@@ -13,70 +13,11 @@
 using namespace std;
 
 
-class Player {
-private:
-    string name;
-    int balance, currentBet;
-    bool isBigBlind, isSmallBlind, isFolded;
-
-
-public:
-    Player(const string& playerName, int startingBalance) : name(playerName), balance(startingBalance), bet(0) {}
-
-    int getBalance() const { return balance; }
-
-    void winHand(int pot) { balance += pot; }
-
-    void setCurrentBet(int betMade) { currentBet += betMade};
-
-    void placeBet(int betAmount) { balance -= betAmount; }
-
-    void raise(int raiseAmount) { balance -= raiseAmount; }
-
-    void fold() { isFolded = true; }
-
-    void bigBlindPayment() { balance -= 10; }
-
-    void smallBlindPayment() { balance -= 5; }
-
-    void bigBlind() { isBigBlind = true; }
-
-    void smallBlind() { isSmallBlind = true; }
-
-    void fold() { isFolded = true; } 
-
-    void cpuAction(bool isRaiseMade) {
-        double betProbability;
-        double callProbability;
-        double raiseProbability;
-        double foldProbability;
-    }
-};
-
 
 bool compareCardsByRank(const Card& a, const Card& b) {
     return a.getRank() < b.getRank();
 }
-Card {
-private:
-    Rank rank;
-    Suit suit;
 
-public:
-    enum Rank { TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE };
-    enum Suit { HEARTS, CLUBS, DIAMONDS, SPADES };
-
-    Card(Rank r, Suit s) : rank(r), suit(s) {}
-
-    Rank getRank() const { return rank; }
-    Suit getSuit() const { return suit; }
-
-    void display() const {
-        const char* rankStr[] = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
-        const char* suitStr[] = { "H", "C", "D", "S" };
-        cout << rankStr[rank] << suitStr[suit] << endl;
-    }
-};
 class Hand {
 private:
     vector<Card> cards;
@@ -235,45 +176,6 @@ public:
 
 };
 
-struct CardNode {
-    Card card;
-    CardNode* next;
-    CardNode* prev;
-
-    CardNode(const Card& c) : card(c), next(nullptr), prev(nullptr) {}
-};
-
-class DoublyLinkedList {
-private:
-    CardNode* head;
-    CardNode* tail;
-
-public:
-    DoublyLinkedList() : head(nullptr), tail(nullptr) {}
-
-    void pushBack(const Card& card) {
-        CardNode* newNode = new CardNode(card);
-        if (!tail) {
-            head = tail = newNode;
-        }
-        else {
-            tail->next = newNode;
-            newNode->prev = tail;
-            tail = newNode;
-        }
-    }
-
-    void clear() {
-        while (head) {
-            CardNode* temp = head;
-            head = head->next;
-            delete temp;
-        }
-        tail = nullptr;
-    }
-
-    bool isEmpty() { return head == nullptr; }
-};
 
 
 
@@ -376,16 +278,6 @@ class Deck {
     bool isEmpty() {
         return deck.empty();
     }
-
-    /*
-    for each player
-    ask action
-    isbetmade
-    Switch statements based on action 
-    
-    
-    
-    */
 
 
 };

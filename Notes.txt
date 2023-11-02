@@ -6,4 +6,31 @@ is constructor for Card class, defined using
     indicating that it belongs to the Card class.
     It takes Rank and Suit as parameters and initializes
     the private fields with the provided data.
-    
+
+
+The include guard (the #ifndef, #define, and #endif statements)
+ prevents a header file from being included more than once within
+  the same source file. Here's how it works:
+
+When a source file includes a header file, the preprocessor checks 
+if the #ifndef condition is true. Initially, it's always true because 
+the identifier DECK_H is not defined.
+The preprocessor defines DECK_H using #define. This means that if the 
+same header file is included in other source files, the #ifndef condition
+ will be false in those source files because DECK_H is already defined.
+As a result, the content of the header file is included in the first 
+source file, but in subsequent source files, it's skipped due to the 
+#ifndef condition being false.
+
+Edit: Making Header fields
+
+iostrem - standard c++ lib allows for i/o operations...
+reading from keyboard/writing from screen
+
+Am I essentially doing :: every instance
+    ex. Rank getRank()
+        Card::Rank Card::getRank()
+
+
+So if I make these doubly linekd lists and push the top card of one deck onto 
+the bottom of another deck, will that be enoudh....or do i need to dosome sort of loopage
