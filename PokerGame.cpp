@@ -12,7 +12,6 @@ using namespace std;
 
 
 
-lets see if this saves
 
 class Card {
 private:
