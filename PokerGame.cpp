@@ -36,7 +36,6 @@ public:
 
 bool compareCardsByRank(const Card& a, const Card& a) {
     return a.getRank() < b.getRank();
-
 }
 
 class Hand {
@@ -241,7 +240,7 @@ public:
 class Player {
 private:
     string name;
-    int balance, bet;
+    int balance, currentBet;
     bool isBigBlind, isSmallBlind, isFolded;
 
 public:
@@ -264,6 +263,13 @@ public:
     void smallBlind() { isSmallBlind = true; }
 
     void fold() { isFolded = true; } 
+
+    void cpuAction(bool is RaiseMade) {
+        double betProbability;
+        double callProbability;
+        double raiseProbability;
+        double foldProbability;
+    }
 };
 
 class Deck {
