@@ -11,7 +11,7 @@ class Hand {
 
     public:
         Hand(const std::vector<Card>& handCards);
-        int calculateBestHandScore() const;
+        //int calculateBestHandScore() const;
         int calculateScore() const;
         bool isOnePair() const;
         bool isTwoPair() const;
@@ -21,7 +21,7 @@ class Hand {
         bool isFourOfAKind() const;
         bool isStraightFlush() const;
         bool isRoyalFlush() const;
-}
+};
 
 
 

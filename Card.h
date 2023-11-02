@@ -17,7 +17,7 @@ class Card {
         Suit getSuit() const;
 
         //void display() const;
-}
+};
 
 
 
