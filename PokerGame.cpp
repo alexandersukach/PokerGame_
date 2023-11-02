@@ -8,6 +8,9 @@
 #include <cctype> 
 #include <queue>
 #include <algorithm>
+#include <random>
+
+
 using namespace std;
 
 
@@ -33,7 +36,7 @@ public:
     }
 };
 
-bool compareCardsByRank(const Card& a, const Card& a) {
+bool compareCardsByRank(const Card& a, const Card& b) {
     return a.getRank() < b.getRank();
 }
 
@@ -41,18 +44,18 @@ class Hand {
 private:
     vector<Card> cards;
 
-    std::vector<Card> sortCards(const std::vector<Card>& unsorted) const {
-        std::vector<Card> sorted = unsorted;
-        std::sort(sorted.begin(), sorted.end(), compareCardsByRank);
+    vector<Card> sortCards(const vector<Card>& unsorted) const {
+        vector<Card> sorted = unsorted;
+        sort(sorted.begin(), sorted.end(), compareCardsByRank);
         return sorted;
     }
 
 public:
     // Constructor to initialize the hand with a vector of cards
-    Hand(const std::vector<Card>& handCards) : cards(handCards) {}
+    Hand(const vector<Card>& handCards) : cards(handCards) {}
 
     int calculateScore() const {
-        std::vector<Card> sortedCards = sortCards(cards);
+        vector<Card> sortedCards = sortCards(cards);
 
         if (isRoyalFlush(sortedCards)) {
             return 9; // Royal Flush
@@ -78,7 +81,7 @@ public:
     }
 
     bool isOnePair() const {
-        std::vector<Card> sortedCards = sortCards(cards);
+        vector<Card> sortedCards = sortCards(cards);
 
         for (size_t i = 0; i < sortedCards.size() - 1; i++) {
             if (sortedCards[i].getRank() == sortedCards[i + 1].getRank()) {
@@ -89,7 +92,7 @@ public:
     }
 
     bool isTwoPair() const {
-        std::vector<Card> sortedCards = sortCards(cards);
+        vector<Card> sortedCards = sortCards(cards);
         int pairCount = 0;
 
         for (size_t i = 0; i < sortedCards.size() - 1; i++) {
@@ -242,6 +245,7 @@ private:
     int balance, currentBet;
     bool isBigBlind, isSmallBlind, isFolded;
 
+
 public:
     Player(const string& playerName, int startingBalance) : name(playerName), balance(startingBalance), bet(0) {}
 
@@ -249,9 +253,13 @@ public:
 
     void winHand(int pot) { balance += pot; }
 
+    void setCurrentBet(int betMade) { currentBet += betMade};
+
     void placeBet(int betAmount) { balance -= betAmount; }
 
     void raise(int raiseAmount) { balance -= raiseAmount; }
+
+    void fold() { isFolded = true; }
 
     void bigBlindPayment() { balance -= 10; }
 
@@ -263,7 +271,7 @@ public:
 
     void fold() { isFolded = true; } 
 
-    void cpuAction(bool is RaiseMade) {
+    void cpuAction(bool isRaiseMade) {
         double betProbability;
         double callProbability;
         double raiseProbability;
@@ -371,11 +379,136 @@ class Deck {
         return deck.empty();
     }
 
+    /*
+    for each player
+    ask action
+    isbetmade
+    Switch statements based on action 
     
+    
+    
+    */
 
 
 };
 
+class Round {
+    private:
+
+    int bettingRound;
+    queue<Player> players;
+    int pot;
+    int currentRoundBet;
+    bool isBetMade;
+
+    public:
+
+    Round(int number, queue<Player>& roundPlayers) {
+        bettingRound = number;
+        players = roundPlayers;
+        pot = 0;
+        currentRoundBet = 0;
+        isBetMade = false;
+    }
+
+        bool firstPlayerBet() {
+        // EMPTY AT THE MOMENT 
+    }
+    void playRound() {
+
+        if(isBetMade) {
+            void handleBetMadeActions();
+        } else {
+            handleNoBetActions();
+        }
+    }
+
+    void initialBetAmount(int initialRoundBet) {
+        currentRoundBet = initialRoundBet;
+    }
+
+
+    void handleBetMadePlayerActions() {
+        char choiceBet;
+        cout << "Would you like to (c)all, (r)aise, or (f)old?";
+        cin >> choiceBet;
+        choiceBet = tolower(choiceBet);
+
+        switch(choiceBet) {
+            case 'f':
+                players.front().fold();
+                // Remove a player here, without affecting outer queue to not
+                // have to initialize players again...does for loop handle it...idk
+                break;
+            case 'c':
+                int amountToCall = currentRoundBet - players.front().getCurrentBet();
+                players.front().placeBet(amountToCall);
+                players.front().setCurrentBet(currentRoundBet);
+                break;
+            case 'r':
+                int raiseAmount;
+                cout << "Enter raise amount: ";
+                cin >> raiseAmount;
+
+                if (raiseAmount <= players.front().getBalance()) {
+                    if(raiseAmount == players.front().getBalance()) {
+                        cout << "All in";
+                    }
+                    players.front().placeBet(raiseAmount);
+                    players.front().setCurrentBet(currentRoundBet + raiseAmount);
+                }
+                break;
+            default:
+                cout << "Choose a valid option";
+
+        }
+    }
+
+    void handleNoBetPlayerActions() {
+        char choiceNoBet;
+        cout << "Would you like to (b)et or (c)heck? ";
+        cin >> choiceNoBet;
+        choiceNoBet = tolower(choiceNoBet);
+
+        switch(choiceNoBet) {
+            case 'b':
+                int betAmount;
+                cout << "Enter the bet amount: ";
+                cin >> betAmount;
+                // Add logic to ensure the bet amount is valid and within the player's balance
+                if (betAmount > 0 && betAmount <= players.front().getBalance()) {
+                    players.front().placeBet(betAmount);
+                    players.front().setCurrentBet(betAmount);
+                    currentRoundBet = betAmount;
+                    isBetMade = true;
+                }
+                break;
+            case 'c':
+                // need check method that just goes to next player
+                // I should just have one method that asks for bet...okay i see ..
+
+        }
+    }
+
+    void handleCPUPlayerActions() {
+        // is this something i need... recommendation popped up: cpuPlayers[0].makeDecision();
+        // probabilities set. later adjusted given game scenario / player balance
+        double betProbability = 0.3;
+        double callProbability = 0.0;
+        double foldProbability = 0.0;
+
+        //? bool isRaiseMade = false;          // somehow cover that a raise is made 
+        if (isRaiseMade) {
+            betProbability = 0.0; // Only options are to call or fold
+            callProbability = 0.6;
+            foldProbability = 0.4;
+        }
+
+        
+
+
+    }
+}
 class Game {
     private:
     vector<Card> communityCards[]; // Max 5
@@ -507,74 +640,15 @@ int main() {
 
     game.initializePlayers(numOpponents, userName, userStartingBalance);
     Necessary
-    //InitializeDeck();
-    //shuffleDeck();
-    //cutDeck();
-
-    //You start out as small blind...you're head of queue, to your left is big blind and head -> next;
-    //YOu throw in 5 and big blind throws in 10
-
-    // Each new rotation, set whatever player is the front of the queue as issmallblind true, and the next as isbigblind true
-    //After that you play the hand with a betting round first before any cards are dealt
-    // How do i go about changing player action depending on their standing as some of my comments belowed in terms of limiting options of when to bet
-    // each round set a made bet flag i guess
-    // be like go to next and ask if they want to bet until end of queue reached, where would the bet made be made, where do we track that and the pot
     game.dealHoleCards();
     
-    // Show user what cards he has
-
-    // If not smallblind or bigblind, either don't bet, call...no preflop raise
-    //
     game.dealFlop();
-
-
-    /*Game
-    Would you like to bet, call, check, fold
-    If no bet needs to be made, only do bet, check....nothing to call, and folding on a check would be idiotic
-
-    If cpu raises, you can call, reraise, or fold
-    */
-    // Ask user what he wants to do
-
-
-// REMEMBER NO PREFLOP RAISES
-// Small blind and other players have chance to back out
-// Big blind is automatic check...
-// Only one raise across all players per turn
-// Case 1: Big Blind: Adds 10, do noption to bet, check, raise, fold
-// Case 2: Little Blind: Ask if you want to call the extra 5 to cover the big blind, or fold
-// Case 3: No one has bet around the table, would you like to bet or check
-// Case 4: Someone has bet, you can either call or fold
-
-// Cases 1,2 check isBigBlind and isSmallBlind flags
-// Cases 3,4 check ifBetMade flag; keep track of total bet
-//THESE ARE ALL PER TURN
-
-
-// FOLD IS EMPTY UP TOP, IF FOLD HAPPENS, MAKE SURE TO REMOVE PLAYER FROM CURRENT ROUND
-//we could do currentBet count;
-
-
-//isSmallBlind is the front of players queue (first player to left of dealer)
-//smallBlind is head of queue; player to right of dealer is tail of queue
-//After each round, I want it to shift so head->next becomes head; and the tail->next = head and tail = head (shifting one over)
-    // if userBet doesn't equal highest bet of that hand....reset the highest bet flag...if someone re raises and a player hasn't
-    // added any money, he must add the initial bet plus the raise
 
     game.dealTurn();
 
-    // Ask user what he wants to do
-
     game.dealRiver();
 
-    // Ask user what he wants to do
 
-    // Show cards
-
-    // Compare and determine winnings
-
-    // New deck, same game
-    
 bool isBigBlind, isSmallBlind;
 if (!isBigBlind) {
     if(isSmallBlind) {
@@ -630,31 +704,6 @@ else {
         
 } }
 
-
-char action;
-cout << "Would you like to (b)et, (c)heck, (r)aise, (f)old? ";
-cin >> action;
-action = tolower(action);
-
-switch (action) {
-    case 'b':
-        cout << "How much would you like to bet? ";
-        // Handle player's bet logic
-        break;
-    case 'c':
-        // Handle player's check logic
-        break;
-    case 'r':
-        cout << "How much would you like to raise? ";
-        // Handle player's raise logic
-        break;
-    case 'f':
-        // Handle player's fold logic
-        break;
-    default:
-        cout << "Invalid choice. Please select a valid action.\n";
-        break;
-}
 
 
 
