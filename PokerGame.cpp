@@ -11,7 +11,6 @@
 using namespace std;
 
 
-Maybe this works?
 
 class Card {
 private:
