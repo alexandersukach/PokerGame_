@@ -1,6 +1,7 @@
 {
     "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
-        "map": "cpp"
+        "map": "cpp",
+        "type_traits": "cpp"
     }
 }

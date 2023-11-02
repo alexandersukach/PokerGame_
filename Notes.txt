@@ -1,0 +1,9 @@
+Header File - includes class and member declarations
+
+Ex.) Card::Card(Rank r, Suit s) : rank(r), suit(s) {}
+is constructor for Card class, defined using 
+    (::) - scope resolution operator
+    indicating that it belongs to the Card class.
+    It takes Rank and Suit as parameters and initializes
+    the private fields with the provided data.
+    

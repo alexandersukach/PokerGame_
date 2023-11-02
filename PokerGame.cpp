@@ -10,12 +10,54 @@
 #include <algorithm>
 #include <random>
 
-
 using namespace std;
 
 
+class Player {
+private:
+    string name;
+    int balance, currentBet;
+    bool isBigBlind, isSmallBlind, isFolded;
 
-class Card {
+
+public:
+    Player(const string& playerName, int startingBalance) : name(playerName), balance(startingBalance), bet(0) {}
+
+    int getBalance() const { return balance; }
+
+    void winHand(int pot) { balance += pot; }
+
+    void setCurrentBet(int betMade) { currentBet += betMade};
+
+    void placeBet(int betAmount) { balance -= betAmount; }
+
+    void raise(int raiseAmount) { balance -= raiseAmount; }
+
+    void fold() { isFolded = true; }
+
+    void bigBlindPayment() { balance -= 10; }
+
+    void smallBlindPayment() { balance -= 5; }
+
+    void bigBlind() { isBigBlind = true; }
+
+    void smallBlind() { isSmallBlind = true; }
+
+    void fold() { isFolded = true; } 
+
+    void cpuAction(bool isRaiseMade) {
+        double betProbability;
+        double callProbability;
+        double raiseProbability;
+        double foldProbability;
+    }
+};
+
+
+bool compareCardsByRank(const Card& a, const Card& b) {
+    return a.getRank() < b.getRank();
+}
+Card {
 private:
     Rank rank;
     Suit suit;
@@ -35,11 +77,6 @@ public:
         cout << rankStr[rank] << suitStr[suit] << endl;
     }
 };
-
-bool compareCardsByRank(const Card& a, const Card& b) {
-    return a.getRank() < b.getRank();
-}
-
 class Hand {
 private:
     vector<Card> cards;
@@ -198,7 +235,6 @@ public:
 
 };
 
-
 struct CardNode {
     Card card;
     CardNode* next;
@@ -239,45 +275,7 @@ public:
     bool isEmpty() { return head == nullptr; }
 };
 
-class Player {
-private:
-    string name;
-    int balance, currentBet;
-    bool isBigBlind, isSmallBlind, isFolded;
 
-
-public:
-    Player(const string& playerName, int startingBalance) : name(playerName), balance(startingBalance), bet(0) {}
-
-    int getBalance() const { return balance; }
-
-    void winHand(int pot) { balance += pot; }
-
-    void setCurrentBet(int betMade) { currentBet += betMade};
-
-    void placeBet(int betAmount) { balance -= betAmount; }
-
-    void raise(int raiseAmount) { balance -= raiseAmount; }
-
-    void fold() { isFolded = true; }
-
-    void bigBlindPayment() { balance -= 10; }
-
-    void smallBlindPayment() { balance -= 5; }
-
-    void bigBlind() { isBigBlind = true; }
-
-    void smallBlind() { isSmallBlind = true; }
-
-    void fold() { isFolded = true; } 
-
-    void cpuAction(bool isRaiseMade) {
-        double betProbability;
-        double callProbability;
-        double raiseProbability;
-        double foldProbability;
-    }
-};
 
 class Deck {
     private:
