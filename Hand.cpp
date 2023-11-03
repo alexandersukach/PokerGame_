@@ -66,57 +66,91 @@ int Hand::calculateScore() const {
     }
 }
 
+// if the hand the score's being evaluated for is 5 cards,
+// should i be swapping based on 5 for all the cards.size()
+
+// Remember to keep in mind, the cards are sorted...
+// Drawing 5 cards of 7
+
+
+//isOnePair() - all we need is one match
+// I want to try kinda moving up the chain 
 
 bool Hand::isOnePair() const {
-    for (int i = 0; i < cards.size() - 1; i++) {
-        for(int j = i + 1; j < cards.size(); j++) {
-            if(cards[i].getRank() == cards[j].getRank) {
+    int j = 0;
+    int k = 1;
+    while (j < cards.size() && k < cards.size()) {
+            for (int i = 0; i < cards.size() - 1; i++) {
+        if(cards[j].getRank() == cards[k].getRank()) {
+            return true;
+        } else if(j > k) {
+            k += 2;
+        } else {
+            j += 2;
+        }
+    }
+    }
+}
+
+//isTwoPair() - we need two matches...say cards 1 and 2 are a pair,
+// we need to jump and start check at j+1 for i and j+2 for j? 
+// include counterofpairs and return whether equal 2;
+// Going to approach like above...
+
+bool Hand::isTwoPair() const {
+    int j = 0;
+    int k = 1;
+    int numPairs = 0;
+    while (j < cards.size() && k < cards.size()) {
+            for (int i = 0; i < cards.size(); i++) {
+        if(numPairs == 2) {
+            return true;
+        }
+        if(cards[j].getRank() == cards[k].getRank()) {
+            numPairs++;
+            j += 2;
+            k += 2;
+        } else (if j > k) {
+            k += 2;
+        } else {
+            j += 2;
+        }
+    }
+    }
+}
+
+
+// only check first three cards to match the consecutive two
+
+// example should i do while i <=2
+bool Hand::isThreeOfAKind() const {
+    for (int i = 0; i < cards.size() - 2; i++) {
+        if (cards[i].getRank() == cards[i+1].getRank() &&
+            cards[i+1].getRank() == cards[i+2].getRank()) {
                 return true;
             }
-        }
     }
     return false;
 }
 
-bool Hand::isTwoPair() const {
-    int numPairs = 0;
-    bool oldPair = false; // Pair already seen so we don't repeat pair count
-    for (int i = 0; i < cards.size() - 1; i++) {
-        for (int j = i + 1; j < cards.size(); j++) {
-            if(cards[i].getRank() == cards[j].getRank()) {
-                if (!oldPair) {
-                    numPairs++;
-                    oldPair = true;
-                } else {
-                    oldPair = false;
-                }
-            }
-        }
-    }
-    return numPairs == 2;
-}
+// same logic for 4ofkind?
 
-bool Hand::isThreeOfAKind() const {
-    for (int i = 0; i < cards.size() - 2; i++) {
-        int numMatches = 0;
-        for (int j = i + 1; j < cards.size(); j++) {
-            if(cards[i].getRank() == cards[j].getRank()) {
-                numMatches++;
+bool Hand::isFourOfAKind() const {
+    for (int i = 0; i < cards.size() - 3; i++) {
+        if (cards[i].getRank() == cards[i + 1].getRank() &&
+            cards[i + 1].getRank() == cards[i + 2].getRank() &&
+            cards[i + 2].getRank() == cards.[i + 3].getRank()) {
+                return true;
             }
-        }
-        if(numMatches == 2) {
-            return true;
-        }
     }
-    return false
+    return false;
 }
 
 // bool Hand::isStraight() const {}
 // bool Hand::isFlush() const {}
+// bool Hand:: isFullHouse() const { return isOnePair() && isThreeOfAKind() }
 // bool Hand::isFourOfAKind() const{}
 /*
-bool Hand::isStraightFlush() {
-    return isStraight() && isFlush();
-}
+bool Hand::isStraightFlush() { return isStraight() && isFlush(); }
 
 */
