@@ -146,6 +146,27 @@ bool Hand::isFourOfAKind() const {
     return false;
 }
 
+bool Hand::isFlush() {
+    Card::Suit cardSuit;
+
+    for (int i = 0; i < cards.size(); i++) {
+        int numSpades;
+        int numClubs;
+        int numDiamonds;
+        int numHearts;
+        cardSuit = cards[i].getSuit();
+        if (cardSuit == "SPADES") {
+            numSpades++;
+        } else if (cardSuit == "CLUBS") {
+            numClubs++;
+        } else if (cardSuit == "DIAMONDS") {
+            numDiamonds++;
+        } else {
+            numHearts++;
+        }
+    }
+}
+
 // bool Hand::isStraight() const {}
 // bool Hand::isFlush() const {}
 // bool Hand:: isFullHouse() const { return isOnePair() && isThreeOfAKind() }
