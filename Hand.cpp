@@ -72,7 +72,6 @@ int Hand::calculateScore() const {
 // Remember to keep in mind, the cards are sorted...
 // Drawing 5 cards of 7
 
-
 //isOnePair() - all we need is one match
 // I want to try kinda moving up the chain 
 
@@ -167,6 +166,15 @@ bool Hand::isFlush() {
     }
 }
 
+bool Hand::isStraight() {
+    for (int i = 0; i < cards.size() - 3; i++) {
+        if ((cards[i].getRank() == cards[i + 1].getRank() - 1) &&
+        (cards[i + 1].getRank() == cards[i + 2].getRank() - 1) &&
+        (cards[i + 2].getRank() == cards[i + 3].getRank() - 1)) {
+            return true;
+        }
+    }
+}
 // bool Hand::isStraight() const {}
 // bool Hand::isFlush() const {}
 // bool Hand:: isFullHouse() const { return isOnePair() && isThreeOfAKind() }
