@@ -37,7 +37,7 @@ void DoublyLinkedList::popBack(const Card& card) {
     }
     delete temp;
 }
-
+// Adding something to see if this syncs w github
 void DoublyLinkedList::popFront(const Card& card) {
     if (head == nullptr) {
         return; // empty list
