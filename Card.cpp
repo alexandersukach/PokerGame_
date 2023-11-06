@@ -1,6 +1,7 @@
 #include "Card.h"
 #include <iostream>
 
+Card::Card() : rank(TWO), suit(HEARTS) {}
 Card::Card(Rank r, Suit s) : rank(r), suit(s) {}
 
 Card::Rank Card::getRank() const {

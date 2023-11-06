@@ -10,7 +10,8 @@ class Hand {
 
     public:
         Hand(const std::vector<Card>& handCards);
-        int calculateScore() const;
+        int calculateScore(const std::vector<Card> &sortedCards) const;
+        int calculateBestHandScore() const;
         bool isOnePair(const std::vector<Card> &sortedCards) const;
         bool isTwoPair(const std::vector<Card> &sortedCards) const;
         bool isThreeOfAKind(const std::vector<Card> &sortedCards) const;
@@ -21,7 +22,6 @@ class Hand {
         bool isStraightFlush(const std::vector<Card> &sortedCards) const;
         bool isRoyalFlush(const std::vector<Card> &sortedCards) const;
         bool isFullHouse(const std::vector<Card> &sortedCards) const;
-        // std::vector<Card> sortCards(const std::vector<Card>& unsorted) const;
 };
 
 #endif // HAND_H

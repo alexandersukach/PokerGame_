@@ -1,25 +1,34 @@
 #ifndef GAME_H
 #define GAME_H
+#include "Card.h"
+#include "Deck.h"
+#include "Player.h"
+#include <string>
+#include <queue>
+using namespace std;
+
+
 
 class Game {
     private:
-        std::vector<Card> communityCards[]; // 5 total
-        std::vector<Card>  playerHoleCards[][]; // [playerIndex][card]
-        std::vector<Card> combinedHand[][]; //[playerIndex][card]
+        Card Game::communityCards[5]; // 5 total
+        Card Game::playerHoleCards[5][2]; // [playerIndex][card]
+        Card Game::combinedHand[5][7]; //[playerIndex][card]
         std::queue<Player> players;
         Deck gameDeck;
+        Player userPlayer;
 
     public:
-        Game() : gameDeck() {}
+        Game(const std::string& userName, int userStartingBalance);
 
-        //void initiliazePlayers(int numOpponents, const string& playerName, int startingBalance) { }
+        void initializePlayers(const std::string& playerName, int startingBalance) { };
         void dealHoleCards() {};
         void dealFlop() {};
         void dealTurn() {};
         void dealRiver() {};
         //Maybe I could make those into a loop
 
-        void combineHands() {}
+        void combineHands() {};
 
 
         //TOO LAZY TO SWITCH CLASS

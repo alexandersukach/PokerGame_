@@ -10,12 +10,14 @@ class Player {
         bool isBigBlind, isSmallBlind, isFolded;
     
     public:
+        Player();
         Player(const std::string& playerName, int startingBalance);
+        
 
         int getBalance() const;
         void winHand(int pot);
         void setCurrentBet(int betMade);
-        // int getCurrentBet();
+        int getCurrentBet() const;
         void placeBet(int betAmount);
         void raise(int raiseAmount);
         void fold();

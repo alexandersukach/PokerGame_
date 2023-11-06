@@ -9,6 +9,7 @@ class Card {
         enum Rank { TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE };
         enum Suit { HEARTS, CLUBS, DIAMONDS, SPADES };
 
+        Card();
         Card(Rank r, Suit s);
 
         Rank getRank() const;

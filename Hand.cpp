@@ -16,9 +16,31 @@ std::vector<Card> sortCards(const std::vector<Card>& unsorted) {
     return sortedCards;
 }
 
-int Hand::calculateScore() const {
+int Hand::calculateBestHandScore() const {
+        int bestScore = 0;
+        // Iterate through all combinations of 5 cards
+        for (int i = 0; i < cards.size() - 4; i++) {
+            for (int j = i + 1; j < cards.size() - 3; j++) {
+                for (int k = j + 1; k < cards.size() - 2; k++) {
+                    for (int m = k + 1; m < cards.size() - 1; m++) {
+                        for (int n = m + 1; n < cards.size(); n++) {
+                            // Create a temporary hand with the selected 5 cards
+                            std::vector<Card> tempHand = {cards[i], cards[j], cards[k], cards[m], cards[n]};
+                            // Calculate the score for this combination
+                            int score = calculateScore(tempHand);
+                            // Update the best score if this combination is better
+                            if (score > bestScore) {
+                                bestScore = score;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return bestScore;
+    }
+int Hand::calculateScore(const std::vector<Card>& hand) const {
     std::vector<Card> sortedCards = sortCards(cards); // Copy cards for sorting
-    //sortCards(sortedCards); // Sort the copy
 
     if (isRoyalFlush(sortedCards)) {
         return 10;
@@ -44,7 +66,7 @@ int Hand::calculateScore() const {
 }
 
 bool Hand::isOnePair(const std::vector<Card>& sortedCards) const {
-    for (size_t i = 0; i < sortedCards.size() - 1; i++) {
+    for (int i = 0; i < sortedCards.size() - 1; i++) {
         if (sortedCards[i].getRank() == sortedCards[i + 1].getRank()) {
             return true;
         }
@@ -54,7 +76,7 @@ bool Hand::isOnePair(const std::vector<Card>& sortedCards) const {
 
 bool Hand::isTwoPair(const std::vector<Card>& sortedCards) const {
     int numPairs = 0;
-    for (size_t i = 0; i < sortedCards.size() - 1; i++) {
+    for (int i = 0; i < sortedCards.size() - 1; i++) {
         if (sortedCards[i].getRank() == sortedCards[i + 1].getRank()) {
             numPairs++;
             i++;
@@ -64,7 +86,7 @@ bool Hand::isTwoPair(const std::vector<Card>& sortedCards) const {
 }
 
 bool Hand::isThreeOfAKind(const std::vector<Card>& sortedCards) const {
-    for (size_t i = 0; i < sortedCards.size() - 2; i++) {
+    for (int i = 0; i < sortedCards.size() - 2; i++) {
         if (sortedCards[i].getRank() == sortedCards[i + 1].getRank() &&
             sortedCards[i].getRank() == sortedCards[i + 2].getRank()) {
             return true;
@@ -74,7 +96,7 @@ bool Hand::isThreeOfAKind(const std::vector<Card>& sortedCards) const {
 }
 
 bool Hand::isFourOfAKind(const std::vector<Card>& sortedCards) const {
-    for (size_t i = 0; i < sortedCards.size() - 3; i++) {
+    for (int i = 0; i < sortedCards.size() - 3; i++) {
         if (sortedCards[i].getRank() == sortedCards[i + 1].getRank() &&
             sortedCards[i].getRank() == sortedCards[i + 2].getRank() &&
             sortedCards[i].getRank() == sortedCards[i + 3].getRank()) {
@@ -85,9 +107,8 @@ bool Hand::isFourOfAKind(const std::vector<Card>& sortedCards) const {
 }
 
 bool Hand::isFlush(const std::vector<Card>& sortedCards) const {
-    // Check if all cards have the same suit
-    for (size_t i = 1; i < sortedCards.size(); i++) {
-        if (sortedCards[i].getSuit() != sortedCards[0].getSuit()) {
+    for (int i = 0; i < sortedCards.size() - 1; i++) {
+        if (sortedCards[i].getSuit() != sortedCards[i + 1].getSuit()) {
             return false;
         }
     }
@@ -96,7 +117,7 @@ bool Hand::isFlush(const std::vector<Card>& sortedCards) const {
 
 bool Hand::isStraight(const std::vector<Card>& sortedCards) const {
     // Check if the ranks form a consecutive sequence
-    for (size_t i = 0; i < sortedCards.size() - 1; i++) {
+    for (int i = 0; i < sortedCards.size() - 1; i++) {
         if (sortedCards[i].getRank() != sortedCards[i + 1].getRank() - 1) {
             return false;
         }
