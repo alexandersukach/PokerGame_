@@ -1,9 +1,16 @@
 #include "DoublyLinkedList.h"
 
-DoublyLinkedList::DoublyLinkedList() : head(nullptr), tail(nullptr);
+template <class T>
+DoublyLinkedList<T>::DoublyLinkedList() : head(nullptr), tail(nullptr) {}
 
-void DoublyLinkedList::pushBack(const Card& card) {
-    CardNode* newNode = new CareNode(card);
+
+
+template <class T>
+ListNode<T>* DoublyLinkedList<T>::getHead() const {
+    return head;
+}template <class T>
+void DoublyLinkedList<T>::pushBack(const T& data) {
+    ListNode<T>* newNode = new Node<T>(data);
     if (head == nullptr) {
         head = tail = newNode;
     } else {
@@ -13,8 +20,9 @@ void DoublyLinkedList::pushBack(const Card& card) {
     }
 }
 
-void DoublyLinkedList::pushFront(const Card& card) {
-    CardNode* newNode = new CardNode(card);
+template <class T>
+void DoublyLinkedList<T>::pushFront(const T& data) {
+    ListNode<T>* newNode = new Node<T>(data);
     if (head == nullptr) {
         head = tail = newNode;
     } else {
@@ -24,11 +32,12 @@ void DoublyLinkedList::pushFront(const Card& card) {
     }
 }
 
-void DoublyLinkedList::popBack(const Card& card) {
+template <class T>
+void DoublyLinkedList<T>::popBack() {
     if (tail == nullptr) {
         return; // empty list
     }
-    CardNode* temp = tail;
+    ListNode<T>* temp = tail;
     tail = tail->prev;
     if (tail == nullptr) {
         head = nullptr;
@@ -37,12 +46,13 @@ void DoublyLinkedList::popBack(const Card& card) {
     }
     delete temp;
 }
-// Adding something to see if this syncs w github
-void DoublyLinkedList::popFront(const Card& card) {
+
+template <class T>
+void DoublyLinkedList<T>::popFront() {
     if (head == nullptr) {
         return; // empty list
     }
-    CardNode* temp = head;
+    ListNode<T>* temp = head;
     head = head->next;
     if (head == nullptr) {
         tail = nullptr;
@@ -52,20 +62,17 @@ void DoublyLinkedList::popFront(const Card& card) {
     delete temp;
 }
 
-
-void DoublyLinkedList::clear() {
+template <class T>
+void DoublyLinkedList<T>::clear() {
     while (head) {
-        CardNode* temp = head;
+        ListNode<T>* temp = head;
         head = head->next;
         delete temp;
     }
-    head == tail == nullptr;
+    head = tail = nullptr;
 }
 
-bool DoublyLinkedList::isEmpty() {
+template <class T>
+bool DoublyLinkedList<T>::isEmpty() {
     return head == nullptr && tail == nullptr;
 }
-
-
-
-

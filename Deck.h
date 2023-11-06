@@ -8,7 +8,7 @@ class Deck {
     private:
         DoublyLinkedList<Card> deck;
     
-        void InitializeDeck();
+        void initializeDeck();
         void shuffleDeck();
         void cutDeck();
 

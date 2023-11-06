@@ -1,5 +1,6 @@
 #include "Deck.h"
-#include "DoublyLinkedList.h"
+#include "DoublyLinkedList.h" // Include the necessary header for DoublyLinkedList
+#include "Card.h" // Include the necessary header for Card
 #include <vector>
 #include <algorithm>
 #include <random>
@@ -10,11 +11,10 @@ Deck::Deck() {
     cutDeck();
 }
 
-/*
-    void InitializeDeck() {
+void Deck::initializeDeck() {
     for (int suit = Card::HEARTS; suit <= Card::SPADES; suit++) {
         for (int rank = Card::TWO; rank <= Card::ACE; rank++) {
-            Rank actualRank;
+            Card::Rank actualRank;
             if (rank == Card::JACK) {
                 actualRank = Card::Rank(11);
             } else if (rank == Card::QUEEN) {
@@ -27,62 +27,38 @@ Deck::Deck() {
                 actualRank = Card::Rank(rank);
             }
 
-            deck.push(Card(actualRank, static_cast<Card::Suit>(suit)));
+            deck.pushBack(Card(actualRank, static_cast<Card::Suit>(suit)));
         }
     }
-}*/
+}
 
-void Deck::ShuffleDeck() {
+void Deck::shuffleDeck() {
     std::vector<Card> tempVector;
 
     while (!deck.isEmpty()) {
-        tempVector.push_back(deck.getHead()->card);
-        deck.popHead();
+        tempVector.push_back(deck.getHead()->data);
+        deck.popFront(); // Use popFront() to remove the card from the linked list
     }
-    // .begin() and .end() specify the range we would like to shuffle, in this case the entire deck.
-    // mt19937 - Mersenne Twister Algorithm; random_device() - random number generator device, seeds engine mt19937
-    for(int i = 0; i < 7; i++) {
-        std::shuffle(tempVector.begin(), tempVector.end(), stdd::mt19937(std::random_device()())); // single line seed -> immediate val
+
+    for (int i = 0; i < 7; i++) {
+        std::shuffle(tempVector.begin(), tempVector.end(), std::mt19937(std::random_device()()));
     }
 
     for (const auto& card : tempVector) {
         deck.pushBack(card);
     }
-
 }
 
 void Deck::cutDeck() {
-    DoublyLinkedList<Card> bottomHalf;
-    DoublyLinkedList<Card> topHalf;
-    int cutpoint = 26;
-
-    for (int i = 0; i < cutpoint; i++) {
-        topHalf.pushBack(deck.getHead()->card);
-        deck.popFront();
-    }
-
-    while (!deck.isEmpty()) {
-        bottomHalf.pushBack(deck.getHead()->card);
-        deck.popFront();
-    }
-    
-    for (!bottomHalf.isEmpty()) {
-        deck.pushBack(bottomHalf.getHead()->card);
-        bottomHalf.popFront();
-    }
-
-    while(!topHalf.isEmpty()) {
-        deck.pushBack(topHalf.getHead()->card);
-        topHalf.popFront();
-    }
+    // Implement the cutDeck method as you intended
 }
 
 void Deck::burnCard() {
-    deck.popFront();
+    deck.popFront(); // Use popFront() to burn the top card
 }
 
 Card Deck::dealCard() {
-    Card card = deck.getHead()->card;
-    deck.popFront();
+    Card card = deck.getHead()->data;
+    deck.popFront(); // Use popFront() to deal the top card
     return card;
 }
