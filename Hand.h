@@ -7,23 +7,21 @@
 class Hand {
     private:
         std::vector<Card> cards;
-        std::vector<Card> sortCards(const std::vector<Card>& unsorted) const;
 
     public:
         Hand(const std::vector<Card>& handCards);
-        //int calculateBestHandScore() const;
         int calculateScore() const;
-        bool isOnePair() const;
-        bool isTwoPair() const;
-        bool isThreeOfAKind() const;
-        bool isStraight() const;
-        bool isFlush() const;
-        bool isFourOfAKind() const;
-        bool isStraightFlush() const;
-        bool isRoyalFlush() const;
+        bool isOnePair(const std::vector<Card> &sortedCards) const;
+        bool isTwoPair(const std::vector<Card> &sortedCards) const;
+        bool isThreeOfAKind(const std::vector<Card> &sortedCards) const;
+        bool isStraight(const std::vector<Card> &sortedCards) const;
+        bool isFlush(const std::vector<Card> &sortedCards) const;
+        bool isFullHouse(const std::vector<Card> &sortedCards) const;
+        bool isFourOfAKind(const std::vector<Card> &sortedCards) const;
+        bool isStraightFlush(const std::vector<Card> &sortedCards) const;
+        bool isRoyalFlush(const std::vector<Card> &sortedCards) const;
+        bool isFullHouse(const std::vector<Card> &sortedCards) const;
+        // std::vector<Card> sortCards(const std::vector<Card>& unsorted) const;
 };
-
-
-
 
 #endif // HAND_H

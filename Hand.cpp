@@ -6,43 +6,20 @@ bool compareCardsByRank(const Card& a, const Card& b) {
 }
 
 Hand::Hand(const std::vector<Card>& handCards) : cards(handCards) {
-    sortCards();
+    // sortCards();
 }
 
-void Hand::sortCards() {
-    std::sort(cards.begin(), cards.end(), compareCardsByRank);
+std::vector<Card> sortCards(const std::vector<Card>& unsorted) {
+    // Your implementation for sorting the cards
+    std::vector<Card> sortedCards = unsorted; // Make a copy of the unsorted cards
+    std::sort(sortedCards.begin(), sortedCards.end(), compareCardsByRank); // Use the sorting function you've defined
+    return sortedCards;
 }
-/*
-int Hand::calculateBestHandScore() const {
-        int bestScore = 0;
 
-        // Iterate through all combinations of 5 cards
-        for (size_t i = 0; i < cards.size() - 4; i++) {
-            for (size_t j = i + 1; j < cards.size() - 3; j++) {
-                for (size_t k = j + 1; k < cards.size() - 2; k++) {
-                    for (size_t m = k + 1; m < cards.size() - 1; m++) {
-                        for (size_t n = m + 1; n < cards.size(); n++) {
-                            // Create a temporary hand with the selected 5 cards
-                            std::vector<Card> tempHand = {cards[i], cards[j], cards[k], cards[m], cards[n]};
-
-                            // Calculate the score for this combination
-                            int score = calculateScore(tempHand);
-
-                            // Update the best score if this combination is better
-                            if (score > bestScore) {
-                                bestScore = score;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        return bestScore;
-    }
-    */
 int Hand::calculateScore() const {
-    std::vector<Card> sortedCards = sortCards(cards);
+    std::vector<Card> sortedCards = sortCards(cards); // Copy cards for sorting
+    //sortCards(sortedCards); // Sort the copy
+
     if (isRoyalFlush(sortedCards)) {
         return 10;
     } else if (isStraightFlush(sortedCards)) {
@@ -66,120 +43,85 @@ int Hand::calculateScore() const {
     }
 }
 
-// if the hand the score's being evaluated for is 5 cards,
-// should i be swapping based on 5 for all the cards.size()
-
-// Remember to keep in mind, the cards are sorted...
-// Drawing 5 cards of 7
-
-//isOnePair() - all we need is one match
-// I want to try kinda moving up the chain 
-
-bool Hand::isOnePair() const {
-    int j = 0;
-    int k = 1;
-    while (j < cards.size() && k < cards.size()) {
-            for (int i = 0; i < cards.size() - 1; i++) {
-        if(cards[j].getRank() == cards[k].getRank()) {
+bool Hand::isOnePair(const std::vector<Card>& sortedCards) const {
+    for (size_t i = 0; i < sortedCards.size() - 1; i++) {
+        if (sortedCards[i].getRank() == sortedCards[i + 1].getRank()) {
             return true;
-        } else if(j > k) {
-            k += 2;
-        } else {
-            j += 2;
         }
     }
-    }
+    return false;
 }
 
-//isTwoPair() - we need two matches...say cards 1 and 2 are a pair,
-// we need to jump and start check at j+1 for i and j+2 for j? 
-// include counterofpairs and return whether equal 2;
-// Going to approach like above...
-
-bool Hand::isTwoPair() const {
-    int j = 0;
-    int k = 1;
+bool Hand::isTwoPair(const std::vector<Card>& sortedCards) const {
     int numPairs = 0;
-    while (j < cards.size() && k < cards.size()) {
-            for (int i = 0; i < cards.size(); i++) {
-        if(numPairs == 2) {
-            return true;
-        }
-        if(cards[j].getRank() == cards[k].getRank()) {
+    for (size_t i = 0; i < sortedCards.size() - 1; i++) {
+        if (sortedCards[i].getRank() == sortedCards[i + 1].getRank()) {
             numPairs++;
-            j += 2;
-            k += 2;
-        } else (if j > k) {
-            k += 2;
-        } else {
-            j += 2;
+            i++;
         }
     }
-    }
+    return numPairs == 2;
 }
 
-
-// only check first three cards to match the consecutive two
-
-// example should i do while i <=2
-bool Hand::isThreeOfAKind() const {
-    for (int i = 0; i < cards.size() - 2; i++) {
-        if (cards[i].getRank() == cards[i+1].getRank() &&
-            cards[i+1].getRank() == cards[i+2].getRank()) {
-                return true;
-            }
-    }
-    return false;
-}
-
-// same logic for 4ofkind?
-
-bool Hand::isFourOfAKind() const {
-    for (int i = 0; i < cards.size() - 3; i++) {
-        if (cards[i].getRank() == cards[i + 1].getRank() &&
-            cards[i + 1].getRank() == cards[i + 2].getRank() &&
-            cards[i + 2].getRank() == cards.[i + 3].getRank()) {
-                return true;
-            }
-    }
-    return false;
-}
-
-bool Hand::isFlush() {
-    Card::Suit cardSuit;
-
-    for (int i = 0; i < cards.size(); i++) {
-        int numSpades;
-        int numClubs;
-        int numDiamonds;
-        int numHearts;
-        cardSuit = cards[i].getSuit();
-        if (cardSuit == "SPADES") {
-            numSpades++;
-        } else if (cardSuit == "CLUBS") {
-            numClubs++;
-        } else if (cardSuit == "DIAMONDS") {
-            numDiamonds++;
-        } else {
-            numHearts++;
-        }
-    }
-}
-
-bool Hand::isStraight() {
-    for (int i = 0; i < cards.size() - 3; i++) {
-        if ((cards[i].getRank() == cards[i + 1].getRank() - 1) &&
-        (cards[i + 1].getRank() == cards[i + 2].getRank() - 1) &&
-        (cards[i + 2].getRank() == cards[i + 3].getRank() - 1)) {
+bool Hand::isThreeOfAKind(const std::vector<Card>& sortedCards) const {
+    for (size_t i = 0; i < sortedCards.size() - 2; i++) {
+        if (sortedCards[i].getRank() == sortedCards[i + 1].getRank() &&
+            sortedCards[i].getRank() == sortedCards[i + 2].getRank()) {
             return true;
         }
     }
+    return false;
 }
-// bool Hand::isStraight() const {}
-// bool Hand::isFlush() const {}
-// bool Hand:: isFullHouse() const { return isOnePair() && isThreeOfAKind() }
-// bool Hand::isFourOfAKind() const{}
-/*
-bool Hand::isStraightFlush() { return isStraight() && isFlush(); }
 
-*/
+bool Hand::isFourOfAKind(const std::vector<Card>& sortedCards) const {
+    for (size_t i = 0; i < sortedCards.size() - 3; i++) {
+        if (sortedCards[i].getRank() == sortedCards[i + 1].getRank() &&
+            sortedCards[i].getRank() == sortedCards[i + 2].getRank() &&
+            sortedCards[i].getRank() == sortedCards[i + 3].getRank()) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Hand::isFlush(const std::vector<Card>& sortedCards) const {
+    // Check if all cards have the same suit
+    for (size_t i = 1; i < sortedCards.size(); i++) {
+        if (sortedCards[i].getSuit() != sortedCards[0].getSuit()) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Hand::isStraight(const std::vector<Card>& sortedCards) const {
+    // Check if the ranks form a consecutive sequence
+    for (size_t i = 0; i < sortedCards.size() - 1; i++) {
+        if (sortedCards[i].getRank() != sortedCards[i + 1].getRank() - 1) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Hand::isFullHouse(const std::vector<Card>& sortedCards) const {
+    // A full house consists of three cards of one rank and two cards of another rank
+    if (sortedCards[0].getRank() == sortedCards[1].getRank() &&
+        sortedCards[3].getRank() == sortedCards[4].getRank() &&
+        (sortedCards[2].getRank() == sortedCards[0].getRank() || sortedCards[2].getRank() == sortedCards[3].getRank())) {
+        return true;
+    }
+    return false;
+}
+
+bool Hand::isStraightFlush(const std::vector<Card>& sortedCards) const {
+    return isStraight(sortedCards) && isFlush(sortedCards);
+}
+
+bool Hand::isRoyalFlush(const std::vector<Card>& sortedCards) const {
+    // Royal Flush is a special case of a Straight Flush
+    if (isStraightFlush(sortedCards) && sortedCards[4].getRank() == Card::ACE) {
+        return true;
+    }
+    return false;
+}
