@@ -3,33 +3,33 @@
 Player::Player() {
     // Initialize default values for the player here.
     name = "Default Name";
-    balance = 0; // You can set any default balance you want
-    currentBet = 0;
+    balance = 0.00; // You can set any default balance you want
+    currentBet = 0.00;
     isBigBlind = false;
     isSmallBlind = false;
     isFolded = false;
+    isComputerPlayer = false;
+
 }
 
-Player::Player(const std::string& playerName, int startingBalance) 
-: name(playerName), balance(startingBalance), currentBet(0), isBigBlind(false), isSmallBlind(false), isFolded(false)  { }
+Player::Player(const std::string& playerName, double startingBalance) 
+: name(playerName), balance(startingBalance), currentBet(0), isBigBlind(false), isSmallBlind(false), isFolded(false), isComputerPlayer(false) { }
 
-int Player::getBalance() const { return balance; }
+double Player::getBalance() const { return balance; }
 
-void Player::setBalance(int bet) { balance -= bet; }
+void Player::setBalance(double bet) { balance -= bet; }
 
-int Player::getCurrentBet() const {
-    return currentBet;
- }
+bool Player::isComputer() const { return isComputerPlayer; }
 
-void Player::winHand(int pot) { balance += pot; }
+ void Player::winHand(double pot) { balance += pot; }
 
-void Player::setCurrentBet(int betMade) { currentBet += betMade; } // How much player has bet so far
+//void Player::setCurrentBet(int betMade) { currentBet += betMade; } // How much player has bet so far
 
-// void Player::getCurrentBet() { return currentBet; }
+ int Player::getCurrentBet() { return currentBet; }
 
-void Player::placeBet(int betAmount) { balance -= betAmount; currentBet += betAmount; }
+void Player::placeBet(double betAmount) { balance -= betAmount; currentBet += betAmount; }
 
-void Player::raise(int raiseAmount) { balance -= raiseAmount; }
+void Player::raise(double raiseAmount) { balance -= raiseAmount; }
 
 void Player::fold() { isFolded = true; }
 // bool Player::isInGame() const { return inGame; } Maybe in addition to fold()
@@ -38,9 +38,9 @@ void Player::bigBlindPayment() { balance -= 10; }
 
 void Player::smallBlindPayment() { balance -= 5; }
 
-void Player::bigBlind() { isBigBlind = true; }
+void Player::setBigBlind() { isBigBlind = true; }
 
-void Player::smallBlind() { isSmallBlind = true; }
+void Player::setSmallBlind() { isSmallBlind = true; }
 
 // void cpuAction
 /*

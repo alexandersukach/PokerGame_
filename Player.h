@@ -7,25 +7,26 @@ class Player {
     private:
         std::string name;
         int balance, currentBet;
-        bool isBigBlind, isSmallBlind, isFolded;
+        bool isBigBlind, isSmallBlind, isFolded, isComputerPlayer;
     
     public:
         Player();
-        Player(const std::string& playerName, int startingBalance);
+        Player(const std::string& playerName, double startingBalance);
         
 
-        int getBalance() const;
-        void setBalance(int bet);
-        void winHand(int pot);
-        void setCurrentBet(int betMade);
-        int getCurrentBet() const;
-        void placeBet(int betAmount);
-        void raise(int raiseAmount);
+        double getBalance() const;
+        bool isComputer() const;
+        void setBalance(double bet);
+        void winHand(double pot);
+        void setCurrentBet(double betMade);
+        int getCurrentBet();
+        void placeBet(double betAmount);
+        void raise(double raiseAmount);
         void fold();
         void bigBlindPayment();
         void smallBlindPayment();
-        void bigBlind();
-        void smallBlind();
+        void setBigBlind();
+        void setSmallBlind();
         // void cpuAction(bool isRaiseMade);
 
 
