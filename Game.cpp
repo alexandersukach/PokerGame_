@@ -18,7 +18,7 @@ class Game {
     Player userPlayer;
     
     public:
-    Game::Game(const std::string& userName, int userStartingBalance) : gameDeck() {
+    Game(const std::string& userName, int userStartingBalance) : gameDeck() {
         initializePlayers(userName, userStartingBalance);
     }
 
@@ -37,7 +37,7 @@ class Game {
     }
 
 
-void Game::dealHoleCards() {
+void dealHoleCards() {
     for (int cardIndex = 0; cardIndex < 2; cardIndex++) {
         for (int playerIndex = 0; playerIndex < 5; playerIndex++) {
             Player& player = players.front(); // Get the first player in the queue

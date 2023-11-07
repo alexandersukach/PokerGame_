@@ -29,7 +29,7 @@ class Round {
         if(isBetMade) {
             void handleBetMadeActions();
         } else {
-            handleNoBetActions();
+            void handleNoBetActions();
         }
     }
 
@@ -107,7 +107,7 @@ class Round {
         double callProbability = 0.0;
         double foldProbability = 0.0;
 
-        //? bool isRaiseMade = false;          // somehow cover that a raise is made 
+        bool isRaiseMade = false;          // somehow cover that a raise is made 
         if (isRaiseMade) {
             betProbability = 0.0; // Only options are to call or fold
             callProbability = 0.6;
