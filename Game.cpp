@@ -16,6 +16,7 @@ class Game {
     std::queue<Player> players;
     Deck gameDeck;
     Player userPlayer;
+    Player* dealer;
     
     public:
     Game(const std::string& userName, int userStartingBalance) : gameDeck() {

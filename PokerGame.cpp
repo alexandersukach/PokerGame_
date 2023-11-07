@@ -57,6 +57,9 @@ int main() {
 
     cout << "\nEnter starting balance for all players: ";
     cin >> userStartingBalance;
+
+    Game pokerGame(userName, userStartingBalance);
+    
 }
 
 
