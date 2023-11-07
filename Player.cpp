@@ -15,6 +15,8 @@ Player::Player(const std::string& playerName, int startingBalance)
 
 int Player::getBalance() const { return balance; }
 
+void Player::setBalance(int bet) { balance -= bet; }
+
 int Player::getCurrentBet() const {
     return currentBet;
  }

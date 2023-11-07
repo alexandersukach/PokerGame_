@@ -4,26 +4,28 @@
 using namespace std;
 class Round {
     private:
-
-    int bettingRound;
-    queue<Player> players;
-    int pot;
-    int currentRoundBet;
-    bool isBetMade;
+        //int bettingRound;
+        queue<Player> players;
+        int pot;
+        int currentRoundBet;
+        bool isBetMade;
+        bool isRaiseMade;
+        bool isReRaiseMade;
+        int initialBet = 10; // currentRoundBet is bigBlind maybe
 
     public:
 
     Round(int number, queue<Player>& roundPlayers) {
-        bettingRound = number;
+        //bettingRound = number;
         players = roundPlayers;
         pot = 0;
-        currentRoundBet = 0;
+        currentRoundBet = 10;
         isBetMade = false;
+        isRaiseMade = false;
+        isReRaiseMade = false;
     }
 
-        bool firstPlayerBet() {
-        // EMPTY AT THE MOMENT 
-    }
+
     void playRound() {
 
         if(isBetMade) {
@@ -31,11 +33,28 @@ class Round {
         } else {
             void handleNoBetActions();
         }
+
+        if(isRaiseMade) {
+            void handleRaiseMadeActions();
+        } else {
+            void handleNoRaiseActions();
+        }
+        if(isReRaiseMade) {
+            void handleReRaiseMadeActions();
+            } else {
+            void handleNoReRaiseActions();
+        }
+        // so could i just make a fold method to use
+        // for the elses
+
     }
 
     void initialBetAmount(int initialRoundBet) {
         currentRoundBet = initialRoundBet;
+
+
     }
+
 
 
     void handleBetMadePlayerActions() {
@@ -118,4 +137,30 @@ class Round {
 
 
     }
+    
+    void handleNoBetYetPlayerActions(Player& player) {
+        cout << "Would you like to (b)et or (c)all? " ;
+        char choice;
+        cin >> choice;
+        choice = tolower(choice);
+
+        switch(choice) {
+            case 'b':
+            int betAmount;
+                cout << "How much would you like to bet? ";
+                cin  >> betAmount;
+                if (betAmount >= 2 * initialBet && betAmount <= player.getBalance()) {
+                    player.placeBet(betAmount);
+                    player.setBalance(player.getBalance() - betAmount);
+                    currentRoundBet = betAmount;
+                    isBetMade = true;
+                    pot += betAmount;
+                } else {
+                    cout << "Check that bet is at least twice the current bet and within your budget..." << endl;
+
+                }
+                break;
+            case 'c'
+        }
+        }
 };

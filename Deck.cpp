@@ -22,7 +22,7 @@ void Deck::initializeDeck() {
             } else if (rank == Card::KING) {
                 actualRank = Card::Rank(13);
             } else if (rank == Card::ACE) {
-                actualRank = Card::Rank(14); // or 14 depending on the hand
+                actualRank = Card::Rank(14); // or 14 depending on the hand, still haven't figured it out...
             } else {
                 actualRank = Card::Rank(rank);
             }

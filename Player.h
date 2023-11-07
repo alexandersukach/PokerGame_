@@ -15,6 +15,7 @@ class Player {
         
 
         int getBalance() const;
+        void setBalance(int bet);
         void winHand(int pot);
         void setCurrentBet(int betMade);
         int getCurrentBet() const;

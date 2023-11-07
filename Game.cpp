@@ -24,32 +24,31 @@ class Game {
 
     void initializePlayers(const std::string& userName, int userStartingBalance) {
         userPlayer = Player(userName, userStartingBalance);
-        const int numComputerPlayers = 4; // Adjust as needed
+        const int numComputerPlayers = 4; 
+        players.push(userPlayer);
 
         for (int i = 0; i < numComputerPlayers; i++) {
             std::string computerName = "Computer Player " + std::to_string(i + 1);
             int startingBalance = rand() % 1000 + 1000; // Random starting balance
             players.push(Player(computerName, startingBalance));
         }
-
-        // Add the user player to the queue
-        players.push(userPlayer);
     }
 
 
 void dealHoleCards() {
     for (int cardIndex = 0; cardIndex < 2; cardIndex++) {
         for (int playerIndex = 0; playerIndex < 5; playerIndex++) {
-            Player& player = players.front(); // Get the first player in the queue
+            Player& player = players.front(); 
             playerHoleCards[playerIndex][cardIndex] = gameDeck.dealCard();
-            players.push(player); // Move the player to the back of the queue
-            players.pop(); // Remove the player from the front of the queue
+            players.push(player);
+            players.pop();
         }
     }
 }
+        // BETTING ROUND 1
 
     // Dealing community cards 
-
+        
     void dealFlop() {
         gameDeck.burnCard();
         for (int i = 0; i < 3; i++) {
@@ -57,31 +56,28 @@ void dealHoleCards() {
             communityCards[i] = dealtCard;
         }
     }
-
+        // BETTING ROUND 2
     void dealTurn() {
         gameDeck.burnCard();
         Card dealtCard = gameDeck.dealCard();
         communityCards[3] = dealtCard;
     }
-
+        // BETTING ROUND 3
     void dealRiver() {
         gameDeck.burnCard();
         Card dealtCard = gameDeck.dealCard();
         communityCards[4] = dealtCard;
     }
-
+        // BETTING ROUND 4
     // Combining community cards and each player's cards to compare hand strength
 
 void combineHands() {
     for (int playerIndex = 0; playerIndex < players.size(); playerIndex++) {
-        // No need to clear or default-construct cards
 
-        // Combine the player's hole cards (first two items)
         for (int i = 0; i < 2; i++) {
             combinedHands[playerIndex][i] = playerHoleCards[playerIndex][i];
         }
 
-        // Combine with community cards (remaining five items)
         for (int i = 2; i < 7; i++) {
             combinedHands[playerIndex][i] = communityCards[i - 2];
         }
