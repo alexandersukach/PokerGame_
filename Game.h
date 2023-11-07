@@ -29,6 +29,7 @@ class Game {
         //Maybe I could make those into a loop
 
         void combineHands() {};
+        void rotateDealer() {};
 
 
         //TOO LAZY TO SWITCH CLASS

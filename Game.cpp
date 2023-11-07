@@ -17,22 +17,25 @@ class Game {
     Deck gameDeck;
     Player userPlayer;
     Player* dealer;
-    
+
     public:
     Game(const std::string& userName, int userStartingBalance) : gameDeck() {
         initializePlayers(userName, userStartingBalance);
     }
 
+    
     void initializePlayers(const std::string& userName, int userStartingBalance) {
         userPlayer = Player(userName, userStartingBalance);
-        const int numComputerPlayers = 4; 
+        const int numComputerPlayers = 4;
         players.push(userPlayer);
 
         for (int i = 0; i < numComputerPlayers; i++) {
             std::string computerName = "Computer Player " + std::to_string(i + 1);
-            int startingBalance = rand() % 1000 + 1000; // Random starting balance
-            players.push(Player(computerName, startingBalance));
+            players.push(Player(computerName, userStartingBalance));  // All players start with the same balance
         }
+
+        // Set the initial dealer
+        dealer = &players.front();
     }
 
 
@@ -105,6 +108,10 @@ void selectionSortCombinedHands(int playerIndex) {
         }
     }
 
-
+void rotateDealer() {
+        Player dealerPlayer = players.front();
+        players.pop();
+        players.push(dealerPlayer);
+    }
 
 };
