@@ -2,7 +2,7 @@
 #define ROUND_H
 #include <queue>
 #include "Player.h"
-using namespace std
+using namespace std;
 
 class Round {
     private:
@@ -14,15 +14,14 @@ class Round {
         bool isReRaiseMade;
 
 public:
-    Round(int number, queue<Player>& players, roundPlayers);
+    Round(queue<Player>& players);
 
     void playRound();
-    void handleBetMadeActions();
-    void handleNoBetActions();
-    void initialBetAmount(int initialRoundBet);
-    void handleBetMadePlayerActions();
-    void handleNoBetPlayerActions();
-    void handleCPUPlayerActions();
+    void handleNoBetYetPlayerActions(Player& user);
+    void handleBetMadePlayerActions(Player& user);
+    void handleRaiseMadePlayerActions(Player& user);
+    void handleCpuActions(Player& computerPlayer);
+    void removePlayerIfBalanceZero();
 };
 
 #endif // ROUND_H
