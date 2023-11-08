@@ -1,30 +1,23 @@
 #ifndef DOUBLYLINKEDLIST_H
 #define DOUBLYLINKEDLIST_H
 
-template <class T>
-struct ListNode {
-    T data;
-    ListNode* next;
-    ListNode* prev;
+#include "CardNode.h"
 
-    ListNode(const T& data) : data(data), next(nullptr), prev(nullptr) {}
-};
-
-template <class T>
 class DoublyLinkedList {
-private:
-    ListNode<T>* head;
-    ListNode<T>* tail;
+    private:
+        CardNode* head;
+        CardNode* tail;
 
-public:
-    DoublyLinkedList();
-    ListNode<T>* getHead() const;
-    void pushBack(const T& data);
-    void pushFront(const T& data);
-    void popBack();
-    void popFront();
-    void clear();
-    bool isEmpty();
+    public:
+        DoublyLinkedList();
+        //~DoublyLinkedList();
+        CardNode* getHead() const;
+        void pushBack(const Card& card);
+        void pushFront(const Card& card);
+        void popBack();
+        void popFront();
+        void clear();
+        bool isEmpty();
 };
 
-#endif
+#endif // DOUBLYELINKEDLIST_H
