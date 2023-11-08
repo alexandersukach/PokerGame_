@@ -2,9 +2,11 @@
 #define GAME_H
 #include "Card.h"
 #include "Deck.h"
-#include "Player.h"
+#include "Player.h" // Include any other necessary headers here
+
 #include <string>
 #include <queue>
+
 using namespace std;
 
 
@@ -23,15 +25,16 @@ class Game {
         //bool isHandOver = false;
 
     public:
-        Game(const string& userName, double usersBalance);
-
-        void initializePlayers(const string& playerName, double usersBalance);
+        Game(const string& userName, double userStartingBalance);
+    void initializePlayers(const string& userName, double playerBalance);
         void dealHoleCards();
         void dealFlop();
         void dealTurn() {};
         void dealRiver() {};
         void combineHands() {};
         void rotateDealer() {};
+        void displayRules() {};
+        void displayHandRankings() {};
 };
 
 

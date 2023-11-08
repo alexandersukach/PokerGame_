@@ -15,7 +15,7 @@
 //#include "Hand.h"
 //#include "Deck.h"
 //#include "DoublyLinkedList.h"
-#include "Game.h"
+//#include "Game.h"
 using namespace std;
 
 void displayRules() {
@@ -76,33 +76,7 @@ void displayHandRankings() {
 }
 
 
-int main() {
-    displayRules();
-    displayHandRankings();
 
-    double pot = 0.00;
-    string userName;
-        cout << "\nWhat is your name? ";
-        cin >> userName;
-    int numOpponents;
-        cout << "How many opponents would you like to play against(max 4)? ";
-        cin >> numOpponents;
-
-    double buyIn;
-        cout << "Provide buyIn value for everyone: $";
-        cin >> buyIn;
-
-    Game pokerGame(userName, buyIn);
-
-
-
-
-
-
-
-
-    return 0;
-}
 
 /*
     double pot = 0.00;
