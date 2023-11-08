@@ -12,10 +12,10 @@ class Game {
     public:
         Game(const string& userName, double userStartingBalance);
     void initializePlayers(const string& userName, double playerBalance);
-        void dealHoleCards();
-        void dealFlop();
-        void dealTurn();
-        void dealRiver();
+        void dealHoleCards(queue<Player>& activePlayers, Deck& roundDeck);
+        void dealFlop(Deck& roundDeck);
+        void dealTurn(Deck& roundDeck);
+        void dealRiver(Deck& roundDeck);
         void combineHands();
         void rotateDealer();
         void displayRules();

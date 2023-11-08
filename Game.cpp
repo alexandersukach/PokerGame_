@@ -35,34 +35,35 @@ using namespace std;
     dealer = &players.front();
 }
 
-void Game::dealHoleCards() {
+void Game::dealHoleCards(queue<Player>& activePlayers, Deck& roundDeck) {
     for (int cardIndex = 0; cardIndex < 2; cardIndex++) {
-        for (int playerIndex = 0; playerIndex < 5; playerIndex++) {
-            Player& player = players.front(); 
-            playerHoleCards[playerIndex][cardIndex] = gameDeck.dealCard();
-            players.push(player);
-            players.pop();
+        for (int playerIndex = 0; playerIndex < activePlayers.size(); playerIndex++) {
+            Player& player = activePlayers.front(); 
+            playerHoleCards[playerIndex][cardIndex] = roundDeck.dealCard();
+            activePlayers.push(player);
+            activePlayers.pop();
         }
     }
 }
+
         // BETTING ROUND 1
 
-    void Game::dealFlop() {
-        gameDeck.burnCard();
+    void Game::dealFlop(Deck& roundDeck) {
+        roundDeck.burnCard();
         for (int i = 0; i < 3; i++) {
             Card dealtCard = gameDeck.dealCard();
             communityCards[i] = dealtCard;
         }
     }
         // BETTING ROUND 2
-    void Game::dealTurn() {
-        gameDeck.burnCard();
+    void Game::dealTurn(Deck& roundDeck) {
+        roundDeck.burnCard();
         Card dealtCard = gameDeck.dealCard();
         communityCards[3] = dealtCard;
     }
         // BETTING ROUND 3
-    void Game::dealRiver() {
-        gameDeck.burnCard();
+    void Game::dealRiver(Deck& roundDeck) {
+        roundDeck.burnCard();
         Card dealtCard = gameDeck.dealCard();
         communityCards[4] = dealtCard;
     }

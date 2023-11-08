@@ -34,6 +34,7 @@ void Player::raise(double raiseAmount) { balance -= raiseAmount; }
 void Player::fold() { isFolded = true; }
 // bool Player::isInGame() const { return inGame; } Maybe in addition to fold()
 
+bool Player::hasFolded() { return isFolded; }
 void Player::bigBlindPayment() { balance -= 10; }
 
 void Player::smallBlindPayment() { balance -= 5; }

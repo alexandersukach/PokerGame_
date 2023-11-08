@@ -23,6 +23,7 @@ class Player {
         void placeBet(double betAmount);
         void raise(double raiseAmount);
         void fold();
+        bool hasFolded();
         void bigBlindPayment();
         void smallBlindPayment();
         void setBigBlind();
