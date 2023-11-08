@@ -85,11 +85,11 @@ int main() {
         cout << "\nWhat is your name? ";
         cin >> userName;
     int numOpponents;
-        cout << "How many opponents would you like to play against(max 5)? ";
+        cout << "How many opponents would you like to play against(max 4)? ";
         cin >> numOpponents;
 
     double buyIn;
-        cout << "Provide buyIn value for veryone: $";
+        cout << "Provide buyIn value for everyone: $";
         cin >> buyIn;
 
     Game pokerGame(userName, buyIn);
