@@ -6,7 +6,7 @@ class Round {
     private:
         //int bettingRound;
         queue<Player> players;
-        queue<Player> foldedPlayers; 
+       // I need to consider queue<Player> foldedPlayers; 
         double pot;
         double currentRoundBet;
         bool isBetMade;

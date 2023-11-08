@@ -29,19 +29,37 @@ int main() {
         cin >> buyIn;
 
     Game pokerGame(userName, buyIn);
-    Deck gameDeck();
-
+    Deck gameDeck;
+    Player userPlayer = Player(userName, buyIn);
+    // while player's balance > 0
+    // create new round and add players (which are those that didn't fold last round)
+    // deal cards until all hands are complete
+    // determine winner of each hand
     queue<Player> players;
-    players.push(Player(userName, buyIn));
+    players.push(userPlayer); // player User
     for (int i = 0; i < numOpponents; i++) {
         string opponentName = "CPU " + to_string(0 + 1);
         players.push(Player(opponentName, buyIn));
     }
 
+
+
     pokerGame.displayRules();
     pokerGame.displayHandRankings();
 
+    bool gameOver = false;
+    while (!gameOver) {
+        // deal, bet, deal, bet, but I need another condition....for every 4 bet rounds?, keep same
+        // game but determine winner and reset deck, unless user's balance is 0, in which case
+        // gameOver = true;
+        if (userPlayer.getBalance() == 0) {
+            gameOver = true;
+        }
+    }
 
+/*
+    End while loop determine game;
+*/
 //Modify the Round class to add a queue for players who folded in the current hand:
 
 
