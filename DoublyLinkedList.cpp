@@ -1,6 +1,8 @@
 #include "DoublyLinkedList.h"
-
+#include "Card.h"
 #include <cstddef>  // Include this header to define nullptr
+
+template class DoublyLinkedList<Card>;
 
 template <class T>
 DoublyLinkedList<T>::DoublyLinkedList() : head(nullptr), tail(nullptr) {}

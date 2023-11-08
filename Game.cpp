@@ -118,11 +118,10 @@ void Game::displayRules() {
     cout << "  examined to determine the winner." << endl << endl;
 }
 
-const std::string RED_TEXT = "\033[31m"; // Red text color
-const std::string BLACK_TEXT = "\033[30m"; // Black text color
-const std::string RESET_COLOR = "\033[0m"; // Reset text color to default
+const string RED_TEXT = "\033[31m"; // Red text
+const string BLACK_TEXT = "\033[30m"; // Black text 
+const string RESET_COLOR = "\033[0m"; // Default text
 void Game::displayHandRankings() {
-    // Set a fixed width for card strings to ensure alignment
     const int cardWidth = 6;
 
     cout << "================ Hand Rankings ================" << endl;
@@ -156,11 +155,12 @@ int main() {
         cin >> buyIn;
 
     Game pokerGame(userName, buyIn);
-
+    double pot = 0.00;
+    
     pokerGame.displayRules();
     pokerGame.displayHandRankings();
 
-    double pot = 0.00;
+
 
 
 
