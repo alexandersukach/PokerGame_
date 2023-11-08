@@ -21,6 +21,7 @@ class Game {
         void displayRules();
         void displayHandRankings();
         void compareHands();
+        string mapScoreToHand(int score);
         
     private:
         Card communityCards[5]; // 5 total

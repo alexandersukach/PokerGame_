@@ -146,6 +146,29 @@ void Game::displayHandRankings() {
     cout << "===============================================" << endl;
 }
 
+string Game::mapScoreToHand(int score) {
+    if (score == 10) {
+        return "Royal Flush";
+    } else if (score == 9) {
+        return "Straight Flush";
+    } else if (score == 8) {
+        return "Four of a Kind";
+    } else if (score == 7) {
+        return ("Full House");
+    } else if (score == 6) {
+        return "Flush";
+    } else if (score == 5) {
+        return "Straight";
+    } else if (score == 4){ 
+        return "Three of a Kind";
+    } else if (score == 3) {
+        return "Two Pair";
+    } else if (score == 3) {
+        return "One Pair";
+    } else {
+        return "High Card";
+    }
+    }
 
 void Game::compareHands() {
     map<string, int> playerScores;
@@ -161,36 +184,28 @@ void Game::compareHands() {
         int score = playerHand.calculateBestHandScore();
         playerScores[currentPlayer.getName()] = score;
     }
+    string bestHandPlayerName;
+    int bestScore = -1;
+    for(auto& score : playerScores) {
+        if (score.second > bestScore) {
+            bestScore = score.second;
+            bestHandPlayerName = score.first;
+        }
+    
+    }
+    string bestHandString = mapScoreToHand(bestScore);
+
+    cout << "Winner: " << bestHandPlayerName << " with a " << bestHandString << endl; // I want to take the score and match it to the actual hand...also display everyone's hand...
+
+    for(auto& score : playerScores) {
+        string playerName = score.first;
+        int playerScore = score.second;
+        string playerHandString = mapScoreToHand(playerScore);
+
+        cout << playerName << " had a " << playerHandString << "." << endl;
+    }
 }
-/*
-void Game::compareHands() {
-    map<string, int> playerScores;
 
-    // Calculate hand scores for all players
-    for (int playerIndex = 0; playerIndex < 5; playerIndex++) {
-        vector<Card> playerCards;
-        for (int cardIndex = 0; cardIndex < 7; cardIndex++) {
-            playerCards.push_back(combinedHand[playerIndex][cardIndex]);
-        }
-        Hand playerHand(playerCards);
-        int score = playerHand.calculateBestHandScore();
-        playerScores[players[playerIndex].getName()] = score;
-    }
-    // Find the winner
-    string bestPlayerName;
-    int bestScore = -1; 
-
-    for (const auto& entry : playerScores) {
-        const string& playerName = entry.first;
-        const int score = entry.second;
-
-        if (score > bestScore) {
-            bestScore = score;
-            bestPlayerName = playerName;
-        }
-    }
-    cout << "Winner: " << bestPlayerName << " with a hand score of " << bestScore << endl;
-}*/
 
 
 
