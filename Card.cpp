@@ -14,3 +14,12 @@ void Card::display() const {
     const char* suitStr[] = { "H", "C", "D", "S" };
     cout << rankStr[rank] << suitStr[suit] << endl;
 }
+
+/*
+~/Desktop/PokerGame_> g++ -std=c++17 Card.cpp
+Undefined symbols for architecture x86_64:
+  "_main", referenced from:
+     implicit entry/start for main executable
+ld: symbol(s) not found for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+*/
