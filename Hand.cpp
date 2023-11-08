@@ -1,11 +1,12 @@
 #include "Hand.h"
 #include <algorithm>
 
+
 bool compareCardsByRank(const Card& a, const Card& b) {
     return a.getRank() < b.getRank();
 }
 
-Hand::Hand(const std::vector<Card>& handCards) : cards(handCards) {
+Hand::Hand(const std::vector<Card>& handCards) : cards(sortCards(handCards)) {
     // sortCards();
 }
 
@@ -17,28 +18,27 @@ std::vector<Card> sortCards(const std::vector<Card>& unsorted) {
 }
 
 int Hand::calculateBestHandScore() const {
-        int bestScore = 0;
-        // Iterate through all combinations of 5 cards
-        for (int i = 0; i < cards.size() - 4; i++) {
-            for (int j = i + 1; j < cards.size() - 3; j++) {
-                for (int k = j + 1; k < cards.size() - 2; k++) {
-                    for (int m = k + 1; m < cards.size() - 1; m++) {
-                        for (int n = m + 1; n < cards.size(); n++) {
-                            // Create a temporary hand with the selected 5 cards
-                            std::vector<Card> tempHand = {cards[i], cards[j], cards[k], cards[m], cards[n]};
-                            // Calculate the score for this combination
-                            int score = calculateScore(tempHand);
-                            // Update the best score if this combination is better
-                            if (score > bestScore) {
-                                bestScore = score;
-                            }
+    int bestScore = 0;
+    // Iterate through all combinations of 5 cards
+    for (int i = 0; i < 3; i++) {  // No need to check after fourth card
+        for (int j = i + 1; j < 4; j++) {
+            for (int k = j + 1; k < 5; k++) {
+                for (int m = k + 1; m < 6; m++) {
+                    for (int n = m + 1; n < 7; n++) {
+                        std::vector<Card> tempHand = {cards[i], cards[j], cards[k], cards[m], cards[n]};
+                        // Calculate the score for each combination
+                        int score = calculateScore(tempHand);
+                        if (score > bestScore) {
+                            bestScore = score;
                         }
                     }
                 }
             }
         }
-        return bestScore;
     }
+    return bestScore;
+}
+
 int Hand::calculateScore(const std::vector<Card>& hand) const {
     std::vector<Card> sortedCards = sortCards(cards); // Copy cards for sorting
 
