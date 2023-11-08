@@ -15,6 +15,7 @@ class Player {
         
 
         double getBalance() const;
+        std::string getName() const;
         bool isComputer() const;
         void setBalance(double bet);
         void winHand(double pot);

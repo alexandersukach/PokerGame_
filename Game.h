@@ -20,6 +20,7 @@ class Game {
         void rotateDealer();
         void displayRules();
         void displayHandRankings();
+        void compareHands();
         
     private:
         Card communityCards[5]; // 5 total

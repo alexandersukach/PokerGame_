@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <string>
 
 Player::Player() {
     // Initialize default values for the player here.
@@ -19,6 +20,9 @@ double Player::getBalance() const { return balance; }
 
 void Player::setBalance(double bet) { balance -= bet; }
 
+std::string Player::getName() const{
+    return name;
+}
 bool Player::isComputer() const { return isComputerPlayer; }
 
  void Player::winHand(double pot) { balance += pot; }
