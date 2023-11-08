@@ -1,6 +1,6 @@
 #include "Hand.h"
 #include <algorithm>
-
+using namespace std;
 
 bool compareCardsByRank(const Card& a, const Card& b) {
     return a.getRank() < b.getRank();
@@ -10,7 +10,7 @@ Hand::Hand(const std::vector<Card>& handCards) : cards(sortCards(handCards)) {
     // sortCards();
 }
 
-std::vector<Card> sortCards(const std::vector<Card>& unsorted) {
+std::vector<Card> Hand::sortCards(const std::vector<Card>& unsorted) {
     // Your implementation for sorting the cards
     std::vector<Card> sortedCards = unsorted; // Make a copy of the unsorted cards
     std::sort(sortedCards.begin(), sortedCards.end(), compareCardsByRank); // Use the sorting function you've defined
@@ -40,7 +40,7 @@ int Hand::calculateBestHandScore() const {
 }
 
 int Hand::calculateScore(const std::vector<Card>& hand) const {
-    std::vector<Card> sortedCards = sortCards(cards); // Copy cards for sorting
+    vector<Card> sortedCards = sortCards(hand); // Copy cards for sorting
 
     if (isRoyalFlush(sortedCards)) {
         return 10;

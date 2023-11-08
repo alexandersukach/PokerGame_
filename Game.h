@@ -3,15 +3,24 @@
 #include "Card.h"
 #include "Deck.h"
 #include "Player.h" // Include any other necessary headers here
-
 #include <string>
 #include <queue>
 
 using namespace std;
 
-
-
 class Game {
+    public:
+        Game(const string& userName, double userStartingBalance);
+    void initializePlayers(const string& userName, double playerBalance);
+        void dealHoleCards();
+        void dealFlop();
+        void dealTurn();
+        void dealRiver();
+        void combineHands();
+        void rotateDealer();
+        void displayRules();
+        void displayHandRankings();
+        
     private:
         Card communityCards[5]; // 5 total
         Card playerHoleCards[5][2]; // [playerIndex][card]
@@ -23,18 +32,6 @@ class Game {
         //int currentTurn;
         //bool isGameOver = false;
         //bool isHandOver = false;
-
-    public:
-        Game(const string& userName, double userStartingBalance);
-    void initializePlayers(const string& userName, double playerBalance);
-        void dealHoleCards();
-        void dealFlop();
-        void dealTurn() {};
-        void dealRiver() {};
-        void combineHands() {};
-        void rotateDealer() {};
-        void displayRules() {};
-        void displayHandRankings() {};
 };
 
 

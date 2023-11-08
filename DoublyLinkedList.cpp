@@ -1,16 +1,18 @@
 #include "DoublyLinkedList.h"
 
+#include <cstddef>  // Include this header to define nullptr
+
 template <class T>
 DoublyLinkedList<T>::DoublyLinkedList() : head(nullptr), tail(nullptr) {}
-
-
 
 template <class T>
 ListNode<T>* DoublyLinkedList<T>::getHead() const {
     return head;
-}template <class T>
+}
+
+template <class T>
 void DoublyLinkedList<T>::pushBack(const T& data) {
-    ListNode<T>* newNode = new Node<T>(data);
+    ListNode<T>* newNode = new ListNode<T>(data);
     if (head == nullptr) {
         head = tail = newNode;
     } else {
@@ -22,7 +24,7 @@ void DoublyLinkedList<T>::pushBack(const T& data) {
 
 template <class T>
 void DoublyLinkedList<T>::pushFront(const T& data) {
-    ListNode<T>* newNode = new Node<T>(data);
+    ListNode<T>* newNode = new ListNode<T>(data);
     if (head == nullptr) {
         head = tail = newNode;
     } else {

@@ -4,7 +4,7 @@
 #include <iostream>
 #include "string.h"
 #include "Player.h"
-
+#include <iomanip>
 #include <string>
 using namespace std;
 

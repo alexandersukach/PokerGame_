@@ -76,68 +76,72 @@ void handleNoBetMadePlayerActions(Player& user) {
 
 
 void handleBetMadePlayerActions(Player& user) {
-            cout << "Would you like to (c)all, (f)old, or (r)aise? " << endl;
-            char choice;
-            cin >> choice;
-            choice = tolower(choice);
-            switch(choice) {
-                case 'c':
-                    //call // i need to keep track of current bet
+    cout << "Would you like to (c)all, (f)old, or (r)aise? " << endl;
+    char choice;
+    cin >> choice;
+    choice = tolower(choice);
 
-                    double amountToCall = currentRoundBet - user.getCurrentBet(); 
-                    if(amountToCall >= user.getBalance()) {
-                        cout << "You're forced to go all in!" << endl;
-                        user.placeBet(user.getBalance());
-                    } else {
-                        cout << "You call, next player" << endl;
-                        user.placeBet(amountToCall);
-                    }    
-                    pot += amountToCall;
-                    break;
-                case 'f':
-                    user.fold();
-                    break;
-                case 'r':
-                    double raiseAmount;
-                    cout << "How much would you like to raise by? ";
-                    cin  >> raiseAmount;
-                    if (raiseAmount > user.getBalance()) {
-                        cout << "Not enough money." << endl;
-                    } else {
-                        user.placeBet(raiseAmount);
-                        pot += raiseAmount;
-                    }
-                    break;
-                default:
-                    cout << "Invalid action" << endl;
-            }
-        }
-void handleRaiseMadePlayerActions(Player& user) {
-        cout << "Would you like to (c)all or (f)old? " << endl;
-            char choice;
-            cin >> choice;
-            choice = tolower(choice);
-            switch(choice) {
-                case 'c':
+    double amountToCall = currentRoundBet - user.getCurrentBet();  // Define and initialize amountToCall here
 
-                    double amountToCall = currentRoundBet - user.getCurrentBet(); 
-                    if(amountToCall >= user.getBalance()) {
-                        cout << "You're forced to go all in!" << endl;
-                        user.placeBet(user.getBalance());
-                    } else {
-                        cout << "You call, next player" << endl;
-                        user.placeBet(amountToCall);
-                    }    
-                    pot += amountToCall;
-                    break;
-                case 'f':
-                    user.fold();
-                    break;
-                default:
-                    cout << "Invalid action" << endl;
+    switch(choice) {
+        case 'c':
+            if (amountToCall >= user.getBalance()) {
+                cout << "You're forced to go all in!" << endl;
+                user.placeBet(user.getBalance());
+            } else {
+                cout << "You call, next player" << endl;
+                user.placeBet(amountToCall);
             }
-                    
+            pot += amountToCall;
+            break;
+        case 'f':
+            user.fold();
+            break;
+        case 'r':
+            double raiseAmount;
+            cout << "How much would you like to raise by? ";
+            cin  >> raiseAmount;
+            if (raiseAmount > user.getBalance()) {
+                cout << "Not enough money." << endl;
+            } else {
+                user.placeBet(raiseAmount);
+                pot += raiseAmount;
+                isRaiseMade = true;
+            }
+            break;
+        default:
+            cout << "Invalid action" << endl;
     }
+}
+
+
+void handleRaiseMadePlayerActions(Player& user) {
+    cout << "Would you like to (c)all or (f)old? " << endl;
+    char choice;
+    cin >> choice;
+    choice = tolower(choice);
+
+    double amountToCall = currentRoundBet - user.getCurrentBet();  // Define and initialize amountToCall here
+
+    switch(choice) {
+        case 'c':
+            if (amountToCall >= user.getBalance()) {
+                cout << "You're forced to go all in!" << endl;
+                user.placeBet(user.getBalance());
+
+            } else {
+                cout << "You call, next player" << endl;
+                user.placeBet(amountToCall);
+            }
+            pot += amountToCall;
+            break;
+        case 'f':
+            user.fold();
+            break;
+        default:
+            cout << "Invalid action" << endl;
+    }
+}
 
 
 void handleCpuActions(Player& computerPlayer) {

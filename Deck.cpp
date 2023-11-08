@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <random>
 
+
 Deck::Deck() {
     initializeDeck();
     shuffleDeck();
@@ -23,28 +24,6 @@ void Deck::initializeDeck() {
                 actualRank = Card::Rank(13);
             } else if (rank == Card::ACE) {
                 actualRank = Card::Rank(14); // or 14 depending on the hand, still haven't figured it out...
-            } else {
-                actualRank = Card::Rank(rank);
-            }
-
-            deck.pushBack(Card(actualRank, static_cast<Card::Suit>(suit)));
-        }
-    }
-}
-
-
-void Deck::initializeDeck() {
-    for (int suit = Card::HEARTS; suit <= Card::SPADES; suit++) {
-        for (int rank = Card::TWO; rank <= Card::ACE; rank++) {
-            Card::Rank actualRank;
-            if (rank == Card::JACK) {
-                actualRank = Card::Rank(11);
-            } else if (rank == Card::QUEEN) {
-                actualRank = Card::Rank(12);
-            } else if (rank == Card::KING) {
-                actualRank = Card::Rank(13);
-            } else if (rank == Card::ACE) {
-                actualRank = Card::Rank(14); // or 14 depending on the hand
             } else {
                 actualRank = Card::Rank(rank);
             }
@@ -103,16 +82,12 @@ void Deck::cutDeck() {
     }
 }
 
-// Human error would entail approx halfway...should I include a random number generator within a valid range of "halfway" values
-        // Linked list to represent deck
-        
-
 void Deck::burnCard() {
     deck.popFront(); // Use popFront() to burn the top card
 }
 
 Card Deck::dealCard() {
     Card card = deck.getHead()->data;
-    deck.popFront(); // Use popFront() to deal the top card
+    deck.popFront(); 
     return card;
 }
