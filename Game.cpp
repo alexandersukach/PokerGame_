@@ -1,17 +1,25 @@
 #include "Game.h"
+
+#include "Card.h"
+#include "Deck.h"
+#include "Hand.h"
+#include "Round.h"
+#include "DoublyLinkedList.h"
+#include "string.h"
+#include "Player.h"
+
 #include <vector>
 #include <string>
 #include <iostream>
-#include "string.h"
-#include "Player.h"
 #include <iomanip>
+#include <queue>
 #include <string>
 using namespace std;
 
 
-
     Game::Game(const string& userName, double userStartingBalance) : gameDeck() {
    initializePlayers(userName, userStartingBalance);
+
 }
 
  void Game::initializePlayers(const string& userName, double playerBalance) {
@@ -27,7 +35,6 @@ using namespace std;
     dealer = &players.front();
 }
 
-
 void Game::dealHoleCards() {
     for (int cardIndex = 0; cardIndex < 2; cardIndex++) {
         for (int playerIndex = 0; playerIndex < 5; playerIndex++) {
@@ -40,8 +47,6 @@ void Game::dealHoleCards() {
 }
         // BETTING ROUND 1
 
-    // Dealing community cards 
-        
     void Game::dealFlop() {
         gameDeck.burnCard();
         for (int i = 0; i < 3; i++) {
@@ -142,27 +147,3 @@ void Game::displayHandRankings() {
 
 
 
-int main() {
-        string userName;
-        cout << "\nWhat is your name? ";
-        cin >> userName;
-    int numOpponents;
-        cout << "How many opponents would you like to play against(max 4)? ";
-        cin >> numOpponents;
-
-    double buyIn;
-        cout << "Provide buyIn value for everyone: $";
-        cin >> buyIn;
-
-    Game pokerGame(userName, buyIn);
-    double pot = 0.00;
-    
-    pokerGame.displayRules();
-    pokerGame.displayHandRankings();
-
-
-
-
-
-    return 0;
-}

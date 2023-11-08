@@ -6,6 +6,7 @@ class Round {
     private:
         //int bettingRound;
         queue<Player> players;
+        queue<Player> foldedPlayers; 
         double pot;
         double currentRoundBet;
         bool isBetMade;

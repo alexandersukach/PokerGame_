@@ -1,0 +1,51 @@
+~/Desktop/PokerGame_> g++ -std=c++17 *.cpp -o PokerGame
+Undefined symbols for architecture x86_64:
+  "DoublyLinkedList<Card>::isEmpty()", referenced from:
+      Deck::shuffleDeck() in Deck-24c364.o
+      Deck::cutDeck() in Deck-24c364.o
+  "DoublyLinkedList<Card>::popFront()", referenced from:
+      Deck::shuffleDeck() in Deck-24c364.o
+      Deck::cutDeck() in Deck-24c364.o
+      Deck::burnCard() in Deck-24c364.o
+      Deck::dealCard() in Deck-24c364.o
+  "DoublyLinkedList<Card>::pushBack(Card const&)", referenced from:
+      Deck::initializeDeck() in Deck-24c364.o
+      Deck::shuffleDeck() in Deck-24c364.o
+      Deck::cutDeck() in Deck-24c364.o
+  "DoublyLinkedList<Card>::DoublyLinkedList()", referenced from:
+      Deck::Deck() in Deck-24c364.o
+      Deck::shuffleDeck() in Deck-24c364.o
+      Deck::cutDeck() in Deck-24c364.o
+  "DoublyLinkedList<Card>::getHead() const", referenced from:
+      Deck::shuffleDeck() in Deck-24c364.o
+      Deck::cutDeck() in Deck-24c364.o
+      Deck::dealCard() in Deck-24c364.o
+ld: symbol(s) not found for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+~/Desktop/PokerGame_> g++ -std=c++17 Game.cpp -o PokerGame
+Undefined symbols for architecture x86_64:
+  "Card::Card()", referenced from:
+      Game::Game(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, double) in Game-f2d678.o
+  "Deck::burnCard()", referenced from:
+      Game::dealFlop() in Game-f2d678.o
+      Game::dealTurn() in Game-f2d678.o
+      Game::dealRiver() in Game-f2d678.o
+  "Deck::dealCard()", referenced from:
+      Game::dealHoleCards() in Game-f2d678.o
+      Game::dealFlop() in Game-f2d678.o
+      Game::dealTurn() in Game-f2d678.o
+      Game::dealRiver() in Game-f2d678.o
+  "Deck::Deck()", referenced from:
+      Game::Game(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, double) in Game-f2d678.o
+  "Player::Player(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, double)", referenced from:
+      Game::initializePlayers(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, double) in Game-f2d678.o
+  "Player::Player()", referenced from:
+      Game::Game(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, double) in Game-f2d678.o
+ld: symbol(s) not found for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+~/Desktop/PokerGame_>
+
+
+
+
+___-----------------------------------------

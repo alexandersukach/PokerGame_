@@ -37,29 +37,3 @@ the bottom of another deck, will that be enoudh....or do i need to dosome sort o
 
 
 
-
-AFTER FINALLY COMPILING,
-LEFT WITH THIS ERROR: 
-Undefined symbols for architecture x86_64:
-  "DoublyLinkedList<Card>::isEmpty()", referenced from:
-      Deck::shuffleDeck() in Deck-4cd412.o
-      Deck::cutDeck() in Deck-4cd412.o
-  "DoublyLinkedList<Card>::popFront()", referenced from:
-      Deck::shuffleDeck() in Deck-4cd412.o
-      Deck::cutDeck() in Deck-4cd412.o
-      Deck::burnCard() in Deck-4cd412.o
-      Deck::dealCard() in Deck-4cd412.o
-  "DoublyLinkedList<Card>::pushBack(Card const&)", referenced from:
-      Deck::initializeDeck() in Deck-4cd412.o
-      Deck::shuffleDeck() in Deck-4cd412.o
-      Deck::cutDeck() in Deck-4cd412.o
-  "DoublyLinkedList<Card>::DoublyLinkedList()", referenced from:
-      Deck::Deck() in Deck-4cd412.o
-      Deck::shuffleDeck() in Deck-4cd412.o
-      Deck::cutDeck() in Deck-4cd412.o
-  "DoublyLinkedList<Card>::getHead() const", referenced from:
-      Deck::shuffleDeck() in Deck-4cd412.o
-      Deck::cutDeck() in Deck-4cd412.o
-      Deck::dealCard() in Deck-4cd412.o
-ld: symbol(s) not found for architecture x86_64
-clang: error: linker command failed with exit code 1 (use -v to see invocation)
