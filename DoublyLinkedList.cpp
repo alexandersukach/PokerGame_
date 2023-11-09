@@ -1,15 +1,16 @@
 #include "DoublyLinkedList.h"
-#include "CardNode.h"
 
+template <class T>
+DoublyLinkedList<T>::DoublyLinkedList() : head(nullptr), tail(nullptr) {}
 
-DoublyLinkedList::DoublyLinkedList() : head(nullptr), tail(nullptr) {}
-
-CardNode* DoublyLinkedList::getHead() const {
+template <class T>
+Node<T>* DoublyLinkedList<T>::getHead() const {
     return head;
 }
 
-void DoublyLinkedList::pushBack(const Card& card) {
-    CardNode* newNode = new CardNode(card);
+template <class T>
+void DoublyLinkedList<T>::pushBack(const T& data) {
+    Node<T>* newNode = new Node<T>(data);
     if (head == nullptr) {
         head = tail = newNode;
     } else {
@@ -19,9 +20,10 @@ void DoublyLinkedList::pushBack(const Card& card) {
     }
 }
 
-void DoublyLinkedList::pushFront(const Card& card) {
-    CardNode* newNode = new CardNode(card);
-    if(head == nullptr) {
+template <class T>
+void DoublyLinkedList<T>::pushFront(const T& data) {
+    Node<T>* newNode = new Node<T>(data);
+    if (head == nullptr) {
         head = tail = newNode;
     } else {
         newNode->next = head;
@@ -30,35 +32,47 @@ void DoublyLinkedList::pushFront(const Card& card) {
     }
 }
 
-void DoublyLinkedList::popBack() {
-    delete tail;
+template <class T>
+void DoublyLinkedList<T>::popBack() {
+    if (tail == nullptr) {
+        return; // empty list
+    }
+    Node<T>* temp = tail;
     tail = tail->prev;
-    tail->next = nullptr;
+    if (tail == nullptr) {
+        head = nullptr;
+    } else {
+        tail->next = nullptr;
+    }
+    delete temp;
 }
 
-void DoublyLinkedList::popFront() {
-    delete head;
+template <class T>
+void DoublyLinkedList<T>::popFront() {
+    if (head == nullptr) {
+        return; // empty list
+    }
+    Node<T>* temp = head;
     head = head->next;
-    head->prev = nullptr;
+    if (head == nullptr) {
+        tail = nullptr;
+    } else {
+        head->prev = nullptr;
+    }
+    delete temp;
 }
 
-void DoublyLinkedList::clear() {
+template <class T>
+void DoublyLinkedList<T>::clear() {
     while (head) {
-        CardNode* temp = head;
+        Node<T>* temp = head;
         head = head->next;
         delete temp;
     }
     head = tail = nullptr;
 }
 
-bool DoublyLinkedList::isEmpty() {
+template <class T>
+bool DoublyLinkedList<T>::isEmpty() {
     return head == nullptr && tail == nullptr;
 }
-
-/*
-~/Desktop/PokerGame_> g++ -std=c++17 DoublyLinkedList.cpp
-Undefined symbols for architecture x86_64:
-  "_main", referenced from:
-     implicit entry/start for main executable
-ld: symbol(s) not found for architecture x86_64
-clang: error: linker command failed with exit code 1 (use -v to see invocation)*/

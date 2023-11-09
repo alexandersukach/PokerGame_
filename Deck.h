@@ -1,24 +1,21 @@
 #ifndef DECK_H
 #define DECK_H
 
-#include "DoublyLinkedList.h"
-#include "Card.h"
+#include "DoublyLinkedList.h" 
+#include "CardNode.h"
 
 class Deck {
-    private:
-        DoublyLinkedList<Card> deck;
-    
-        void initializeDeck();
-        void shuffleDeck();
-        void cutDeck();
+private:
+    DoublyLinkedList<CardNode> deck; 
 
-    public:
-        Deck();
-        Card dealCard();
-        // bool isEmpty();
-        void burnCard();
+    void initializeDeck();
+    void shuffleDeck();
+    void cutDeck();
+
+public:
+    Deck();
+    Card dealCard();
+    void burnCard();
 };
-
-
 
 #endif // DECK_H
