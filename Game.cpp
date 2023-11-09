@@ -3,7 +3,7 @@
 #include "Card.h"
 #include "Deck.h"
 #include "Hand.h"
-#include "Round.h"
+#include "BettingRound.h"
 #include "DoublyLinkedList.h"
 #include "string.h"
 #include "Player.h"
