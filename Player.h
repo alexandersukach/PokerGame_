@@ -2,33 +2,26 @@
 #define PLAYER_H
 
 #include <string>
+using namespace std;
 
 class Player {
     private:
-        std::string name;
+        string name;
         int balance, currentBet;
-        bool isBigBlind, isSmallBlind, isFolded, isComputerPlayer;
+        bool isFolded, isComputerPlayer;
     
     public:
         Player();
-        Player(const std::string& playerName, double startingBalance);
-        
-
+        Player(const string& playerName, double startingBalance);
         double getBalance() const;
-        std::string getName() const;
+        string getName() const;
         bool isComputer() const;
-        void setBalance(double bet);
-        void winHand(double pot);
-        void setCurrentBet(double betMade);
+        void placeBet(double betPlaced); // setBalance and setCurrentBet
+        void winBet(double betWon); // setBalance 
         int getCurrentBet();
-        void placeBet(double betAmount);
-        void raise(double raiseAmount);
+        void raise(double raiseAmount); // setCurrentBet
         void fold();
         bool hasFolded();
-        void bigBlindPayment();
-        void smallBlindPayment();
-        void setBigBlind();
-        void setSmallBlind();
         // void cpuAction(bool isRaiseMade);
 
 
