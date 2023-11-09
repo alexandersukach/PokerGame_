@@ -1,10 +1,9 @@
 #include "Deck.h"
-#include "DoublyLinkedList.h" // Include the necessary header for DoublyLinkedList
-#include "Card.h" // Include the necessary header for Card
+#include "DoublyLinkedList.h"
+#include "Card.h"
 #include <vector>
 #include <algorithm>
 #include <random>
-
 
 Deck::Deck() {
     initializeDeck();
@@ -88,6 +87,6 @@ void Deck::burnCard() {
 
 Card Deck::dealCard() {
     Card card = deck.getHead()->data;
-    deck.popFront(); 
+    deck.popFront();
     return card;
 }

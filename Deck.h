@@ -2,11 +2,11 @@
 #define DECK_H
 
 #include "DoublyLinkedList.h" 
-#include "CardNode.h"
+#include "Card.h"
 
 class Deck {
 private:
-    DoublyLinkedList<CardNode> deck; 
+    DoublyLinkedList<Card> deck; 
 
     void initializeDeck();
     void shuffleDeck();
