@@ -73,6 +73,6 @@ void DoublyLinkedList<T>::clear() {
 }
 
 template <class T>
-bool DoublyLinkedList<T>::isEmpty() {
-    return head == nullptr && tail == nullptr;
+bool DoublyLinkedList<T>::isEmpty() const {
+    return head == nullptr;
 }

@@ -19,8 +19,8 @@ void Deck::initializeDeck() {
                 actualRank = Card::Rank(11);
             } else if (rank == Card::QUEEN) {
                 actualRank = Card::Rank(12);
-            } else if (rank == Card::KING) {
-                actualRank = Card::Rank(13);
+            } else if (rank == Card::KING) { // Not sure if the 11 - 14 ranking 
+                actualRank = Card::Rank(13); // is most appropriate
             } else if (rank == Card::ACE) {
                 actualRank = Card::Rank(14); // or 14 depending on the hand, still haven't figured it out...
             } else {
@@ -90,3 +90,4 @@ Card Deck::dealCard() {
     deck.popFront();
     return card;
 }
+

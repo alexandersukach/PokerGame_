@@ -3,7 +3,7 @@
 
 template <class T>
 struct Node {
-    T data;
+    T data; // The card of the node (cardNode)
     Node* next;
     Node* prev;
 
@@ -25,7 +25,7 @@ public:
     void popBack();
     void popFront();
     void clear();
-    bool isEmpty();
+    bool isEmpty() const;
 };
 
 #endif // DOUBLYLINKEDLIST_H

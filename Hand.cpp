@@ -1,6 +1,6 @@
 #include "Hand.h"
 #include <algorithm>
-using namespace std;
+
 
 bool compareCardsByRank(const Card& a, const Card& b) {
     return a.getRank() < b.getRank();
@@ -12,8 +12,8 @@ Hand::Hand(const vector<Card>& handCards) : cards(sortCards(handCards)) {
 
 vector<Card> Hand::sortCards(const vector<Card>& unsorted) {
     // Your implementation for sorting the cards
-    std::vector<Card> sortedCards = unsorted; // Make a copy of the unsorted cards
-    std::sort(sortedCards.begin(), sortedCards.end(), compareCardsByRank); // Use the sorting function you've defined
+    vector<Card> sortedCards = unsorted; // Make a copy of the unsorted cards
+    sort(sortedCards.begin(), sortedCards.end(), compareCardsByRank); // Use the sorting function you've defined
     return sortedCards;
 }
 
@@ -25,7 +25,7 @@ int Hand::calculateBestHandScore() const {
             for (int k = j + 1; k < 5; k++) {
                 for (int m = k + 1; m < 6; m++) {
                     for (int n = m + 1; n < 7; n++) {
-                        std::vector<Card> tempHand = {cards[i], cards[j], cards[k], cards[m], cards[n]};
+                        vector<Card> tempHand = {cards[i], cards[j], cards[k], cards[m], cards[n]};
                         // Calculate the score for each combination
                         int score = calculateScore(tempHand);
                         if (score > bestScore) {
@@ -141,7 +141,7 @@ bool Hand::isStraightFlush(const vector<Card>& sortedCards) const {
 
 bool Hand::isRoyalFlush(const vector<Card>& sortedCards) const {
     // Royal Flush is a special case of a Straight Flush
-    if (isStraightFlush(sortedCards) && sortedCards[4].getRank() == Card::ACE) {
+    if (isStraightFlush(sortedCards) && sortedCards[4].getRank() == Card::ACE) { // Should get rank be , if ACE, is 14 returned?
         return true;
     }
     return false;

@@ -1,42 +1,85 @@
-Header File - includes class and member declarations
+STATUS:
+Nov. 9th, 2023 
 
-Ex.) Card::Card(Rank r, Suit s) : rank(r), suit(s) {}
-is constructor for Card class, defined using 
-    (::) - scope resolution operator
-    indicating that it belongs to the Card class.
-    It takes Rank and Suit as parameters and initializes
-    the private fields with the provided data.
+CARD - compiles
+     - no current concerns
 
 
-The include guard (the #ifndef, #define, and #endif statements)
- prevents a header file from being included more than once within
-  the same source file. Here's how it works:
+DOUBLYLINKEDLIST - compiles (when using c++17; nullptr identified with just g++)
+    - Template class, meaning datatypes other than node can utilize it.
+* This is a good thing as we don't have to recompile the entire library for different data types.
 
-When a source file includes a header file, the preprocessor checks 
-if the #ifndef condition is true. Initially, it's always true because 
-the identifier DECK_H is not defined.
-The preprocessor defines DECK_H using #define. This means that if the 
-same header file is included in other source files, the #ifndef condition
- will be false in those source files because DECK_H is already defined.
-As a result, the content of the header file is included in the first 
-source file, but in subsequent source files, it's skipped due to the 
-#ifndef condition being false.
+HAND - ~/Desktop/PokerGame_> g++ Hand.cpp
+Hand.cpp:28:43: error: non-aggregate type 'std::vector<Card>' cannot be
+      initialized with an initializer list
+  ...tempHand = {cards[i], cards[j], cards[k], cards[m], cards[n]};
+     ^          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+~/Desktop/PokerGame_> g++ -std=c++17  Hand
+Hand.cpp  Hand.h
+~/Desktop/PokerGame_> g++ -std=c++17  Hand.cpp
+Undefined symbols for architecture x86_64:
+  "Card::getRank() const", referenced from:
+      compareCardsByRank(Card const&, Card const&) in Hand-42d900.o
+      Hand::isRoyalFlush(std::__1::vector<Card, std::__1::allocator<Card> > const&) const in Hand-42d900.o
+      Hand::isFourOfAKind(std::__1::vector<Card, std::__1::allocator<Card> > const&) const in Hand-42d900.o
+      Hand::isFullHouse(std::__1::vector<Card, std::__1::allocator<Card> > const&) const in Hand-42d900.o
+      Hand::isStraight(std::__1::vector<Card, std::__1::allocator<Card> > const&) const in Hand-42d900.o
+      Hand::isThreeOfAKind(std::__1::vector<Card, std::__1::allocator<Card> > const&) const in Hand-42d900.o
+      Hand::isTwoPair(std::__1::vector<Card, std::__1::allocator<Card> > const&) const in Hand-42d900.o
+      ...
+  "Card::getSuit() const", referenced from:
+      Hand::isFlush(std::__1::vector<Card, std::__1::allocator<Card> > const&) const in Hand-42d900.o
+  "_main", referenced from:
+     implicit entry/start for main executable
+ld: symbol(s) not found for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
 
-Edit: Making Header fields
-
-iostrem - standard c++ lib allows for i/o operations...
-reading from keyboard/writing from screen
-
-Am I essentially doing :: every instance
-    ex. Rank getRank()
-        Card::Rank Card::getRank()
-
-
-So if I make these doubly linekd lists and push the top card of one deck onto 
-the bottom of another deck, will that be enoudh....or do i need to dosome sort of loopage
 
 
 
-===================================
-November 8, 7pm:
-    - Removing anything involving blinds...will worry about later...
+Over the course of the project, I settled into this approach for int main()
+
+1. Create a poker game for 5 players (1 user, 4 computer) with a set buyin. 
+2. Create a queue with the user and computer players....
+
+NOT IN ORDER BUT ALSO, REMEMBER TO CHECK WHETHER HUMAN OR NOT BEFORE HANDLING ACTIONS
+3. While (!gameOver)
+    - Initialize a deck.
+    - Deal hole cards
+    - Round of betting
+    - Deal turn card
+    - Round of betting
+    - Deal river card
+    - Round of betting
+    - Compare hands 
+    - Display winner
+    - Reset hand
+    - Repeat until game over (meaning you don't have any money)
+
+* I could also add a feature where the user can print everyone's balance
+before placing his own bet.....; 
+I need to think about bounds checking and more messages that'll come up in given situations if that makes sense
+Would I do 'isBigBlind' or 'isSmallBlind' check in 'BettingRound' and 
+set the beginning pot accordingly????
+I need to ensure that before every betting round, the players who folded 
+are not included...then that active players should reset when the new deck is initialized
+If they're out they're out though (remove Player if balance zero)
+
+How can I handle dealer button?
+I want the first person in the queue to be small blind, always put 5 in so pot has at least something
+the next person is the bigblind, again put 10 in so theres always money.
+when hole cards are dealt, every person has to call th 10 to stay in the hand, except the small bling who only
+needs to call 5. 
+With each new round of poker, the smallblind and bigblind should shift to next if that makes sense
+so head ->next = head and then head = tail.....
+I think having a flag to mark who its big/smallblind would be useful...
+how do I go about making that shift though for the queue of players to be used
+....do you understand how game of hold em works...when i say round of poker, i don't mean betting round. when i say round of poker, i mean including the four betting rounds
+
+
+
+
+Is destructor in doublylinkedlist needed?
+
+Deck dealCard necessary? given we've already got deal the cards...

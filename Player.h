@@ -8,7 +8,7 @@ class Player {
     private:
         string name;
         int balance, currentBet;
-        bool isFolded, isComputerPlayer;
+        bool isFolded, isComputerPlayer, bigBlind, smallBlind;
     
     public:
         Player();
@@ -18,10 +18,16 @@ class Player {
         bool isComputer() const;
         void placeBet(double betPlaced); // setBalance and setCurrentBet
         void winBet(double betWon); // setBalance 
-        int getCurrentBet();
-        void raise(double raiseAmount); // setCurrentBet
+        double getCurrentBet();
+        void raise(double raiseAmount); // 'setCurrentBet'
         void fold();
         bool hasFolded();
+        
+        void setBigBlind();
+        bool isBigBlind();
+
+        void setSmallBlind();
+        bool isSmallBlind();
         // void cpuAction(bool isRaiseMade);
 
 

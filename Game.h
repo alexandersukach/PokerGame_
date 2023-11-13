@@ -18,8 +18,8 @@ class Game {
         void dealRiver(Deck& roundDeck);
         void combineHands();
         void rotateDealer();
-        void displayRules();
-        void displayHandRankings();
+        //void displayRules();
+        //void displayHandRankings();
         void compareHands();
         string mapScoreToHand(int score);
         
@@ -27,7 +27,7 @@ class Game {
         Card communityCards[5]; // 5 total
         Card playerHoleCards[5][2]; // [playerIndex][card]
         Card combinedHand[5][7]; //[playerIndex][card]
-        queue<Player> players;
+        queue<Player> players; // could 
         Deck gameDeck;
         Player userPlayer;
         Player* dealer;
