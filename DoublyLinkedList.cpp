@@ -1,15 +1,19 @@
+
+// My 'DoublyLinkedList' implementation
+
 #include "DoublyLinkedList.h"
+#include "Card.h"
 
-template <class T>
-DoublyLinkedList<T>::DoublyLinkedList() : head(nullptr), tail(nullptr) {}
+template <class T> DoublyLinkedList<T>::DoublyLinkedList() : head(nullptr), tail(nullptr) {}
 
-template <class T>
-Node<T>* DoublyLinkedList<T>::getHead() const {
+
+// getHead() returns head node of DLL; if empty, nullptr returned
+template <class T> Node<T>* DoublyLinkedList<T>::getHead() const {
     return head;
 }
 
-template <class T>
-void DoublyLinkedList<T>::pushBack(const T& data) {
+// pushBack() creates new node containing data and adds to end of list
+template <class T> void DoublyLinkedList<T>::pushBack(const T& data) {
     Node<T>* newNode = new Node<T>(data);
     if (head == nullptr) {
         head = tail = newNode;
@@ -19,9 +23,8 @@ void DoublyLinkedList<T>::pushBack(const T& data) {
         tail = newNode;
     }
 }
-
-template <class T>
-void DoublyLinkedList<T>::pushFront(const T& data) {
+// pushFront() creates new node containing data and adds to beginning of list
+template <class T> void DoublyLinkedList<T>::pushFront(const T& data) {
     Node<T>* newNode = new Node<T>(data);
     if (head == nullptr) {
         head = tail = newNode;
@@ -32,8 +35,9 @@ void DoublyLinkedList<T>::pushFront(const T& data) {
     }
 }
 
-template <class T>
-void DoublyLinkedList<T>::popBack() {
+// popBack() removes the last element of the list; if empty, do nothing
+
+template <class T> void DoublyLinkedList<T>::popBack() {
     if (tail == nullptr) {
         return; // empty list
     }
@@ -47,8 +51,8 @@ void DoublyLinkedList<T>::popBack() {
     delete temp;
 }
 
-template <class T>
-void DoublyLinkedList<T>::popFront() {
+// popFront() removes the first element of the list; if empty, do nothing
+template <class T> void DoublyLinkedList<T>::popFront() {
     if (head == nullptr) {
         return; // empty list
     }
@@ -62,8 +66,8 @@ void DoublyLinkedList<T>::popFront() {
     delete temp;
 }
 
-template <class T>
-void DoublyLinkedList<T>::clear() {
+// clear() removes all elements from the list; deletes each node to free memory
+template <class T> void DoublyLinkedList<T>::clear() {
     while (head) {
         Node<T>* temp = head;
         head = head->next;
@@ -72,7 +76,10 @@ void DoublyLinkedList<T>::clear() {
     head = tail = nullptr;
 }
 
-template <class T>
-bool DoublyLinkedList<T>::isEmpty() const {
+// isEmpty() returns true if list is empty
+template <class T> bool DoublyLinkedList<T>::isEmpty() const {
     return head == nullptr;
 }
+
+// Explicit instantiation of the template for the Card class
+template class DoublyLinkedList<Card>;

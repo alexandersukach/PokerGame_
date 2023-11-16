@@ -1,28 +1,43 @@
-#include "Player.h"
-#include <queue> 
+#include "BettingRound.h"
 #include <iostream>
 #include <cstdlib>
-#include "BettingRound.h"
+#include <queue>
+#include "Player.h"  // Include the Player class header file
 
 using namespace std;
 
+BettingRound::BettingRound(std::queue<Player>& roundPlayers, double minBet)
+    : players(roundPlayers), pot(0), currentRoundBet(0), isBetMade(false), isRaiseMade(false), isReRaiseMade(false), minRoundBet(minBet) {}
+
 void BettingRound::playRound() {
+    int playersChecked = 0;
+
     while (!players.empty()) {
         Player& player = players.front();
 
+        isBetMade = false;
+        isRaiseMade = false;
+
         if (!player.isComputer()) {
-            if (isBetMade) {
-                handleBetMadePlayerActions(player);
-            } else if (isRaiseMade) {
-                handleRaiseMadePlayerActions(player);
-            } else {
-                handleNoBetMadePlayerActions(player);
+            handleNoBetMadePlayerActions(player);
+
+            // Check if the player has checked
+            if (player.getCurrentBet() == currentRoundBet) {
+                playersChecked++;
             }
         } else {
             handleCPUActions(player);
+
+            // Check if the CPU player has checked
+            if (player.getCurrentBet() == currentRoundBet) {
+                playersChecked++;
+            }
         }
         players.push(player);
         players.pop();
+    }
+    if (playersChecked == players.size()) {
+        cout << "All players have checked. Ending the round." << endl;
     }
 }
 
@@ -30,14 +45,19 @@ void BettingRound::handleNoBetMadePlayerActions(Player& user) {
     bool validBet = false;
 
     while (!validBet) {
+        cout << "Your current bet: " << user.getCurrentBet() << endl;
         cout << "Action to you. Would you like to (b)et or (c)heck?" << endl;
         char action;
         cin >> action;
         action = tolower(action);
 
-        switch(action) {
+        switch (action) {
             case 'b':
                 validBet = makeBet(user);
+                if (validBet) {
+                    cout << "You have bet." << endl;
+                    isBetMade = true;
+                }
                 break;
             case 'c':
                 cout << "\nYou check. Action passed to the next player" << endl;
@@ -46,6 +66,11 @@ void BettingRound::handleNoBetMadePlayerActions(Player& user) {
             default:
                 cout << "\nInvalid choice. Try again." << endl;
         }
+
+        // Move to the next player in the queue (either human or computer)
+        Player nextPlayer = players.front();
+        players.pop();
+        players.push(nextPlayer);
     }
 }
 
@@ -53,7 +78,7 @@ bool BettingRound::makeBet(Player& user) {
     cout << "\nHow much would you like to bet? ";
     double betAmount;
     cin >> betAmount;
-    
+
     if (betAmount >= 2 * minRoundBet && betAmount <= user.getBalance()) {
         user.placeBet(betAmount);
         isBetMade = true;
@@ -73,7 +98,7 @@ void BettingRound::handleBetMadePlayerActions(Player& user) {
     action = tolower(action);
     double amountToCall = (currentRoundBet - user.getCurrentBet());
 
-    switch(action) {
+    switch (action) {
         case 'c':
             if (amountToCall >= user.getBalance()) {
                 cout << "You're forced to go all in!" << endl;
@@ -90,7 +115,7 @@ void BettingRound::handleBetMadePlayerActions(Player& user) {
             user.fold();
             break;
         case 'r':
-            cout << "\nHow much would you like to raise by?" ;
+            cout << "\nHow much would you like to raise by?";
             double raiseAmount;
             cin >> raiseAmount;
             if (raiseAmount == user.getBalance()) {
@@ -104,7 +129,7 @@ void BettingRound::handleBetMadePlayerActions(Player& user) {
                 currentRoundBet += raiseAmount;
                 pot += raiseAmount;
             } else {
-                cout << "\nRaise must be at least twice the initial bet and within your budget.";
+                cout << "\nRaise must be at least twice the initial bet and within your budget." << endl;
             }
             break;
         default:
@@ -119,7 +144,7 @@ void BettingRound::handleRaiseMadePlayerActions(Player& user) {
     action = tolower(action);
     double amountToCall = currentRoundBet - user.getCurrentBet();
 
-    switch(action) {
+    switch (action) {
         case 'c':
             if (amountToCall >= user.getBalance()) {
                 cout << "You're forced to go all in!" << endl;
@@ -201,3 +226,77 @@ void BettingRound::handleCPUActions(Player& computerPlayer) {
         isBetMade = true;
     }
 }
+
+bool BettingRound::allPlayersFinishedBetting() const {
+    queue<Player> tempQueue = players; // Create a copy of the queue
+
+    while (!tempQueue.empty()) {
+        const Player& player = tempQueue.front();
+        if (!player.hasFolded() && player.getCurrentBet() < currentRoundBet) {
+            return false;
+        }
+        tempQueue.pop();
+    }
+
+    return true;
+}
+
+// Other member functions for getting pot, currentRoundBet, etc.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

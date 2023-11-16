@@ -11,7 +11,7 @@ using namespace std;
 class Game {
     public:
         Game(const string& userName, double userStartingBalance);
-    void initializePlayers(const string& userName, double playerBalance);
+        void initializePlayers(const string& userName, double playerBalance);
         void dealHoleCards(queue<Player>& activePlayers, Deck& roundDeck);
         void dealFlop(Deck& roundDeck);
         void dealTurn(Deck& roundDeck);
@@ -22,18 +22,26 @@ class Game {
         //void displayHandRankings();
         void compareHands();
         string mapScoreToHand(int score);
+        void printPlayersNames();
+        bool isOver() const;
+        void updateActivePlayers(queue<Player>& activePlayers);
         
-    private:
+        queue<Player> players;
+
+        Player* currentPlayer;
+        Player userPlayer;
+        Player* dealer;
         Card communityCards[5]; // 5 total
         Card playerHoleCards[5][2]; // [playerIndex][card]
         Card combinedHand[5][7]; //[playerIndex][card]
-        queue<Player> players; // could 
+ // could 
         Deck gameDeck;
-        Player userPlayer;
-        Player* dealer;
+
         //int currentTurn;
         //bool isGameOver = false;
         //bool isHandOver = false;
+    private:
+
 };
 
 

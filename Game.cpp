@@ -1,5 +1,4 @@
 #include "Game.h"
-
 #include "Card.h"
 #include "Deck.h"
 #include "Hand.h"
@@ -16,23 +15,47 @@
 #include <map>
 using namespace std;
 
-
-    Game::Game(const string& userName, double userStartingBalance) : gameDeck() {
+Game::Game(const string& userName, double userStartingBalance) : gameDeck() {
    initializePlayers(userName, userStartingBalance);
-
 }
+void Game::printPlayersNames() {
+    // Iterate through the players queue and print each player's name
+    cout << "Players in the game:" << endl;
+    queue<Player> tempPlayers = players;
+    while (!tempPlayers.empty()) {
+        cout << tempPlayers.front().getName() << endl;
+        tempPlayers.pop();
+    }
+}
+void Game::initializePlayers(const string& userName, double playerBalance) {
+    // Use the member variable directly, not a local variable
+    userPlayer = Player(userName, playerBalance, false);
 
- void Game::initializePlayers(const string& userName, double playerBalance) {
-    Player userPlayer = Player(userName, playerBalance);
     const int numComputerPlayers = 4;
     players.push(userPlayer);
 
     for (int i = 0; i < numComputerPlayers; i++) {
         string computerName = "CPU " + to_string(i + 1);
-        players.push(Player(computerName, playerBalance));  // All players start with the same balance
+        players.push(Player(computerName, playerBalance, true));  // Computer players are marked as such
     }
     // Set the initial dealer
     dealer = &players.front();
+}
+
+bool Game::isOver() const {
+    return userPlayer.getBalance() == 0;
+}
+
+void Game::updateActivePlayers(queue<Player>& activePlayers) {
+    queue<Player> temp;
+    while (!activePlayers.empty()) {
+        Player currentPlayer = activePlayers.front();
+        activePlayers.pop();
+        if (!currentPlayer.hasFolded()) {
+            temp.push(currentPlayer);
+        }
+    }
+    activePlayers = temp;
 }
 
 void Game::dealHoleCards(queue<Player>& activePlayers, Deck& roundDeck) {
@@ -152,7 +175,6 @@ void Game::compareHands() {
         cout << playerName << " had a " << playerHandString << "." << endl;
     }
 }
-
 
 
 

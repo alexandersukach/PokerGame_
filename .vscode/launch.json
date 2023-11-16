@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/alexs/Desktop/PokerGame_",
+      "program": "/Users/alexs/Desktop/PokerGame_/build/Debug/outDebug"
+    }
+  ]
+}

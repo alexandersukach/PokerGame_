@@ -1,9 +1,13 @@
+/*
+Hand Class:
+    - represents player's card collection
+*/
 #include "Hand.h"
 #include <algorithm>
 
 
 bool compareCardsByRank(const Card& a, const Card& b) {
-    return a.getRank() < b.getRank();
+    return a.getRank() < b.getRank(); // returns true if a's rank is less than b's rank
 }
 
 Hand::Hand(const vector<Card>& handCards) : cards(sortCards(handCards)) {
@@ -13,7 +17,7 @@ Hand::Hand(const vector<Card>& handCards) : cards(sortCards(handCards)) {
 vector<Card> Hand::sortCards(const vector<Card>& unsorted) {
     // Your implementation for sorting the cards
     vector<Card> sortedCards = unsorted; // Make a copy of the unsorted cards
-    sort(sortedCards.begin(), sortedCards.end(), compareCardsByRank); // Use the sorting function you've defined
+    sort(sortedCards.begin(), sortedCards.end(), compareCardsByRank); // 
     return sortedCards;
 }
 
@@ -141,7 +145,7 @@ bool Hand::isStraightFlush(const vector<Card>& sortedCards) const {
 
 bool Hand::isRoyalFlush(const vector<Card>& sortedCards) const {
     // Royal Flush is a special case of a Straight Flush
-    if (isStraightFlush(sortedCards) && sortedCards[4].getRank() == Card::ACE) { // Should get rank be , if ACE, is 14 returned?
+    if (isStraightFlush(sortedCards) && sortedCards[4].getRank() == Card::ACE) {
         return true;
     }
     return false;

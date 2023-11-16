@@ -2,16 +2,15 @@
 #define DOUBLYLINKEDLIST_H
 
 template <class T>
-struct Node {
-    T data; // The card of the node (cardNode)
+struct Node { // ~cardNode~
+    T data; // card
     Node* next;
     Node* prev;
 
     Node(const T& data) : data(data), next(nullptr), prev(nullptr) {}
 };
 
-template <class T>
-class DoublyLinkedList {
+template <class T> class DoublyLinkedList {
 private:
     Node<T>* head;
     Node<T>* tail;

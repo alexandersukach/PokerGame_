@@ -1,5 +1,4 @@
 #include "Game.h"
-
 #include "Card.h"
 #include "Deck.h"
 #include "Hand.h"
@@ -7,7 +6,6 @@
 #include "DoublyLinkedList.h"
 #include "string.h"
 #include "Player.h"
-
 #include <vector>
 #include <string>
 #include <iostream>
@@ -50,52 +48,85 @@ void displayRules() {
     cout << "  each player's kicker card, which is their second hole card, may be " << endl;
     cout << "  examined to determine the winner." << endl << endl;
 }
-
 void displayHandRankings() {
-    const int cardWidth = 6;
+    const int cardWidth = 9;
     const string RED_TEXT = "\033[31m"; // Red text
     const string BLACK_TEXT = "\033[30m"; // Black text 
     const string RESET_COLOR = "\033[0m"; // Default text
-
-    cout << "================ Hand Rankings ================" << endl;
-    cout << "             (Strongest to weakest)" << endl;
-    cout << "Royal Flush:" << "       " << BLACK_TEXT << left << setw(cardWidth) << "AS" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "KS" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "QS" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "JS" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "10S" << RESET_COLOR << endl;
-    cout << "Straight Flush:" << "    " << RED_TEXT << left << setw(cardWidth) << "8H" << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << "7H" << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << "6H" << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << "5H" << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << "4H" << RESET_COLOR << endl;
-    cout << "Four of a Kind:" << "    " << BLACK_TEXT << left << setw(cardWidth) << "7C" << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << "7D" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "7S" << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << "7H" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "3C" << RESET_COLOR << endl;
-    cout << "Full House:" << "        " << RED_TEXT << left << setw(cardWidth) << "QH" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "QC" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "QS" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "4S" << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << "4H" << RESET_COLOR << endl;
-    cout << "Flush:" << "             " << BLACK_TEXT << left << setw(cardWidth) << "4C" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "JS" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "AS" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "7C" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "9C" << RESET_COLOR << endl;
-    cout << "Straight:" << "          " << BLACK_TEXT << left << setw(cardWidth) << "QC" << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << "JD" << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << "10H" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "9C" << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << "3H" << RESET_COLOR << endl;
-    cout << "Three of a Kind:" << "   " << RED_TEXT << left << setw(cardWidth) << "KH" << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << "KD" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "KS" << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << "10H" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "7S" << RESET_COLOR << endl;
-    cout << "Two Pair:" << "          " << BLACK_TEXT << left << setw(cardWidth) << "8S" << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << "8H" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "5S" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "5C" << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << "3H" << RESET_COLOR << endl;
-    cout << "One Pair:" << "          " << BLACK_TEXT << left << setw(cardWidth) << "10C" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "10S" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "7C" << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << "4H" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "2C" << RESET_COLOR << endl;
-    cout << "High Card:" << "         " << RED_TEXT << left << setw(cardWidth) << "AH" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "QC" << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << "10H" << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << "7C" << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << "4D" << RESET_COLOR << endl;
-    cout << "===============================================" << endl;
+    const string SPADE = "\u2660";   // Unicode for Spade symbol
+    const string HEART = "\u2665";   // Unicode for Heart symbol
+    const string DIAMOND = "\u2666"; // Unicode for Diamond symbol
+    const string CLUB = "\u2663";    // Unicode for Club symbol
+    cout << "=================== Hand Rankings ====================" << endl;
+    cout << "                (Strongest to weakest)" << endl;
+    cout << "Royal Flush:" << "       " << BLACK_TEXT << left << setw(cardWidth) << (" A " + SPADE) << left << setw(cardWidth) << (" K " + SPADE) << left << setw(cardWidth) << (" Q " + SPADE) << left << setw(cardWidth) << (" J " + SPADE) << left << setw(cardWidth) << ("10 " + SPADE) << RESET_COLOR << endl;
+    cout << "Straight Flush:" << "    " << RED_TEXT << left << setw(cardWidth) << (" 8 " + HEART) << left << setw(cardWidth) << (" 7 " + HEART) << left << setw(cardWidth) << ( " 6 " + HEART) << left << setw(cardWidth) << (" 5 " + HEART) << left << setw(cardWidth) << (" 4 " + HEART) << RESET_COLOR << endl;
+    cout << "Four of a Kind:" << "    " << BLACK_TEXT << left << setw(cardWidth) << (" 7 " + CLUB) << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << (" 7 " + DIAMOND) << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << (" 7 " + SPADE) << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << (" 7 " + HEART) << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << (" 3 " + CLUB) << RESET_COLOR << endl;
+    cout << "Full House:" << "        " << RED_TEXT << left << setw(cardWidth) << (" Q " + HEART) << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << (" Q " + CLUB) << left << setw(cardWidth) << (" Q " + SPADE) << left << setw(cardWidth) << (" 4 " + SPADE) << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << (" 4 " + HEART)<< RESET_COLOR << endl;
+    cout << "Flush:" << "             " << BLACK_TEXT << left << setw(cardWidth) << (" 4 " + CLUB) << left << setw(cardWidth) << (" J " + SPADE) << left << setw(cardWidth) << (" A " + SPADE) << left << setw(cardWidth) << (" 7 " + CLUB) << left << setw(cardWidth) << (" 9 " + CLUB) << RESET_COLOR << endl;
+    cout << "Straight:" << "          " << BLACK_TEXT << left << setw(cardWidth) << (" Q " + CLUB) << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << (" J " + DIAMOND) << left << setw(cardWidth) << ("10 " + HEART) << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << (" 9 " + CLUB) << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << (" 3 " + HEART) << RESET_COLOR << endl;
+    cout << "Three of a Kind:" << "   " << RED_TEXT << left << setw(cardWidth) << (" K " + HEART) << left << setw(cardWidth) << (" K " + DIAMOND) << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << (" K " + SPADE) << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << ("10 " + HEART) << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << (" 7 " + SPADE) << RESET_COLOR << endl;
+    cout << "Two Pair:" << "          " << BLACK_TEXT << left << setw(cardWidth) << (" 8 " + SPADE) << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << (" 8 " + HEART) << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << (" 5 " + SPADE) << left << setw(cardWidth) << (" 5 " + CLUB) << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << (" 3 " + HEART) << RESET_COLOR << endl;
+    cout << "One Pair:" << "          " << BLACK_TEXT << left << setw(cardWidth) << ("10 " + CLUB) << left << setw(cardWidth) << ("10 " + SPADE) << left << setw(cardWidth) << (" 7 " + CLUB) << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << (" 4 " + HEART) << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << (" 2 " + CLUB) << RESET_COLOR << endl;
+    cout << "High Card:" << "         " << RED_TEXT << left << setw(cardWidth) << (" A " + HEART) << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << (" Q " + CLUB) << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << ("10 " + HEART) << RESET_COLOR << BLACK_TEXT << left << setw(cardWidth) << (" 7 " + CLUB) << RESET_COLOR << RED_TEXT << left << setw(cardWidth) << (" 4 " + DIAMOND) << RESET_COLOR << endl;
+    cout << "======================================================" << endl;
 }
 
-void updateActivePlayers(queue<Player>& activePlayers) {
-    queue<Player> temp;
-    while (!activePlayers.empty()) {
-        Player currentPlayer = activePlayers.front();
-        activePlayers.pop();
-        if (!currentPlayer.hasFolded()) {
-            temp.push(currentPlayer);
-        }
-    }
-    activePlayers = temp;
-}
 
 int main() {
     displayRules();
+    displayHandRankings();
 
     cout << "What is your name? ";
     string userName;
     cin >> userName;
-    cout << "What would you like to buy-in for? ";
-    double amountToBuyIn;
-    cin >> amountToBuyIn;
 
-    Game pokerGame(userName, amountToBuyIn); // if I'm initializing userPlayer, should initializePlayers just be initializeComputers 
-    Player userPlayer = Player(userName,amountToBuyIn);
+    cout << "How much would you like to buy in for? ";
+    double buyInAmount;
+    cin >> buyInAmount;
+    double minBet = 10.00;
+    Game pokerGame(userName, buyInAmount);
+    pokerGame.printPlayersNames();
+
+    Deck gameDeck = Deck();
+    pokerGame.dealHoleCards(pokerGame.players, gameDeck);
+        BettingRound preFlop(pokerGame.players, minBet);
+        preFlop.playRound();
+        pokerGame.updateActivePlayers(pokerGame.players);
+/*
+
+    while (!pokerGame.isOver()) {
+        Deck gameDeck = Deck();
+        
+        // Assuming players is the queue of players in your Game class
+        pokerGame.dealHoleCards(pokerGame.players, gameDeck);
+        BettingRound preFlop(pokerGame.players);
+        preFlop.playRound();
+        pokerGame.updateActivePlayers(pokerGame.players);
+
+        pokerGame.dealFlop(gameDeck);
+        BettingRound postFlop(pokerGame.players);
+        postFlop.playRound();
+        pokerGame.updateActivePlayers(pokerGame.players);
+
+        pokerGame.dealTurn(gameDeck);
+        BettingRound postTurn(pokerGame.players);
+        postTurn.playRound();
+        pokerGame.updateActivePlayers(pokerGame.players);
+
+        pokerGame.dealRiver(gameDeck);
+        BettingRound postRiver(pokerGame.players);
+        postRiver.playRound();
+        pokerGame.updateActivePlayers(pokerGame.players);
+    }*/
+
+    return 0;
+}
+
+/*
+    Game pokerGame(userName, amountToBuyIn);
+    pokerGame.initializePlayers(userName, amountToBuyIn);
+    // When I run the program, after inputting the ammountToBuyIn, i receive a segmentation fault: 11 error, why could that be?
     // if user presses q, displayHandRankings() 
     bool gameOver = false;
 
@@ -128,15 +159,15 @@ int main() {
         postRiver.playRound();
         
 
+
+
         // After the river/bets settled, unless a player has no money, readd everyone to the queue, shift it clockwise and keep going yknow...
 
         // At this point, hands are compared...winner determined....
         // Bets are settled...etc....
         
         // I don't believe userPlayer is in the correct place...
-        if (userPlayer.getBalance() == 0) {
-            gameOver = true;                                                                                       
-        }
+      // If user balance hits 0, game over
 
         // Reset everything here...
         // Reset deck, reset queue of players to what is was (long so they're still in the game)
@@ -147,7 +178,7 @@ int main() {
 
 
 
-/*
+
 
 
     bool gameOver = false;

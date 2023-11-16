@@ -1,0 +1,35 @@
+You check. Action passed to next player
+CPU has placed a bet. Would you like to (c)all, (f)old, or (r)aise? r
+
+How much would you like to raise by?1000
+You're going all-in!
+Raise must be at least twice the initial bet and within your budget.CPU has placed a bet. Would you like to (c)all, (f)old, or (r)aise?
+
+
+WHEN WRONG RAISE OR BET.....REPROMPT USER.....DO NOT MOVE ON..... 
+
+
+How much would you like to raise by?1000
+You're going all-in!
+Raise must be at least twice the initial bet and within your budget.CPU has placed a bet. Would you like to (c)all, (f)old, or (r)aise? f
+You folded your hand.
+CPU has placed a bet. Would you like to (c)all, (f)old, or (r)aise? f
+You folded your hand.
+CPU has placed a bet. Would you like to (c)all, (f)old, or (r)aise? f
+You folded your hand.
+CPU has placed a bet. Would you like to (c)all, (f)old, or (r)aise? f
+You folded your hand.
+CPU has placed a bet. Would you like to (c)all, (f)old, or (r)aise? f
+You folded your hand.
+CPU has placed a bet. Would you like to (c)all, (f)old, or (r)aise? f
+You folded your hand.
+CPU has placed a bet. Would you like to (c)all, (f)old, or (r)aise? f
+You folded your hand.
+CPU has placed a bet. Would you like to (c)all, (f)old, or (r)aise? f
+You folded your hand.
+CPU has placed a bet. Would you like to (c)all, (f)old, or (r)aise? f
+You folded your hand.
+CPU has placed a bet. Would you like to (c)all, (f)old, or (r)aise? f
+You folded your hand.
+
+PREVENT THAT TOO

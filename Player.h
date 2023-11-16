@@ -12,16 +12,17 @@ class Player {
     
     public:
         Player();
-        Player(const string& playerName, double startingBalance);
+        Player(const string& playerName, double startingBalance, bool isComputer);
         double getBalance() const;
         string getName() const;
         bool isComputer() const;
         void placeBet(double betPlaced); // setBalance and setCurrentBet
         void winBet(double betWon); // setBalance 
-        double getCurrentBet();
+        //double getCurrentBet();
+        double getCurrentBet() const;
         void raise(double raiseAmount); // 'setCurrentBet'
         void fold();
-        bool hasFolded();
+        bool hasFolded() const;
         
         void setBigBlind();
         bool isBigBlind();
