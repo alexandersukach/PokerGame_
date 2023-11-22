@@ -31,6 +31,8 @@ class Player {
         bool isSmallBlind();
         // void cpuAction(bool isRaiseMade);
 
+        bool operator==(const Player& other) const;
+
 
 
 };

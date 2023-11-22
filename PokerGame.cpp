@@ -82,17 +82,28 @@ int main() {
     cin >> userName;
 
     cout << "How much would you like to buy in for? ";
+    
     double buyInAmount;
     cin >> buyInAmount;
     double minBet = 10.00;
     Game pokerGame(userName, buyInAmount);
+    //pokerGame.initializePlayers();
     pokerGame.printPlayersNames();
 
+
     Deck gameDeck = Deck();
+
     pokerGame.dealHoleCards(pokerGame.players, gameDeck);
-        BettingRound preFlop(pokerGame.players, minBet);
-        preFlop.playRound();
-        pokerGame.updateActivePlayers(pokerGame.players);
+    pokerGame.displayPlayerHand(pokerGame.getUserPlayer());
+    BettingRound preFlop(pokerGame.players, minBet);
+    preFlop.playRound();
+
+    return 0; 
+}
+    /*
+        
+    preFlop.playRound();
+    pokerGame.updateActivePlayers(pokerGame.players);*/
 /*
 
     while (!pokerGame.isOver()) {
@@ -119,10 +130,6 @@ int main() {
         postRiver.playRound();
         pokerGame.updateActivePlayers(pokerGame.players);
     }*/
-
-    return 0;
-}
-
 /*
     Game pokerGame(userName, amountToBuyIn);
     pokerGame.initializePlayers(userName, amountToBuyIn);

@@ -1,6 +1,9 @@
 #ifndef CARD_H
 #define CARD_H
 
+#include <string> 
+using namespace std;
+
 class Card {
     public:
         enum Rank { TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE }; // All possible ranks
@@ -11,6 +14,7 @@ class Card {
         Rank getRank() const;
         Suit getSuit() const;
         void display() const;
+        string toString() const;
         
     private: 
         Rank rank; // Type 'Rank' stores card rank within class

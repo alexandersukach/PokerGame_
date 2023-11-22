@@ -18,6 +18,31 @@ using namespace std;
 Game::Game(const string& userName, double userStartingBalance) : gameDeck() {
    initializePlayers(userName, userStartingBalance);
 }
+int Game::findPlayerIndex(const Player& player) const {
+    int index = 0;
+    queue<Player> tempPlayers = players;
+    while (!tempPlayers.empty()) {
+        if (tempPlayers.front() == player) {
+            return index;
+        }
+        tempPlayers.pop();
+        index++;
+    }
+    // Player not found, return an invalid index or handle it appropriately
+    return -1;
+}
+Player Game::getUserPlayer() const {
+    return userPlayer;
+}
+void Game::displayPlayerHand(const Player& player) {
+    cout << player.getName() << "'s hand:" << endl;
+    int userIndex = findPlayerIndex(player);
+    cout << playerHoleCards[userIndex][0].toString() << ", ";
+    cout << playerHoleCards[userIndex][1].toString();
+    cout << endl;
+}
+
+
 void Game::printPlayersNames() {
     // Iterate through the players queue and print each player's name
     cout << "Players in the game:" << endl;
@@ -59,13 +84,17 @@ void Game::updateActivePlayers(queue<Player>& activePlayers) {
 }
 
 void Game::dealHoleCards(queue<Player>& activePlayers, Deck& roundDeck) {
+    // Copy the active players to avoid modifying the original queue
+    queue<Player> tempPlayers = activePlayers;
+
     for (int cardIndex = 0; cardIndex < 2; cardIndex++) {
-        for (int playerIndex = 0; playerIndex < activePlayers.size(); playerIndex++) {
-            Player& player = activePlayers.front(); 
-            playerHoleCards[playerIndex][cardIndex] = roundDeck.dealCard();
-            activePlayers.push(player);
-            activePlayers.pop();
+        while (!tempPlayers.empty()) {
+            Player& player = tempPlayers.front();
+            playerHoleCards[findPlayerIndex(player)][cardIndex] = roundDeck.dealCard();
+            tempPlayers.pop();
         }
+        // Restore the original state of the activePlayers queue
+        tempPlayers = activePlayers;
     }
 }
 

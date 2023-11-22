@@ -25,7 +25,12 @@ class Game {
         void printPlayersNames();
         bool isOver() const;
         void updateActivePlayers(queue<Player>& activePlayers);
-        
+        void displayPlayerHand(const Player& player);
+        int findPlayerIndex(const Player& player) const;
+        Player getUserPlayer() const;
+
+
+
         queue<Player> players;
 
         Player* currentPlayer;

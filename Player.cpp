@@ -24,3 +24,7 @@ void Player::setBigBlind() { bigBlind = true; }
 bool Player::isBigBlind() { return bigBlind; }
 void Player::setSmallBlind() { smallBlind = true; }
 bool Player::isSmallBlind() { return smallBlind; }
+bool Player::operator==(const Player& other) const {
+    // Define your comparison logic here based on your Player class attributes
+    return this->getName() == other.getName() && this->getBalance() == other.getBalance() /* && other comparisons */;
+}
