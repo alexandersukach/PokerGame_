@@ -21,7 +21,7 @@ public:
 
   void playRound();
   void handleNoBetMadePlayerActions(Player &user);
-  void playerRaisesAction(Player &user);
+  void handlePlayerRaisesAction(Player &user);
   void handleBetMadePlayerActions(Player &user);
   void handleRaiseMadePlayerActions(Player &user);
   // void handleReRaiseMadePlayerActions(Player& user);

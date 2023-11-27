@@ -23,7 +23,6 @@ void BettingRound::playRound() {
     isRaiseMade = false;
     isReRaiseMade = false;
 
-    handleNoBetMadePlayerActions(player);
     /*
         Player &player = players.front();
         isBetMade = false;
@@ -67,6 +66,7 @@ bool BettingRound::allPlayersChecked() const {
   return true;
 }
 void BettingRound::handleNoBetMadePlayerActions(Player &user) {
+
   bool validBet = false;
   while (!validBet) {
     cout << "Action to you. Would you like to (b)et or (c)heck?" << endl;
@@ -135,13 +135,14 @@ void BettingRound::handleBetMadePlayerActions(Player &user) {
       user.placeBet(amountToCall);
       pot += amountToCall;
     }
+
     break;
   case 'f':
     cout << "You folded your hand." << endl;
     user.fold();
     break;
   case 'r':
-    playerRaisesAction(user);
+    handlePlayerRaisesAction(user);
     isRaiseMade = true;
     break;
   default:
@@ -149,7 +150,7 @@ void BettingRound::handleBetMadePlayerActions(Player &user) {
   }
 }
 
-void BettingRound::playerRaisesAction(Player &user) {
+void BettingRound::handlePlayerRaisesAction(Player &user) {
   cout << "\nHow much would you like to raise by? ";
   double raiseAmount;
   cin >> raiseAmount;
@@ -167,7 +168,7 @@ void BettingRound::playerRaisesAction(Player &user) {
     cout << "Not a valid raise....Must be at least twice the current round bet "
             "and within your budget."
          << endl;
-    playerRaisesAction(user); // Ask for raise amount again
+    handlePlayerRaisesAction(user); // Ask for raise amount again
   }
 }
 

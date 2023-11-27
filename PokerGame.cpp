@@ -20,24 +20,25 @@ void displayRules() {
   cout
       << "- Start by specifying the buy-in amount at the beginning of the game."
       << endl;
-  cout << "- The game uses standard blinds: $5 for the small blind and $10 for"
+  //   cout << "- The game uses standard blinds: $5 for the small blind and $10
+  //   for"
+  //        << endl;
+  //   cout << "  the big blind." << endl;
+  //   cout << "  Blinds ensure there is always money in the pot to compete
+  //   for."
+  //        << endl;
+  //   cout << "- The player to the immediate left of the dealer assumes the
+  //   role "
+  //        << endl;
+  //   cout << " of the small blind." << endl;
+  //   cout
+  //       << "- The player to the left of the small blind takes on the role of
+  //       the "
+  //       << endl;
+  //   cout << "  big blind." << endl;
+  cout << "- During each round of betting, players can check, bet, call, "
+          "or raise, depending on the current game conditions."
        << endl;
-  cout << "  the big blind." << endl;
-  cout << "  Blinds ensure there is always money in the pot to compete for."
-       << endl;
-  cout << "- The player to the immediate left of the dealer assumes the role "
-       << endl;
-  cout << " of the small blind." << endl;
-  cout
-      << "- The player to the left of the small blind takes on the role of the "
-      << endl;
-  cout << "  big blind." << endl;
-  cout << "- During each round of betting, players can choose from various "
-          "actions, "
-       << endl;
-  cout << "  including checking, betting, calling, or raising, depending on the"
-       << endl;
-  cout << "  game situation." << endl;
   cout << "- Starting with the small blind and proceeding clockwise, each "
           "player "
        << endl;
@@ -66,15 +67,7 @@ void displayRules() {
           "'community "
        << endl;
   cout << "  cards' on the table." << endl;
-  cout << "  For your convenience, hand rankings can be accessed at any time "
-          "to assist you."
-       << endl;
-  cout << "- If players have equal hands, a 'chop pot' occurs. In such cases, "
-       << endl;
-  cout
-      << "  each player's kicker card, which is their second hole card, may be "
-      << endl;
-  cout << "  examined to determine the winner." << endl << endl;
+  cout << "- If players have equal hands, a 'chop pot' occurs." << endl;
 }
 void displayHandRankings() {
   const int cardWidth = 9;
