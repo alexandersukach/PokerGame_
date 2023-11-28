@@ -1,3 +1,5 @@
+// Player.h
+
 #ifndef PLAYER_H
 #define PLAYER_H
 
@@ -7,38 +9,34 @@ using namespace std;
 class Player {
 private:
   string name;
-  int balance, currentBet;
-  bool isComputerPlayer, bigBlind, smallBlind, isFolded, ifBet;
-  bool isChecked;
+  int balance;
+  int currentBet;
+  bool folded;
+  bool isComputerPlayer;
+  bool checked;
+  bool called;
+  string playerName;
 
 public:
   Player();
-  Player(const string &playerName, double startingBalance, bool isComputer);
-  double getBalance() const;
+  Player(const string &playerName, int startingBalance, bool computer);
+
+  int getBalance() const;
   string getName() const;
   bool isComputer() const;
-  void placeBet(double betPlaced); // setBalance and setCurrentBet
+  void placeBet(int betAmount);
   void resetBet();
-  bool hasBet();
-  void winBet(double betWon); // setBalance
-  // double getCurrentBet();
-  double getCurrentBet() const;
-  // void setCurrentBet(double addedBet){};
-  void raise(double raiseAmount);
+  void winBet(int pot);
+  int getCurrentBet() const;
+  bool hasFolded() const;
+  bool hasChecked() const;
+  bool hasCalled() const;
 
+  void call(int amountToCall);
   void fold();
-  bool hasFolded();
+  void raise(int raiseAmount);
+  void check();
 
-  bool hasChecked() const { return isChecked; };
-  void check(bool checked) { isChecked = checked; };
-
-  void setBigBlind();
-  bool isBigBlind();
-
-  void setSmallBlind();
-  bool isSmallBlind();
-  // void cpuAction(bool isRaiseMade);
-  // bool isFolded();
   bool operator==(const Player &other) const;
 };
 

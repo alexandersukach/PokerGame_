@@ -19,7 +19,8 @@ Game::Game(const string &userName, double userStartingBalance) : gameDeck() {
 }
 int Game::findPlayerIndex(const Player &player) const {
   int index = 0;
-  queue<Player> tempPlayers = players;
+  std::queue<Player> tempPlayers = players;
+
   while (!tempPlayers.empty()) {
     if (tempPlayers.front() == player) {
       return index;
@@ -30,6 +31,7 @@ int Game::findPlayerIndex(const Player &player) const {
   // Player not found, return an invalid index or handle it appropriately
   return -1;
 }
+
 Player Game::getUserPlayer() const { return userPlayer; }
 void Game::displayPlayerHand(const Player &player) const {
   cout << "\nYour hand: " << endl;

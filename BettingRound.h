@@ -4,34 +4,33 @@
 #include "Player.h"
 #include <queue>
 
+using namespace std;
+
 class BettingRound {
 private:
-  std::queue<Player> players;
-  double pot;
-  double currentRoundBet;
-  double minRoundBet = 10.00;
+  queue<Player> players;
+  int pot;
+  int currentRoundBet;
+  int minRoundBet = 10.00;
   bool isBetMade;
   bool isRaiseMade;
   bool isReRaiseMade;
-  std::queue<Player> activePlayers;
+  queue<Player> activePlayers;
 
 public:
-  // Constructor with a queue of players
-  BettingRound(const std::queue<Player> &roundPlayers, double minBet);
-
+  BettingRound(std::queue<Player> playerQueue, int minBet);
   void playRound();
-  void handleNoBetMadePlayerActions(Player &user);
-  void handlePlayerRaisesAction(Player &user);
-  void handleBetMadePlayerActions(Player &user);
-  void handleRaiseMadePlayerActions(Player &user);
-  // void handleReRaiseMadePlayerActions(Player& user);
-  void handleNoBetCPUActions(Player &computerPlayer);
-  void handleCPUActions(Player &computerPlayer);
-
-  bool allPlayersFinishedBetting() const;
   bool allPlayersChecked() const;
 
-  double getPot();
+  void handleNoBetMadePlayerActions(Player &user);
+  void handleBetMadePlayerActions(Player &user);
+  void handleRaiseMadePlayerActions(Player &user);
+  void handleBetMadeCPUActions(Player &computerPlayer);
+  void handleRaiseMadeCPUActions(Player &computerPlayer);
+  void handlePlayerActions(Player &computerPlayer);
+  void handleCPUActions(Player &computerPlayer);
+  void handleNoBetMadeCPUActions(Player &computerPlayer);
+  int getPot();
 };
 
 #endif // BETTINGROUND_H
