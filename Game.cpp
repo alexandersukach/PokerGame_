@@ -12,14 +12,15 @@
 #include <queue>
 #include <string>
 #include <vector>
+
 using namespace std;
 
-Game::Game(const string &userName, double userStartingBalance) : gameDeck() {
+Game::Game(const string &userName, int userStartingBalance) : gameDeck() {
   initializePlayers(userName, userStartingBalance);
 }
 int Game::findPlayerIndex(const Player &player) const {
   int index = 0;
-  std::queue<Player> tempPlayers = players;
+  queue<Player> tempPlayers = players;
 
   while (!tempPlayers.empty()) {
     if (tempPlayers.front() == player) {
@@ -68,15 +69,6 @@ void Game::displayCommunityRiver() {
   cout << endl;
 }
 
-/*
-void Game::displayCommunityCards() {
-    cout << "Community Cards: ";
-    for (const Card& card : communityCards) {
-        cout << card.toString() << ", ";
-    }
-    cout << endl;
-}*/
-
 void Game::printPlayersNames() {
   cout << "\nPlayers in the game:" << endl;
   queue<Player> tempPlayers = players;
@@ -90,7 +82,7 @@ void Game::printPlayersNames() {
     tempPlayers.pop();
   }
 }
-void Game::initializePlayers(const string &userName, double playerBalance) {
+void Game::initializePlayers(const string &userName, int playerBalance) {
   // Use the member variable directly, not a local variable
   userPlayer = Player(userName, playerBalance, false);
 
@@ -109,11 +101,6 @@ void Game::initializePlayers(const string &userName, double playerBalance) {
 bool Game::isOver() const { return userPlayer.getBalance() == 0; }
 
 void Game::updateActivePlayers(queue<Player> &active) {
-  // there's a pretty big bug here- the parameter and class member have the same
-  // name, so the activePlayers = true line at the end of the functions does not
-  // update the class activePlayers but instead the local activePlayers (so this
-  // funciton ends up having no effect); then later in the code, you get a seg
-  // fault because you're using an empty activePlayers list.
   queue<Player> temp;
   while (!active.empty()) {
     Player currentPlayer = active.front();
@@ -125,7 +112,7 @@ void Game::updateActivePlayers(queue<Player> &active) {
   activePlayers = temp;
 }
 
-std::queue<Player> Game::getActivePlayers() const { return activePlayers; }
+queue<Player> Game::getActivePlayers() const { return activePlayers; }
 void Game::dealHoleCards() {
 
   for (int playerIndex = 0; playerIndex < 5; playerIndex++) {
@@ -138,7 +125,6 @@ void Game::dealHoleCards() {
 }
 
 // BETTING ROUND 1
-
 void Game::dealFlop(Deck &roundDeck) {
   roundDeck.burnCard();
   for (int i = 0; i < 3; i++) {

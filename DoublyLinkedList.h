@@ -1,3 +1,6 @@
+/*
+ *  Declaration of the DoublyLinkedList class
+ */
 #ifndef DOUBLYLINKEDLIST_H
 #define DOUBLYLINKEDLIST_H
 

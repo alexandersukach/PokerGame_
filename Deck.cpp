@@ -1,8 +1,6 @@
 /*
-Deck Class:
-  - represents a standard deck (52 cards)
-  - for each game round, a new deck is created, shuffled, and cut
-*/
+ *  Implementation of the Deck class
+ */
 #include "Deck.h"
 #include "Card.h"
 #include "DoublyLinkedList.h"
@@ -15,26 +13,11 @@ Deck::Deck() {
   initializeDeck(); // Fill standard deck of 52 playing cards
   shuffleDeck();    // Shuffle deck using random seed
   cutDeck();        // Swap the deck's top and bottom halves
-}
+} // Deck is now ready
 
 void Deck::initializeDeck() {
   for (int suit = Card::HEARTS; suit <= Card::SPADES; suit++) {
     for (int rank = Card::TWO; rank <= Card::ACE; rank++) {
-      // // Map a numeric rank to each actual rank
-      // Card::Rank actualRank;
-      // if (rank == Card::JACK) {
-      //   actualRank = Card::Rank(11);
-      // } else if (rank == Card::QUEEN) {
-      //   actualRank = Card::Rank(12);
-      // } else if (rank == Card::KING) {
-      //   actualRank = Card::Rank(13);
-      // } else if (rank == Card::ACE) {
-      //   actualRank = Card::Rank(14);
-      // } else {
-      //   actualRank = Card::Rank(rank);
-      // }
-      // // Card added to deck
-      // deck.pushBack(Card(actualRank, static_cast<Card::Suit>(suit)));
       deck.pushBack(
           Card{static_cast<Card::Rank>(rank), static_cast<Card::Suit>(suit)});
     }
@@ -51,6 +34,7 @@ void Deck::shuffleDeck() {
       tempDeck.push_back(head->data);
       deck.popFront();
     } else {
+      // Ensure deck is not empty
       throw runtime_error("No deck to shuffle.");
     }
   }
@@ -90,7 +74,7 @@ void Deck::cutDeck() {
       throw runtime_error("No deck to cut.");
     }
   }
-  // Merge the two lists back together
+  // Combine the two lists back together
   deck.clear();
 
   // Add bottom half to list (new top half)
@@ -119,9 +103,9 @@ void Deck::burnCard() { deck.popFront(); }
 
 Card Deck::dealCard() {
   if (deck.isEmpty()) {
+    // Ensure deck is not empty
     throw runtime_error("Cannot deal card. Deck is empty.");
   }
-
   Card dealtCard = deck.getHead()->data;
   deck.popFront();
   return dealtCard;

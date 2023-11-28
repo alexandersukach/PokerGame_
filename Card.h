@@ -1,3 +1,7 @@
+/*
+ *  Declaration of the Card class
+ */
+
 #ifndef CARD_H
 #define CARD_H
 
@@ -20,18 +24,17 @@ public:
     QUEEN,
     KING,
     ACE
-  };                                             // All possible ranks
-  enum Suit { HEARTS, CLUBS, DIAMONDS, SPADES }; // All possible suits
+  };                                             // All ranks enumeration
+  enum Suit { HEARTS, CLUBS, DIAMONDS, SPADES }; // All suits enumeration
 
   Card();
   Card(Rank r, Suit s);
   Rank getRank() const;
   Suit getSuit() const;
-  void display() const;
   string toString() const;
 
 private:
-  Rank rank; // Type 'Rank' stores card rank within class
-  Suit suit; // Type 'Suit' stores card suit within class
+  Rank rank;
+  Suit suit;
 };
 #endif // CARD_H

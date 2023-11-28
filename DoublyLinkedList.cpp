@@ -1,5 +1,6 @@
-
-// My 'DoublyLinkedList' implementation
+/*
+ *  Implementation of the DoublyLinkedList.cpp class
+ */
 
 #include "DoublyLinkedList.h"
 #include "Card.h"

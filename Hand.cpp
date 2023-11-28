@@ -1,7 +1,7 @@
 /*
-Hand Class:
-    - represents player's card collection
-*/
+ *  Implementation of the Hand class
+ */
+
 #include "Hand.h"
 #include <algorithm>
 
@@ -14,8 +14,8 @@ Hand::Hand(const vector<Card> &handCards) : cards(sortCards(handCards)) {
   // sortCards();
 }
 
+// Sorts vector of cards by rank
 vector<Card> Hand::sortCards(const vector<Card> &unsorted) {
-  // Your implementation for sorting the cards
   vector<Card> sortedCards = unsorted; // Make a copy of the unsorted cards
   sort(sortedCards.begin(), sortedCards.end(), compareCardsByRank); //
   return sortedCards;
@@ -31,7 +31,7 @@ int Hand::calculateBestHandScore() const {
           for (int n = m + 1; n < 7; n++) {
             vector<Card> tempHand = {cards[i], cards[j], cards[k], cards[m],
                                      cards[n]};
-            // Calculate the score for each combination
+            // Calculate the score for each possible 5 card combination
             int score = calculateScore(tempHand);
             if (score > bestScore) {
               bestScore = score;
@@ -45,8 +45,8 @@ int Hand::calculateBestHandScore() const {
 }
 
 int Hand::calculateScore(const vector<Card> &hand) const {
-  vector<Card> sortedCards = sortCards(hand); // Copy cards for sorting
-
+  vector<Card> sortedCards = sortCards(hand);
+  // Calculate score of sorted hand
   if (isRoyalFlush(sortedCards)) {
     return 10;
   } else if (isStraightFlush(sortedCards)) {
@@ -70,6 +70,7 @@ int Hand::calculateScore(const vector<Card> &hand) const {
   }
 }
 
+// Hand contains a pair of cards of the same rank; suit neglected
 bool Hand::isOnePair(const vector<Card> &sortedCards) const {
   for (int i = 0; i < sortedCards.size() - 1; i++) {
     if (sortedCards[i].getRank() == sortedCards[i + 1].getRank()) {
@@ -79,6 +80,7 @@ bool Hand::isOnePair(const vector<Card> &sortedCards) const {
   return false;
 }
 
+// Hand contains two different ranked pairs of cards; suit neglected
 bool Hand::isTwoPair(const vector<Card> &sortedCards) const {
   int numPairs = 0;
   for (int i = 0; i < sortedCards.size() - 1; i++) {
@@ -90,6 +92,7 @@ bool Hand::isTwoPair(const vector<Card> &sortedCards) const {
   return numPairs == 2;
 }
 
+// Hand contains three cards of the same rank; suit neglected
 bool Hand::isThreeOfAKind(const vector<Card> &sortedCards) const {
   for (int i = 0; i < sortedCards.size() - 2; i++) {
     if (sortedCards[i].getRank() == sortedCards[i + 1].getRank() &&
@@ -100,6 +103,7 @@ bool Hand::isThreeOfAKind(const vector<Card> &sortedCards) const {
   return false;
 }
 
+// Hand contains four cards of the same rank; suit neglected
 bool Hand::isFourOfAKind(const vector<Card> &sortedCards) const {
   for (int i = 0; i < sortedCards.size() - 3; i++) {
     if (sortedCards[i].getRank() == sortedCards[i + 1].getRank() &&
@@ -111,6 +115,7 @@ bool Hand::isFourOfAKind(const vector<Card> &sortedCards) const {
   return false;
 }
 
+// Hand contains five cards of the same suit; rank neglected
 bool Hand::isFlush(const vector<Card> &sortedCards) const {
   for (int i = 0; i < sortedCards.size() - 1; i++) {
     if (sortedCards[i].getSuit() != sortedCards[i + 1].getSuit()) {
@@ -120,8 +125,8 @@ bool Hand::isFlush(const vector<Card> &sortedCards) const {
   return true;
 }
 
+// Hand contains a consecutively ranked five cards; suit neglected
 bool Hand::isStraight(const vector<Card> &sortedCards) const {
-  // Check if the ranks form a consecutive sequence
   for (int i = 0; i < sortedCards.size() - 1; i++) {
     if (sortedCards[i].getRank() != sortedCards[i + 1].getRank() - 1) {
       return false;
@@ -130,9 +135,9 @@ bool Hand::isStraight(const vector<Card> &sortedCards) const {
   return true;
 }
 
+// Hand contains a pair of same ranked cards, as well as three cards of a
+// different rank; suit neglected
 bool Hand::isFullHouse(const vector<Card> &sortedCards) const {
-  // A full house consists of three cards of one rank and two cards of another
-  // rank
   if (sortedCards[0].getRank() == sortedCards[1].getRank() &&
       sortedCards[3].getRank() == sortedCards[4].getRank() &&
       (sortedCards[2].getRank() == sortedCards[0].getRank() ||
@@ -141,13 +146,14 @@ bool Hand::isFullHouse(const vector<Card> &sortedCards) const {
   }
   return false;
 }
-
+// Hand contains five consecutively ranked cards, all of the same suit
 bool Hand::isStraightFlush(const vector<Card> &sortedCards) const {
   return isStraight(sortedCards) && isFlush(sortedCards);
 }
 
+// Royal Flush is a special case of a Straight Flush
+// The hand must be ranked '10,J,Q,K,A' of the same suit
 bool Hand::isRoyalFlush(const vector<Card> &sortedCards) const {
-  // Royal Flush is a special case of a Straight Flush
   if (isStraightFlush(sortedCards) && sortedCards[4].getRank() == Card::ACE) {
     return true;
   }

@@ -1,0 +1,113 @@
+STATUS OF DOCUMENTATION:
+
+
+
+
+~/Desktop/PokerGame_> ./a.out
+                 =====================================
+                       Texas Hold'em Poker Rules
+                 =====================================
+- Start by specifying the buy-in amount at the beginning of the game.
+- During each round of betting, players can check, bet, call, or raise, depending on the current game conditions.
+- Starting with the small blind and proceeding clockwise, each player
+  receives two 'hole cards' which remain concealed from others.
+- Players engage in a round of betting based on their hole cards and
+  community cards to be revealed.
+- A card is then 'burned', or removed from the deck.
+- The subsequent three cards are placed face up on the board (the flop).
+- Following the flop, another round of betting ensues.
+- A card is then 'burned' and the next card is placed face up (the turn).
+- Another round of betting follows the turn.
+- A final card is then 'burned' and (the river) card is drawn following
+  it, which completes the set of community cards.
+- The final round of betting takes place, and players try to form their
+  best 5-card hand, utilizing both their 'hole cards' and the 'community
+  cards' on the table.
+- If players have equal hands, a 'chop pot' occurs.
+=================== Hand Rankings ====================
+                (Strongest to weakest)
+Royal Flush:        A ♠    K ♠    Q ♠    J ♠   10 ♠
+Straight Flush:     8 ♥    7 ♥    6 ♥    5 ♥    4 ♥
+Four of a Kind:     7 ♣    7 ♦    7 ♠    7 ♥    3 ♣
+Full House:         Q ♥    Q ♣    Q ♠    4 ♠    4 ♥
+Flush:              4 ♣    J ♠    A ♠    7 ♣    9 ♣
+Straight:           Q ♣    J ♦   10 ♥    9 ♣    3 ♥
+Three of a Kind:    K ♥    K ♦    K ♠   10 ♥    7 ♠
+Two Pair:           8 ♠    8 ♥    5 ♠    5 ♣    3 ♥
+One Pair:          10 ♣   10 ♠    7 ♣    4 ♥    2 ♣
+High Card:          A ♥    Q ♣   10 ♥    7 ♣    4 ♦
+======================================================
+What is your name? Alex
+How much would you like to buy in for, Alex? 500
+
+Players in the game:
+Alex, CPU 1, CPU 2, CPU 3, CPU 4.
+
+Your hand:
+5 of Diamonds, 3 of Diamonds
+Action to you...would you like to (b)et or (c)heck?b
+How much would you like to bet? 200
+
+You have bet.
+Your current bet: 200
+
+Action to you...would you like to (b)et or (c)heck?c
+You check. Action passed to the next player.
+Alex checks.
+CPU 1 bets 323.
+
+You have bet.
+Your current bet: 323
+
+CPU 1 bets 323.
+CPU 2 checks.
+CPU 2 bets 0.
+CPU 3 checks.
+CPU 3 bets 0.
+CPU 4 bets 122.
+
+You have bet.
+Your current bet: 122
+
+CPU 4 bets 122.
+Action to you...would you like to (b)et or (c)heck?c
+You check. Action passed to the next player.
+All players have checked. Ending the round.
+ checks.
+Total pot: 645
+Community cards:
+2 of Spades, 10 of Hearts, J of Spades
+
+Action to you...would you like to (b)et or (c)heck?c
+You check. Action passed to the next player.
+Alex checks.
+CPU 1 bets 23.
+
+You have bet.
+Your current bet: 23
+
+CPU 1 bets 23.
+CPU 2 bets 198.
+
+You have bet.
+Your current bet: 198
+
+CPU 2 bets 198.
+CPU 3 bets 147.
+
+You have bet.
+Your current bet: 147
+
+CPU 3 bets 147.
+CPU 4 checks.
+CPU 4 bets 0.
+Action to you...would you like to (b)et or (c)heck?c
+You check. Action passed to the next player.
+All players have checked. Ending the round.
+ checks.
+Total pot: 368
+Community cards:
+2 of Spades, 10 of Hearts, J of Spades, 7 of Hearts
+
+Segmentation fault: 11
+~/Desktop/PokerGame_>

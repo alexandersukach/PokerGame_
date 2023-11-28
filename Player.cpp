@@ -17,15 +17,12 @@ string Player::getName() const { return name; }
 
 bool Player::isComputer() const { return isComputerPlayer; }
 
+// Places a bet and updates the current bet.
 void Player::placeBet(int betAmount) {
-  if (betAmount > 0) {
-    balance -= betAmount;
-    currentBet += betAmount;
-    cout << "\nYou have bet." << endl;
-    cout << "Your current bet: " << currentBet << endl << endl;
-  } else {
-    cout << "\nInvalid bet amount. Please try again." << endl;
-  }
+  balance -= betAmount;
+  currentBet += betAmount;
+  cout << "\n" << getName() << " has bet." << endl;
+  cout << "Current bet: " << currentBet << endl << endl;
 }
 
 void Player::resetBet() { currentBet = 0; }
@@ -40,12 +37,14 @@ bool Player::hasChecked() const { return checked; }
 
 bool Player::hasCalled() const { return called; }
 
+// Handles the player's call action.
 void Player::call(int amountToCall) {
+
   if (amountToCall >= balance) {
-    cout << "You're forced to go all-in!" << endl;
+    cout << getName() << " is forced to go all-in!" << endl;
     placeBet(balance);
   } else {
-    cout << "You call, next player..." << endl;
+    cout << getName() << " calls, next player..." << endl;
     placeBet(amountToCall);
     called = true;
   }
@@ -53,20 +52,22 @@ void Player::call(int amountToCall) {
 
 void Player::fold() { folded = true; }
 
+// Handles the player's raise action.
 void Player::raise(int raiseAmount) {
   if (raiseAmount >= balance) {
-    cout << "You're forced to go all-in!" << endl;
+    cout << getName() << " is forced to go all-in!" << endl;
     placeBet(balance);
   } else {
-    cout << "You raised by " << raiseAmount << "; next player..." << endl;
+    cout << getName() << " raises by " << raiseAmount << "; next player..."
+         << endl;
     placeBet(raiseAmount);
   }
 }
 
 void Player::check() { checked = true; }
 
+// Defines the comparison logic based on Player attributes.
 bool Player::operator==(const Player &other) const {
-  // Define your comparison logic here based on your Player class attributes
-  return this->getName() == other.getName() &&
-         this->getBalance() == other.getBalance() /* && other comparisons */;
+  return getName() == other.getName() && getBalance() == other.getBalance() &&
+         isComputer() == other.isComputer();
 }

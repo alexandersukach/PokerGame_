@@ -1,4 +1,6 @@
-// Player.h
+/*
+ *  Declaration of the Player class.
+ */
 
 #ifndef PLAYER_H
 #define PLAYER_H
@@ -15,7 +17,6 @@ private:
   bool isComputerPlayer;
   bool checked;
   bool called;
-  string playerName;
 
 public:
   Player();
@@ -24,19 +25,24 @@ public:
   int getBalance() const;
   string getName() const;
   bool isComputer() const;
+
+  // Betting actions
   void placeBet(int betAmount);
   void resetBet();
   void winBet(int pot);
+
   int getCurrentBet() const;
   bool hasFolded() const;
   bool hasChecked() const;
   bool hasCalled() const;
 
+  // Player actions during the game
   void call(int amountToCall);
   void fold();
   void raise(int raiseAmount);
   void check();
 
+  // Comparison operator
   bool operator==(const Player &other) const;
 };
 

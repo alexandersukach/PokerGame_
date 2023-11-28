@@ -1,8 +1,14 @@
+/**
+ * @file Game.h
+ * @brief Declaration of the Game class.
+ */
+
 #ifndef GAME_H
 #define GAME_H
+
 #include "Card.h"
 #include "Deck.h"
-#include "Player.h" // Include any other necessary headers here
+#include "Player.h"
 #include <queue>
 #include <string>
 
@@ -10,9 +16,8 @@ using namespace std;
 
 class Game {
 public:
-  Game(const string &userName, double userStartingBalance);
-  void initializePlayers(const string &userName, double playerBalance);
-  // void dealHoleCards(queue<Player> &activePlayers, Deck &roundDeck);
+  Game(const string &userName, int userStartingBalance);
+  void initializePlayers(const std::string &userName, int playerBalance);
   void dealHoleCards();
   void dealFlop(Deck &roundDeck);
   void dealTurn(Deck &roundDeck);
@@ -26,27 +31,22 @@ public:
   void displayPlayerHand(const Player &player) const;
   int findPlayerIndex(const Player &player) const;
   Player getUserPlayer() const;
-  std::queue<Player> getActivePlayers() const;
+  queue<Player> getActivePlayers() const;
   void displayCommunityFlop();
   void displayCommunityTurn();
   void displayCommunityRiver();
 
-  queue<Player> players;
-
   Player *currentPlayer;
   Player userPlayer;
   Player *dealer;
-  Card communityCards[5];     // 5 total
-  Card playerHoleCards[5][2]; // [playerIndex][card]
-  Card combinedHand[5][7];    //[playerIndex][card]
-                              // could
+  Card communityCards[5];
+  Card playerHoleCards[5][2];
+  Card combinedHand[5][7];
   Deck gameDeck;
 
-  // int currentTurn;
-  // bool isGameOver = false;
-  // bool isHandOver = false;
 private:
-  std::queue<Player> activePlayers; // Add this line
+  queue<Player> activePlayers;
+  queue<Player> players;
 };
 
 #endif // GAME_H

@@ -6,8 +6,8 @@
 
 using namespace std;
 
-BettingRound::BettingRound(std::queue<Player> playerQueue, int minBet)
-    : players(std::move(playerQueue)), minRoundBet(minBet), currentRoundBet(0),
+BettingRound::BettingRound(queue<Player> playerQueue, int minBet)
+    : players(move(playerQueue)), minRoundBet(minBet), currentRoundBet(0),
       pot(0), isBetMade(true), isRaiseMade(true) {}
 
 void BettingRound::playRound() {
@@ -47,7 +47,7 @@ void BettingRound::playRound() {
 }
 
 bool BettingRound::allPlayersChecked() const {
-  std::queue<Player> tempQueue = players;
+  queue<Player> tempQueue = players;
 
   while (!tempQueue.empty()) {
     Player player = tempQueue.front();
@@ -79,7 +79,7 @@ void BettingRound::handleNoBetMadePlayerActions(Player &user) {
         if (amountToBet == user.getBalance()) {
           cout << "You are going all in!!!" << endl;
         }
-        if (amountToBet >= 20 && amountToBet <= user.getBalance()) {
+        if (amountToBet > 0) {
           user.placeBet(amountToBet);
           isBetMade = true;
           pot += amountToBet;
@@ -227,7 +227,9 @@ void BettingRound::handleRaiseMadeCPUActions(Player &computerPlayer) {
 }
 
 void BettingRound::handlePlayerActions(Player &user) {
-  if (!isBetMade) {
+  if (isRaiseMade) {
+    handleRaiseMadePlayerActions(user);
+  } else if (!isBetMade) {
     handleNoBetMadePlayerActions(user);
   } else {
     handleBetMadePlayerActions(user);
@@ -235,7 +237,9 @@ void BettingRound::handlePlayerActions(Player &user) {
 }
 
 void BettingRound::handleCPUActions(Player &computerPlayer) {
-  if (!isBetMade) {
+  if (isRaiseMade) {
+    handleRaiseMadeCPUActions(computerPlayer);
+  } else if (!isBetMade) {
     handleNoBetMadeCPUActions(computerPlayer);
   } else {
     handleBetMadeCPUActions(computerPlayer);
