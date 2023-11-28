@@ -1,6 +1,5 @@
-/**
- * @file Game.h
- * @brief Declaration of the Game class.
+/*
+ *  Declaration of the Game class.
  */
 
 #ifndef GAME_H
@@ -17,7 +16,8 @@ using namespace std;
 class Game {
 public:
   Game(const string &userName, int userStartingBalance);
-  void initializePlayers(const std::string &userName, int playerBalance);
+  const queue<Player> &getPlayers() const { return players; }
+  void initializePlayers(const string &userName, int playerBalance);
   void dealHoleCards();
   void dealFlop(Deck &roundDeck);
   void dealTurn(Deck &roundDeck);
@@ -28,23 +28,24 @@ public:
   void printPlayersNames();
   bool isOver() const;
   void updateActivePlayers(queue<Player> &activePlayers);
-  void displayPlayerHand(const Player &player) const;
+  // void displayPlayerHoleCards(const Player &player) const;
+  void displayAllPlayerHoleCards() const;
   int findPlayerIndex(const Player &player) const;
   Player getUserPlayer() const;
   queue<Player> getActivePlayers() const;
   void displayCommunityFlop();
   void displayCommunityTurn();
   void displayCommunityRiver();
+  void startNextRound();
+  void printPlayerOrder() const;
 
-  Player *currentPlayer;
+private:
   Player userPlayer;
   Player *dealer;
   Card communityCards[5];
   Card playerHoleCards[5][2];
   Card combinedHand[5][7];
   Deck gameDeck;
-
-private:
   queue<Player> activePlayers;
   queue<Player> players;
 };

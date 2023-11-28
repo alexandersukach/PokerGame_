@@ -8,6 +8,8 @@
 #include "DoublyLinkedList.h"
 #include <iostream>
 
+using namespace std;
+
 // Deck class represents a standard deck of playing cards
 class Deck {
 private:
@@ -16,13 +18,14 @@ private:
   void shuffleDeck();          // Ceck shuffed using a random seed
   void cutDeck(); // Deck is cut (top and bottom halves are swapped)
 public:
-  void print() {
-    for (auto x{deck.head}; x != nullptr; x = x->next)
-      std::cout << x->data.getRank() << ' ' << x->data.getSuit() << std::endl;
-  }
   Deck();
   Card dealCard(); // Deal card from top of deck
   void burnCard(); // Remove top card from deck
+
+  void print() const {
+    for (auto x = deck.head; x; x = x->next)
+      cout << x->data.getRank() << ' ' << x->data.getSuit() << '\n';
+  }
 };
 
 #endif // DECK_H

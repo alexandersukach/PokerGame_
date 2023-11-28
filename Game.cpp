@@ -34,14 +34,38 @@ int Game::findPlayerIndex(const Player &player) const {
 }
 
 Player Game::getUserPlayer() const { return userPlayer; }
-void Game::displayPlayerHand(const Player &player) const {
-  cout << "\nYour hand: " << endl;
-  int userIndex = findPlayerIndex(player);
-  cout << playerHoleCards[userIndex][0].toString() << ", ";
-  cout << playerHoleCards[userIndex][1].toString();
-  cout << endl;
-}
 
+// void Game::displayPlayerHoleCards(const Player &player) const {
+//   cout << "\nYour hand: " << endl;
+//   int userIndex = findPlayerIndex(player);
+//   cout << playerHoleCards[userIndex][0].toString() << ", ";
+//   cout << playerHoleCards[userIndex][1].toString();
+//   cout << endl;
+// }
+void Game::displayAllPlayerHoleCards() const {
+  queue<Player> tempPlayers = players;
+  while (!tempPlayers.empty()) {
+    const Player &currentPlayer = tempPlayers.front();
+
+    if (currentPlayer.isComputer()) {
+      // Display computer player's cards
+      int computerIndex = findPlayerIndex(currentPlayer);
+      cout << currentPlayer.getName() << "'s hand: ";
+      cout << playerHoleCards[computerIndex][0].toString() << ", ";
+      cout << playerHoleCards[computerIndex][1].toString();
+      cout << endl;
+    } else {
+      // Display user's cards
+      int userIndex = findPlayerIndex(currentPlayer);
+      cout << "\nYour hand: ";
+      cout << playerHoleCards[userIndex][0].toString() << ", ";
+      cout << playerHoleCards[userIndex][1].toString();
+      cout << endl;
+    }
+
+    tempPlayers.pop();
+  }
+}
 void Game::displayCommunityFlop() {
   cout << "Community cards:" << endl;
   cout << communityCards[0].toString() << ", ";
@@ -121,6 +145,28 @@ void Game::dealHoleCards() {
 
   for (int playerIndex = 0; playerIndex < 5; playerIndex++) {
     playerHoleCards[playerIndex][1] = gameDeck.dealCard();
+  }
+}
+
+// Each new game round, the player to the left of who was dealt first the
+// previous round, is dealt first (clockwise direction)
+void Game::startNextRound() {
+  Player frontPlayer = players.front();
+  players.pop();
+  players.push(frontPlayer);
+}
+
+void Game::printPlayerOrder() const {
+  cout << "Player order this round: ";
+  queue<Player> tempPlayers = players;
+  while (!tempPlayers.empty()) {
+    cout << tempPlayers.front().getName();
+    if (tempPlayers.size() > 1) {
+      cout << ", ";
+    } else {
+      cout << ". " << endl;
+    }
+    tempPlayers.pop();
   }
 }
 

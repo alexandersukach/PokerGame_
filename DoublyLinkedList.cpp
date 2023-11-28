@@ -8,12 +8,7 @@
 template <class T>
 DoublyLinkedList<T>::DoublyLinkedList() : head(nullptr), tail(nullptr) {}
 
-// getHead() returns head node of DLL; if empty, nullptr returned
-template <class T> Node<T> *DoublyLinkedList<T>::getHead() const {
-  return head;
-}
-
-// pushBack() creates new node containing data and adds to end of list
+// Create new node containing data and add to end of list
 template <class T> void DoublyLinkedList<T>::pushBack(const T &data) {
   Node<T> *newNode = new Node<T>(data);
   if (head == nullptr) {
@@ -24,7 +19,7 @@ template <class T> void DoublyLinkedList<T>::pushBack(const T &data) {
     tail = newNode;
   }
 }
-// pushFront() creates new node containing data and adds to beginning of list
+// Create new node containing data and add to beginning of list
 template <class T> void DoublyLinkedList<T>::pushFront(const T &data) {
   Node<T> *newNode = new Node<T>(data);
   if (head == nullptr) {
@@ -36,8 +31,7 @@ template <class T> void DoublyLinkedList<T>::pushFront(const T &data) {
   }
 }
 
-// popBack() removes the last element of the list; if empty, do nothing
-
+// Remove the last node in the list
 template <class T> void DoublyLinkedList<T>::popBack() {
   if (tail == nullptr) {
     return; // empty list
@@ -52,7 +46,7 @@ template <class T> void DoublyLinkedList<T>::popBack() {
   delete temp;
 }
 
-// popFront() removes the first element of the list; if empty, do nothing
+// Remove the first node in the list
 template <class T> void DoublyLinkedList<T>::popFront() {
   if (head == nullptr) {
     return; // empty list
@@ -67,7 +61,7 @@ template <class T> void DoublyLinkedList<T>::popFront() {
   delete temp;
 }
 
-// clear() removes all elements from the list; deletes each node to free memory
+// Clear the list of all nodes
 template <class T> void DoublyLinkedList<T>::clear() {
   while (head) {
     Node<T> *temp = head;
@@ -77,7 +71,7 @@ template <class T> void DoublyLinkedList<T>::clear() {
   head = tail = nullptr;
 }
 
-// isEmpty() returns true if list is empty
+// Check whether the list is empty
 template <class T> bool DoublyLinkedList<T>::isEmpty() const {
   return head == nullptr;
 }

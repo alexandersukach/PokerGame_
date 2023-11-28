@@ -154,49 +154,61 @@ int main() {
   string userName;
   cin >> userName;
 
-  cout << "How much would you like to buy in for, " << userName << "? ";
+  // ensure its an int....
+  cout << "Set everyone's buy-in: ";
+  int gameBuyIn;
+  cin >> gameBuyIn;
 
-  double buyInAmount;
-  cin >> buyInAmount;
-  double minBet = 10.00;
-  Game pokerGame(userName, buyInAmount);
-  // pokerGame.initializePlayers();
-  pokerGame.printPlayersNames();
-
+  Game pokerGame(userName, gameBuyIn);
   Deck gameDeck = Deck();
-  //   gameDeck.print();
-  queue<Player> playersStillIn;
+  cout << endl;
+
+  pokerGame.printPlayersNames();
+  cout << endl;
+  pokerGame.printPlayerOrder();
 
   pokerGame.dealHoleCards();
-  pokerGame.displayPlayerHand(pokerGame.getUserPlayer());
+  pokerGame.displayAllPlayerHoleCards();
 
-  BettingRound preFlop(pokerGame.players, minBet);
+  // pokerGame.displayPlayerHoleCards(pokerGame.getUserPlayer());
+
+  BettingRound preFlop(pokerGame.getPlayers());
   preFlop.playRound();
-  cout << "Total pot: " << preFlop.getPot() << endl;
   pokerGame.dealFlop(gameDeck);
   pokerGame.displayCommunityFlop();
-  pokerGame.updateActivePlayers(pokerGame.players);
 
-  playersStillIn = pokerGame.players;
-  /*
-    for (Player player: playersStillIn) {
-       player.resetBet();
-    }
-  */
+  pokerGame.startNextRound();
+  pokerGame.printPlayerOrder();
 
-  BettingRound preTurn(pokerGame.getActivePlayers(), minBet);
-  preTurn.playRound();
-  cout << "Total pot: " << preTurn.getPot() << endl;
-  pokerGame.dealTurn(gameDeck);
-  pokerGame.displayCommunityTurn();
-  pokerGame.updateActivePlayers(pokerGame.players);
+  // queue<Player> playersStillIn;
 
-  BettingRound preRiver(pokerGame.getActivePlayers(), minBet);
-  preRiver.playRound();
-  cout << "Total pot: " << preRiver.getPot() << endl;
-  pokerGame.dealRiver(gameDeck);
-  pokerGame.displayCommunityRiver();
-  pokerGame.updateActivePlayers(pokerGame.players);
+  //   BettingRound preFlop(pokerGame.players, minBet);
+  //   preFlop.playRound();
+  //   cout << "Total pot: " << preFlop.getPot() << endl;
+  //   pokerGame.dealFlop(gameDeck);
+  //   pokerGame.displayCommunityFlop();
+  //   pokerGame.updateActivePlayers(pokerGame.players);
+
+  //   playersStillIn = pokerGame.players;
+  //   /*
+  //     for (Player player: playersStillIn) {
+  //        player.resetBet();
+  //     }
+  //   */
+
+  //   BettingRound preTurn(pokerGame.getActivePlayers(), minBet);
+  //   preTurn.playRound();
+  //   cout << "Total pot: " << preTurn.getPot() << endl;
+  //   pokerGame.dealTurn(gameDeck);
+  //   pokerGame.displayCommunityTurn();
+  //   pokerGame.updateActivePlayers(pokerGame.players);
+
+  //   BettingRound preRiver(pokerGame.getActivePlayers(), minBet);
+  //   preRiver.playRound();
+  //   cout << "Total pot: " << preRiver.getPot() << endl;
+  //   pokerGame.dealRiver(gameDeck);
+  //   pokerGame.displayCommunityRiver();
+  //   pokerGame.updateActivePlayers(pokerGame.players);
 
   return 0;
 }

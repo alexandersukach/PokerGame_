@@ -6,6 +6,7 @@
 #define PLAYER_H
 
 #include <string>
+
 using namespace std;
 
 class Player {
@@ -28,7 +29,6 @@ public:
 
   // Betting actions
   void placeBet(int betAmount);
-  void resetBet();
   void winBet(int pot);
 
   int getCurrentBet() const;
@@ -36,8 +36,11 @@ public:
   bool hasChecked() const;
   bool hasCalled() const;
 
+  void resetBet();
+
   // Player actions during the game
   void call(int amountToCall);
+  void call();
   void fold();
   void raise(int raiseAmount);
   void check();

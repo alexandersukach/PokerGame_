@@ -15,6 +15,7 @@ Deck::Deck() {
   cutDeck();        // Swap the deck's top and bottom halves
 } // Deck is now ready
 
+// An unshuffled dick is created/organized 2-A for each suit
 void Deck::initializeDeck() {
   for (int suit = Card::HEARTS; suit <= Card::SPADES; suit++) {
     for (int rank = Card::TWO; rank <= Card::ACE; rank++) {
@@ -25,11 +26,11 @@ void Deck::initializeDeck() {
 }
 
 void Deck::shuffleDeck() {
-  // Temporary vector to store cards for shuffling
+  // Temporary vector to store cards during shuffling process
   vector<Card> tempDeck;
 
   while (!deck.isEmpty()) {
-    Node<Card> *head = deck.getHead();
+    Node<Card> *head = deck.head;
     if (head != nullptr) {
       tempDeck.push_back(head->data);
       deck.popFront();
@@ -38,7 +39,7 @@ void Deck::shuffleDeck() {
       throw runtime_error("No deck to shuffle.");
     }
   }
-  // Recommended to shuffle a deck 7 times
+  // It is recommended to shuffle a deck 7 times
   for (int i = 0; i < 7; i++) {
     // Mersenne Twister randNum generator for thorough shuffling
     shuffle(tempDeck.begin(), tempDeck.end(), mt19937(random_device()()));
@@ -50,63 +51,41 @@ void Deck::shuffleDeck() {
 }
 
 void Deck::cutDeck() {
+  if (deck.isEmpty()) {
+    throw runtime_error("No deck to cut.");
+  }
+
+  // Find the midpoint of the deck
+  Node<Card> *midpoint = deck.head;
+  Node<Card> *current = deck.head;
+  while (current != nullptr && current->next != nullptr) {
+    midpoint = midpoint->next;
+    current = current->next->next;
+  }
+  // Separate the deck into two halves
   DoublyLinkedList<Card> bottomHalf;
-  DoublyLinkedList<Card> topHalf;
-  int cutpoint = 26;
+  bottomHalf.head = midpoint->next;
+  midpoint->next->prev = nullptr;
+  midpoint->next = nullptr;
 
-  // Move top half of deck into one list
-  for (int i = 0; i < cutpoint; i++) {
-    Node<Card> *head = deck.getHead();
-    if (head != nullptr) {
-      topHalf.pushBack(head->data);
-      deck.popFront();
-    } else {
-      throw runtime_error("No deck to cut.");
-    }
-  }
-  // Move bottom half of deck into one list
-  while (!deck.isEmpty()) {
-    Node<Card> *head = deck.getHead();
-    if (head != nullptr) {
-      bottomHalf.pushBack(head->data);
-      deck.popFront();
-    } else {
-      throw runtime_error("No deck to cut.");
-    }
-  }
-  // Combine the two lists back together
-  deck.clear();
+  // Combine the two halves back together
+  deck.tail->next = deck.head;
+  deck.head->prev = deck.tail;
 
-  // Add bottom half to list (new top half)
-  while (!bottomHalf.isEmpty()) {
-    Node<Card> *bottomHead = bottomHalf.getHead();
-    if (bottomHead != nullptr) {
-      deck.pushBack(bottomHead->data);
-      bottomHalf.popFront();
-    } else {
-      throw runtime_error("No lower half of deck.");
-    }
-  }
-  // Add top half to list (new bottom half)
-  while (!topHalf.isEmpty()) {
-    Node<Card> *topHead = topHalf.getHead();
-    if (topHead != nullptr) {
-      deck.pushBack(topHead->data);
-      topHalf.popFront();
-    } else {
-      throw runtime_error("No upper half of deck.");
-    }
-  }
+  // Update the head and tail pointers
+  deck.head = bottomHalf.head;
+  deck.tail = bottomHalf.head->prev;
 }
 
 void Deck::burnCard() { deck.popFront(); }
 
+// The top card of deck is deal to player
 Card Deck::dealCard() {
   if (deck.isEmpty()) {
     // Ensure deck is not empty
     throw runtime_error("Cannot deal card. Deck is empty.");
   }
-  Card dealtCard = deck.getHead()->data;
+  Card dealtCard = deck.head->data;
   deck.popFront();
   return dealtCard;
 }

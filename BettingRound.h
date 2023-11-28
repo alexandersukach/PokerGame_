@@ -11,16 +11,20 @@ private:
   queue<Player> players;
   int pot;
   int currentRoundBet;
-  int minRoundBet = 10.00;
   bool isBetMade;
   bool isRaiseMade;
   bool isReRaiseMade;
   queue<Player> activePlayers;
 
 public:
-  BettingRound(std::queue<Player> playerQueue, int minBet);
+  BettingRound(queue<Player> playerQueue);
   void playRound();
   bool allPlayersChecked() const;
+  bool allPlayersCalled() const;
+  // void handleRaiseMadePlayerActions(Player &user);
+
+  void handleBet(Player &user, int amountToBet);
+  void handleRaise(Player &user, int amountToBet);
 
   void handleNoBetMadePlayerActions(Player &user);
   void handleBetMadePlayerActions(Player &user);
