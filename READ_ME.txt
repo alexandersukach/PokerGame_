@@ -15,7 +15,7 @@ Deck.cpp, Deck.h - completed
 Hand.cpp, Hand.h - completed
     - Is there any unnecessary repetition of sortCards
 Player.cpp, Player.h - completed
-DoublyLinkedList.cpp, DoublyLinkedList.h - incomplete
+DoublyLinkedList.cpp, DoublyLinkedList.h - completed
     - .h : destructer?
 
 Game.cpp, Game.h - incomplete
