@@ -124,11 +124,11 @@ void Game::initializePlayers(const string &userName, int playerBalance) {
 
 bool Game::isOver() const { return userPlayer.getBalance() == 0; }
 
-void Game::updateActivePlayers(queue<Player> &active) {
+void Game::updateActivePlayers() {
   queue<Player> temp;
-  while (!active.empty()) {
-    Player currentPlayer = active.front();
-    active.pop();
+  while (!activePlayers.empty()) {
+    Player currentPlayer = activePlayers.front();
+    activePlayers.pop();
     if (!currentPlayer.hasFolded()) {
       temp.push(currentPlayer);
     }
@@ -157,15 +157,15 @@ void Game::startNextRound() {
 }
 
 void Game::printPlayerOrder() const {
-  cout << "Player order this round: ";
+  cout << "Player order this round: " << endl;
   queue<Player> tempPlayers = players;
   while (!tempPlayers.empty()) {
     cout << tempPlayers.front().getName();
-    if (tempPlayers.size() > 1) {
-      cout << ", ";
-    } else {
-      cout << ". " << endl;
-    }
+    // if (tempPlayers.size() > 1) {
+    cout << " -  balance: $" << tempPlayers.front().getBalance() << endl;
+    // } else {
+    //   cout << " - " << endl;
+    // }
     tempPlayers.pop();
   }
 }

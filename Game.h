@@ -27,7 +27,7 @@ public:
   string mapScoreToHand(int score);
   void printPlayersNames();
   bool isOver() const;
-  void updateActivePlayers(queue<Player> &activePlayers);
+  void updateActivePlayers();
   // void displayPlayerHoleCards(const Player &player) const;
   void displayAllPlayerHoleCards() const;
   int findPlayerIndex(const Player &player) const;

@@ -162,7 +162,7 @@ int main() {
   Game pokerGame(userName, gameBuyIn);
   Deck gameDeck = Deck();
   cout << endl;
-
+  int pot = 0;
   pokerGame.printPlayersNames();
   cout << endl;
   pokerGame.printPlayerOrder();
@@ -175,10 +175,28 @@ int main() {
   BettingRound preFlop(pokerGame.getPlayers());
   preFlop.playRound();
   pokerGame.dealFlop(gameDeck);
+  pot += preFlop.getPot();
+  cout << "\nCurrent game pot: $" << pot << endl;
+  pokerGame.updateActivePlayers();
+  pokerGame.printPlayersNames();
+  cout << endl;
+
   pokerGame.displayCommunityFlop();
 
   pokerGame.startNextRound();
   pokerGame.printPlayerOrder();
+
+  BettingRound preTurn(pokerGame.getPlayers());
+  preTurn.playRound();
+  pokerGame.dealTurn(gameDeck);
+  pot += preTurn.getPot();
+  cout << "\nCurrent game pot: $" << pot << endl;
+
+  BettingRound preRiver(pokerGame.getPlayers());
+  preRiver.playRound();
+  pokerGame.dealRiver(gameDeck);
+  pot += preRiver.getPot();
+  cout << "\nCurrent game pot: $" << pot << endl;
 
   // queue<Player> playersStillIn;
 

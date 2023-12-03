@@ -14,10 +14,11 @@ private:
   string name;
   int balance;
   int currentBet;
-  bool folded;
   bool isComputerPlayer;
+  bool folded;
   bool checked;
   bool called;
+  bool shoved;
 
 public:
   Player();
@@ -32,9 +33,11 @@ public:
   void winBet(int pot);
 
   int getCurrentBet() const;
+  void setCurrentBet(int newBet);
   bool hasFolded() const;
   bool hasChecked() const;
   bool hasCalled() const;
+  bool isAllIn() const;
 
   void resetBet();
 
@@ -44,6 +47,7 @@ public:
   void fold();
   void raise(int raiseAmount);
   void check();
+  void shove();
 
   // Comparison operator
   bool operator==(const Player &other) const;

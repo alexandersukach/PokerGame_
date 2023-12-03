@@ -13,7 +13,15 @@ Code reduncancy in Game.cpp, when displaying community cards
 
 // I need a hasShoved, is all in, etc..to factor in when asking for player action later on... "if shoved", break, next player
 
-//
+
+HandleNoBetPlayer() - complete
+
+HandleBetMadeCPUActions:
+          computerPlayer.setCurrentBet(computerPlayer.getBalance()) 
+
+
+
+
 
 DOCUMENTATION:
 Card.cpp, Card.h - completed
@@ -31,4 +39,5 @@ Hand.cpp, Hand.h - completed
 
 Game.cpp, Game.h - incomplete
 BettingRound.cpp, BettingRound.h - incomplete
+
 

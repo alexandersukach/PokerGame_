@@ -41,23 +41,22 @@ bool BettingRound::allPlayersCalled() const {
 }
 
 void BettingRound::playRound() {
-  bool roundCompleted = false;
+  isBetMade = false;
+  isRaiseMade = false;
 
-  while (!roundCompleted) {
-    Player &player = players.front();
-    isBetMade = false;
-    isRaiseMade = false;
-
+  for (;;) {
     if (allPlayersChecked()) {
       cout << "All players have checked. Ending betting round." << endl;
-      roundCompleted = true;
+      break;
     }
 
     if (allPlayersCalled()) {
       cout << "All players have either called or folded. Ending betting round."
            << endl;
-      roundCompleted = true;
+      break;
     }
+
+    Player &player = players.front();
 
     if (!player.isComputer()) {
       if (isRaiseMade) {
@@ -84,97 +83,135 @@ void BettingRound::playRound() {
 
 void BettingRound::handleNoBetMadePlayerActions(Player &user) {
   char action;
-
+  cout << "Your current balance: $" << user.getBalance() << endl;
+  cout << "Your current bet: $" << user.getCurrentBet() << endl;
+  cout << "The current round bet: $" << currentRoundBet << endl;
   cout << "Action to you...would you like to (b)et or (c)heck?";
   cin >> action;
   action = tolower(action);
 
   switch (action) {
   case 'b':
-    int amountToBet;
-    cout << "How much would you like to bet? ";
-    cin >> amountToBet;
+    if (!user.isAllIn() && !user.hasFolded()) { // && or ||
+      int amountToBet;
+      cout << "How much would you like to bet? $";
+      cin >> amountToBet;
 
-    if (amountToBet == user.getBalance()) {
-      cout << "You are going all in!!!" << endl;
-    }
+      if (amountToBet == user.getBalance()) {
+        cout << "You are going all in!!!" << endl;
+        user.shove();
+      }
 
-    if (amountToBet > 0 && amountToBet <= user.getBalance()) {
-      user.placeBet(amountToBet);
-      isBetMade = true;
-      pot += amountToBet;
-      currentRoundBet += amountToBet;
+      if (amountToBet > 0 && amountToBet <= user.getBalance()) {
+        user.placeBet(amountToBet);
+        isBetMade = true;
+        pot += amountToBet;
+        currentRoundBet += amountToBet;
+        user.setCurrentBet(amountToBet);
+      } else {
+        cout << "Invalid bet! Please enter a value greater than 0 and within "
+                "your budget of $"
+             << user.getBalance() << endl;
+      }
+    } else if (user.hasFolded()) {
+      cout << "You cannot bet; You have folded." << endl;
     } else {
-      cout << "Bet must be a positive number and within your budget." << endl;
+      cout << "You cannot bet more...you are already all in." << endl;
     }
     break;
   case 'c':
     cout << "You check. Action passed to the next player." << endl;
-    user.check();
     break;
   default:
-    cout << "Invalid option, please select a valid option." << endl;
+    cout << "Invalid input, try again." << endl;
   }
 }
 
 void BettingRound::handleBetMadePlayerActions(Player &user) {
   char action;
   int amountToCall = currentRoundBet - user.getCurrentBet();
+  cout << "Your current balance: $" << user.getBalance() << endl;
+  cout << "Your current bet: $" << user.getCurrentBet() << endl;
+  cout << "The current round bet: $" << currentRoundBet << endl;
 
-  cout << "Someone has bet. Would you like to (c)all, (r)aise, or (f)old? ";
+  cout << "Someone has bet. Would you like to (c)all $" << amountToCall
+       << ", (r)aise, or (f)old?";
   cin >> action;
-  action = tolower(action);
 
   switch (action) {
   case 'c':
-    cout << user.getName() << " calls by " << amountToCall << "." << endl;
-    user.call(amountToCall);
+    if (!user.isAllIn() && !user.hasFolded()) { // && or ||
+      if (amountToCall >= user.getBalance()) {
+        cout << "You are going all in!" << endl;
+        user.shove();
+      }
+      user.call(amountToCall);
+      user.setCurrentBet(amountToCall);
+    } else if (user.hasFolded()) {
+      cout << "You cannot do anything, you have folded." << endl;
+    } else {
+      cout << "You cannot do anything...you are already all-in." << endl;
+    }
     break;
   case 'r':
-    int amountToRaise;
-    cout << "How much would you like to raise by? ";
-    cin >> amountToRaise;
+    if (!user.isAllIn() && !user.hasFolded()) {
+      int amountToRaise;
+      cout << "How much would you like to raise by? ";
+      cin >> amountToRaise;
 
-    if (amountToRaise == user.getBalance()) {
-      cout << "You are going all in!!!" << endl;
-    }
-
-    if (amountToRaise > 0 && amountToRaise <= user.getBalance()) {
-      user.placeBet(amountToRaise);
-      isBetMade = true;
-      pot += amountToRaise;
-      currentRoundBet += amountToRaise;
+      if (amountToRaise > 0 && amountToRaise <= user.getBalance()) {
+        user.raise(amountToRaise);
+        isRaiseMade = true;
+        pot += amountToRaise;
+        user.setCurrentBet(amountToRaise);
+        currentRoundBet += amountToRaise;
+      } else {
+        cout << "Invalid raise...must be at least $1 and within your budget of "
+             << user.getBalance() << "." << endl;
+      }
+    } else if (user.hasFolded()) {
+      cout << "You cannot raise...you have folded." << endl;
     } else {
-      cout << "Bet must be a positive number and within your budget." << endl;
+      cout << "You cannot raise...you are already all-in." << endl;
     }
-    break;
-  case 'f':
-    cout << user.getName() << " folds." << endl;
-    user.fold();
     break;
   default:
-    cout << "Invalid option, please select a valid option." << endl;
+    cout << "Invalid input, try again." << endl;
   }
 }
 
 void BettingRound::handleRaiseMadePlayerActions(Player &user) {
   char action;
   int amountToCall = currentRoundBet - user.getCurrentBet();
+  cout << "Your current balance: $" << user.getBalance() << endl;
+  cout << "Your current bet: $" << user.getCurrentBet() << endl;
+  cout << "The current round bet: $" << currentRoundBet << endl;
 
-  cout << "Someone has raised. Would you like to (c)all " << amountToCall
-       << ", or (f)old?";
+  cout << "Someone has raised. Would you like to (c)all $" << amountToCall
+       << " or (f)old? ";
   cin >> action;
 
   switch (action) {
   case 'c':
-    cout << user.getName() << " calls by " << amountToCall << "." << endl;
-    user.call(amountToCall);
+    if (!user.isAllIn() && !user.hasFolded()) {
+      if (amountToCall >= user.getBalance()) {
+        user.shove();
+        user.call();
+      }
+      user.call(amountToCall);
+      user.setCurrentBet(amountToCall);
+    } else if (user.hasFolded()) {
+      cout << "You cannot do anything, you have folded." << endl;
+    } else {
+      cout << "You cannot do anything...you are already all-in." << endl;
+    }
     break;
   case 'f':
-    cout << user.getName() << " folds." << endl;
+    cout << "You have folded." << endl;
+    user.fold();
     break;
   default:
-    cout << "Invalid option, please select a valid option." << endl;
+    cout << "Invalid input, try again." << endl;
   }
 }
 
@@ -183,52 +220,55 @@ int getRandomBetAmount(const Player &computerPlayer) {
   int maxBet = computerPlayer.getBalance();
   return rand() % (maxBet - minBet + 1) + minBet;
 }
-
 void BettingRound::handleNoBetMadeCPUActions(Player &computerPlayer) {
   int randomValue = rand() % 100;
 
-  if (randomValue < 50) {
+  if (randomValue < 30) {
     int betAmount = getRandomBetAmount(computerPlayer);
+    betAmount = min(
+        betAmount,
+        computerPlayer.getBalance()); // Ensure it doesn't exceed the balance
     cout << computerPlayer.getName() << " bets " << betAmount << "." << endl;
     computerPlayer.placeBet(betAmount);
-    isBetMade = true; // Update isBetMade for the computer player
+    isBetMade = true;
     pot += betAmount;
     currentRoundBet += betAmount;
+    computerPlayer.setCurrentBet(betAmount);
   } else {
     cout << computerPlayer.getName() << " checks." << endl;
+    computerPlayer.check();
     // Do nothing, move to the next player
   }
-
-  // Update isBetMade for the user player
-  // if (!isBetMade) {
-  //   isBetMade = true;
-  // }
 }
 
 void BettingRound::handleBetMadeCPUActions(Player &computerPlayer) {
   int randomValue = rand() % 100;
 
-  if (randomValue < 60) {
+  if (randomValue < 40) {
     int amountToCall = currentRoundBet - computerPlayer.getCurrentBet();
     if (amountToCall >= computerPlayer.getBalance()) {
       computerPlayer.call(computerPlayer.getBalance());
       pot += computerPlayer.getBalance();
+      computerPlayer.setCurrentBet(computerPlayer.getBalance());
     } else {
-      computerPlayer.call(amountToCall);
-      pot += amountToCall;
-    }
-  } else if (randomValue < 80) {
-    int raiseAmount = 2 * currentRoundBet;
-    if (raiseAmount >= computerPlayer.getBalance()) {
-      computerPlayer.raise(computerPlayer.getBalance());
-      pot += computerPlayer.getBalance();
-    } else {
+      int raiseAmount = getRandomBetAmount(computerPlayer);
+      raiseAmount =
+          min(raiseAmount,
+              computerPlayer.getBalance() -
+                  amountToCall); // Ensure it doesn't exceed the balance
       computerPlayer.raise(raiseAmount);
       pot += raiseAmount;
+      cout << computerPlayer.getName() << " raises by $" << raiseAmount
+           << "...next player..." << endl;
+      currentRoundBet += raiseAmount;
+      computerPlayer.setCurrentBet(currentRoundBet);
+      pot += raiseAmount;
+      isRaiseMade = true;
     }
-    isRaiseMade = true;
+  } else if (randomValue < 60) {
+    // Existing code for calling
   } else {
-    cout << "Computer folds." << endl;
+    cout << computerPlayer.getName() << " folds." << endl;
     computerPlayer.fold();
   }
 }
@@ -236,22 +276,30 @@ void BettingRound::handleBetMadeCPUActions(Player &computerPlayer) {
 void BettingRound::handleRaiseMadeCPUActions(Player &computerPlayer) {
   int randomValue = rand() % 100;
 
-  if (randomValue < 70) {
+  if (randomValue < 50) {
     int amountToCall = currentRoundBet - computerPlayer.getCurrentBet();
     if (amountToCall >= computerPlayer.getBalance()) {
       computerPlayer.call(computerPlayer.getBalance());
       pot += computerPlayer.getBalance();
+      computerPlayer.setCurrentBet(computerPlayer.getBalance());
     } else {
       computerPlayer.call(amountToCall);
       pot += amountToCall;
+      computerPlayer.setCurrentBet(currentRoundBet);
     }
   } else {
-    cout << "Computer folds." << endl;
+    cout << computerPlayer.getName() << " folds." << endl;
     computerPlayer.fold();
   }
 }
-
 void BettingRound::handlePlayerActions(Player &user) {
+  if (user.isAllIn()) {
+    cout << user.getName()
+         << " is all-in and will sit out of the following betting rounds."
+         << endl;
+    return;
+  }
+
   if (isRaiseMade) {
     handleRaiseMadePlayerActions(user);
   } else if (!isBetMade) {
@@ -262,6 +310,13 @@ void BettingRound::handlePlayerActions(Player &user) {
 }
 
 void BettingRound::handleCPUActions(Player &computerPlayer) {
+  if (computerPlayer.isAllIn()) {
+    cout << computerPlayer.getName()
+         << " is all-in and will sit out of the following betting rounds."
+         << endl;
+    return;
+  }
+
   if (currentRoundBet > 0) {
     handleBetMadeCPUActions(computerPlayer);
   } else {
